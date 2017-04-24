@@ -1,0 +1,508 @@
+{
+    "view-type": "default",
+    "version": "1",
+    "info": "The SDMA default views",
+    "views": [
+        {
+            "name": "SDMA",
+            "id": "sdma-study",
+            "study": "/Projects/A330_WV052",
+           
+            "content": [
+                {
+                    "group": "GFEM Model",
+                    "options": {
+                        "color": "panel-default"
+                    },
+                    "widgets": [
+                        {
+                            "id": "model-data_shared",
+                            "label": "Model Data",
+                            "view": "grid",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "Last",
+                                "_PATTERN_": [
+                                    ".neut",
+                                    ".op2",
+                                    ".dat"
+                                ],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Description",
+                                        "Value": "GFEM data"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        },
+                        {
+                            "id": "model-validation_shared",
+                            "label": "Validation",
+                            "view": "grid",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [
+                                    ".h3d",
+                                    ".jpg"
+                                ],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Description",
+                                        "Value": "GFEM validation"
+                                    }
+                                ],
+                                "_PARENT_": [
+                                    {
+                                        "_files_": ".neut|.op2|.dat",
+                                        "_properties_": [
+                                            {
+                                                "Namespace": "General",
+                                                "Name": "Description",
+                                                "Value": "GFEM data"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "_CHILD_": []
+                            }
+                        }
+                    ],
+                    "column": "0"
+                },
+                {
+                    "group": "GFEM Loads",
+                    "options": {
+                        "color": "panel-default"
+                    },
+                    "widgets": [
+                        {
+                            "id": "loads-data_shared",
+                            "label": "Data",
+                            "view": "list",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [
+                                    ".neut",
+                                    ".op2"
+                                ],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "Loads",
+                                        "Name": "Family",
+                                        "Value": "Static"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        },
+                        {
+                            "id": "loads-validation_shared",
+                            "label": "Validation",
+                            "view": "grid",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [
+                                    ".h3d",
+                                    ".jpg"
+                                ],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Description",
+                                        "Value": "LOAD validation"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        }
+                    ],
+                    "column": "0"
+                },
+                {
+                    "group": "Extraction Data",
+                    "widgets": [
+                        {
+                            "id": "extraction-data_shared",
+                            "label": "Group file",
+                            "view": "grid",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "FEM group file"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        },
+                        {
+                            "id": "generic-file_shared",
+                            "label": "Generic file",
+                            "view": "list",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "Generic sheet"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        },
+                        {
+                            "id": "dpsn3_shared",
+                            "label": "DPSN3",
+                            "view": "grid",
+                           
+                            "column": "1",
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "Analysis point data file (DPSN3)"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        },
+                        {
+                            "id": "PSN3-session_shared",
+                            "label": "PSN3 session",
+                            "view": "grid",
+                           
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "Analysis point data file (PSN3 Session)"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        },
+                        {
+                            "id": "DPSN4_shared",
+                            "label": "DPSN4",
+                            "view": "grid",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "",
+                                "_PATTERN_": [],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "Analysis point data file (DPSN4)"
+                                    }
+                                ],
+                                "_PARENT_": [],
+                                "_CHILD_": []
+                            }
+                        }
+                    ],
+                    "column": "1"
+                },
+                {
+                    "group": "Extraction Results",
+                    "widgets": [
+                        {
+                            "id": "global_shared",
+                            "label": "Global",
+                            "view": "grid",
+                           
+                            "color": "panel-default",
+                            "search": {
+                                "_VERSION_": "Last",
+                                "_PATTERN_": [],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "Extraction results file"
+                                    }
+                                ],
+                                "_PARENT_": [
+                                    {
+                                        "_files_": ".neut|.op2",
+                                        "_properties_": [
+                                            {
+                                                "Namespace": "General",
+                                                "Name": "Description",
+                                                "Value": "GFEM data"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "_CHILD_": []
+                            }
+                        },
+                        {
+                            "id": "interaction_intermediary_shared",
+                            "label": "Interaction Intermediary",
+                            "view": "list",
+                           
+                            "search": {
+                                "_VERSION_": "Last",
+                                "_PATTERN_": [],
+                                "_PROPERTY_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "Interaction results file"
+                                    },
+                                    {
+                                        "Namespace": "Study Context",
+                                        "Name": "Work Package",
+                                        "Value": "Lower Shell"
+                                    }
+                                ],
+                                "_PARENT_": [
+                                    {
+                                        "_files_": "*.neut|*.op2",
+                                        "_properties_": [
+                                            {
+                                                "Namespace": "General",
+                                                "Name": "Description",
+                                                "Value": "GFEM data"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "_CHILD_": []
+                            },
+                            "column": "2",
+                            "color": "panel-default"
+                        }
+                    ],
+                    "column": "2"
+                },
+                {
+                    "id": "interaction_shared",
+                    "label": "Interaction",
+                    "view": "grid",
+                   
+                    "column": "2",
+                    "color": "panel-default",
+                    "search": {
+                        "_VERSION_": "",
+                        "_PATTERN_": [],
+                        "_PROPERTY_": [
+                            {
+                                "Namespace": "General",
+                                "Name": "Type",
+                                "Value": "Extraction results file"
+                            }
+                        ],
+                        "_PARENT_": [
+                            {
+                                "_files_": "",
+                                "_properties_": [
+                                    {
+                                        "Namespace": "General",
+                                        "Name": "Type",
+                                        "Value": "Interaction results file"
+                                    }
+                                ]
+                            }
+                        ],
+                        "_CHILD_": []
+                    }
+                }
+            ]
+        }
+        ,{
+            "name": "Model ",
+            "id": "model-prt",
+            "study": "/Projects/AER_G7000_RWD_light",
+            "content": [
+                {
+                    "group": "CAO",
+                    "options": {
+                        "color": "panel-default"
+                    },
+                    "widgets": [
+                        {
+                            "id": "general_shared",
+                            "label": "General",
+                            "view": "grid",
+                            "info": "",
+                           
+                            "search": {
+                                "_PATTERN_": [
+                                    "*ETUDE_3D/*.h3d"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "porta-2d_shared",
+                            "label": "2D ",
+                            "color": "panel-default",
+                            "view": "grid",
+                           
+                            "search": {
+                                "_PATTERN_": [
+                                    "*CHECKS/*/2D_*/*_2D_Alpha*.h3d",
+                                    "*CHECKS/*/2D_*/*_2D_nu*.h3d",
+                                    "*CHECKS/*/2D_*/*_2D_Rho*.h3d",
+                                    "*CHECKS/*/2D_*/*_2D_Property*.h3d",
+                                    "*CHECKS/*/2D_*/*_2D_Mat*.h3d"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "work-package_shared",
+                           
+                            "label": "Work Package",
+                            "color": "panel-default",
+                            "view": "list",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*DESIGN/*.h3d"
+                                ]
+                            }
+                        }
+                    ],
+                    "column": "0"
+                },
+                {
+                    "group": "FEM",
+                    "widgets": [
+                        {
+                            "id": "0d_shared",
+                           
+                            "label": "OD",
+                            "color": "panel-default",
+                            "view": "grid",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*CHECKS/*/0D_*/*.h3d"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "1d-fastener_shared",
+                           
+                            "label": "1D Fastener",
+                            "color": "panel-default",
+                            "view": "grid",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*CHECKS/*1D_*/*_Fastener_*.h3d"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "1d-rod_shared",
+                           
+                            "label": "1D ROD",
+                            "color": "panel-default",
+                            "view": "grid",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*CHECKS/*1D_*/*1D_Rod_*.h3d"
+                                ]
+                            }
+                        }
+                    ],
+                    "options": {
+                        "color": "panel-default"
+                    },
+                    "column": "1"
+                },
+                {
+                    "group": "Various 2D",
+                    "options": {
+                        "color": "panel-default"
+                    },
+                    "column": "2",
+                    "widgets": [
+                        {
+                            "id": "mpc_shared",
+                           
+                            "label": "MPC",
+                            "color": "panel-default",
+                            "view": "grid",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*CHECKS/*/MPC_*/.h3d"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "displacement_shared",
+                           
+                            "label": "Displacement",
+                            "color": "panel-default",
+                            "view": "grid",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*RES_STATIQUE/*DISPLACEMENT/*.h3d"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "metal_shared",
+                           
+                            "label": "Metal",
+                            "color": "panel-default",
+                            "view": "grid",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*CHECKS/*/2D_*/*_2D_E*.h3d",
+                                    "*CHECKS/*/2D_*/*_2D_Thickness*.h3d"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "composite_shared",
+                           
+                            "label": "Composite",
+                            "color": "panel-default",
+                            "view": "grid",
+                            "search": {
+                                "_PATTERN_": [
+                                    "*COMPOSITE/*.h3d"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+     ]
+}

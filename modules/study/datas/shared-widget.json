@@ -1,0 +1,255 @@
+{
+    "owner": "default",
+    "version": "",
+    "info": "The SDMA default widgets",
+    "widgets": [
+          {
+            "id"	: "dossier-bar",
+            "label" : "Chart Dossier",
+            "view"  : "bar",
+            "type"	: "chart",
+            
+            "search": {
+                "_VERSION_": "Last",
+                "_PATTERN_": [ ],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name"	   : "Type",
+                        "Value"    : "Model dossier"
+                    }
+                    ,   {
+                        "Namespace": "General",
+                        "Name"	   : "Type",
+                        "Value"    : "Stress dossier"
+                    }
+                ],
+                "_METADATA_": [
+                    {
+                        "Namespace": "General",
+                        "Name"	   : "Percentage of completion" 
+                    }
+                ],
+                "_PARENT_": [],
+                "_CHILD_": []
+            }
+        },
+        {
+            "id": "model-data",
+            "label": "Model Data",
+            "view": "grid",
+            
+            "search": {
+                "_VERSION_": "Last",
+                "_PATTERN_": [
+                    ".neut",
+                    ".op2",
+                    ".dat"
+                ],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name": "Description",
+                        "Value": "GFEM data"
+                    }
+                ],
+                "_PARENT_": [],
+                "_CHILD_": []
+            }
+        },
+        {
+            "id": "model-validation",
+            "label": "Model Validation",
+            "view": "grid",
+            
+            "search": {
+                "_VERSION_": "",
+                "_PATTERN_": [
+                    ".h3d",
+                    ".jpg"
+                ],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name": "Description",
+                        "Value": "GFEM validation"
+                    }
+                ],
+                "_PARENT_": [
+                    {
+                        "_files_": ".neut|.op2",
+                        "_properties_": [
+                            {
+                                "Namespace": "General",
+                                "Name": "Description",
+                                "Value": "GFEM data"
+                            }
+                        ]
+                    }
+                ],
+                "_CHILD_": []
+            }
+        },
+        {
+            "id": "loads-validation",
+            "label": "Loads Validation",
+            "view": "grid",
+            
+            "search": {
+                "_VERSION_": "",
+                "_PATTERN_": [
+                    ".h3d",
+                    ".jpg"
+                ],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name": "Description",
+                        "Value": "LOAD validation"
+                    }
+                ],
+                "_PARENT_": [],
+                "_CHILD_": []
+            }
+        },
+        {
+            "id": "loads-data",
+            "label": "Loads Data",
+            "view": "grid",
+            
+            "color": "panel-default",
+            "search": {
+                "_VERSION_": "",
+                "_PATTERN_": [
+                    ".neut",
+                    ".op2"
+                ],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "Loads",
+                        "Name": "Family",
+                        "Value": "Static"
+                    }
+                ],
+                "_PARENT_": [],
+                "_CHILD_": []
+            }
+        },
+        {
+            "id": "interaction",
+            "label": "Interaction",
+            "view": "grid",
+            
+            "search": {
+                "_VERSION_": "",
+                "_PATTERN_": [],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name": "Type",
+                        "Value": "Extraction results file"
+                    }
+                ],
+                "_PARENT_": [
+                    {
+                        "_files_": "",
+                        "_properties_": [
+                            {
+                                "Namespace": "General",
+                                "Name": "Type",
+                                "Value": "Interaction results file"
+                            }
+                        ]
+                    }
+                ],
+                "_CHILD_": []
+            }
+        },
+        {
+            "id": "interaction_intermediary",
+            "label": "Interaction Intermediary",
+            "view": "list",
+            
+            "search": {
+                "_VERSION_": "",
+                "_PATTERN_": [],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name": "Type",
+                        "Value": "Interaction results file"
+                    },
+                    {
+                        "Namespace": "Study Context",
+                        "Name": "Work Package",
+                        "Value": "Lower Shell"
+                    }
+                ],
+                "_PARENT_": [
+                    {
+                        "_files_": "*.neut|*.op2",
+                        "_properties_": [
+                            {
+                                "Namespace": "General",
+                                "Name": "Description",
+                                "Value": "GFEM data"
+                            }
+                        ]
+                    }
+                ],
+                "_CHILD_": []
+            },
+            "column": "2"
+        },
+        {
+            "id": "group-file",
+            "label": "Group file",
+            "view": "grid",
+            
+            "search": {
+                "_VERSION_": "",
+                "_PATTERN_": [],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name": "Type",
+                        "Value": "FEM group file"
+                    }
+                ],
+                "_PARENT_": [],
+                "_CHILD_": []
+            },
+            "color": "panel-default"
+        },
+        {
+            "id": "global",
+            "label": "Global",
+            "view": "grid",
+            
+            "search": {
+                "_VERSION_": "Last",
+                "_PATTERN_": [],
+                "_PROPERTY_": [
+                    {
+                        "Namespace": "General",
+                        "Name": "Type",
+                        "Value": "Extraction results file"
+                    }
+                ],
+                "_PARENT_": [
+                    {
+                        "_files_": ".neut|.op2",
+                        "_properties_": [
+                            {
+                                "Namespace": "General",
+                                "Name": "Description",
+                                "Value": "GFEM data"
+                            }
+                        ]
+                    }
+                ],
+                "_CHILD_": []
+            }
+        }
+    ] 
+}

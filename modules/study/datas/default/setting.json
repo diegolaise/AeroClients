@@ -1,0 +1,15 @@
+{
+	"Info" : "The SDMA User settings"
+	, "login" : "" 
+	, "RefreshInterval" : "15"
+	, "HyperviewPath" 	: ""
+	, "SelectedView"  	: ""
+	
+	, "skin": "s-skin-4"
+
+	, "ontimer" 	 : "on"
+	, "collapse_menu": "off"
+    , "fixedsidebar" : "on"
+    , "fixednavbar"  : "off"
+    , "fixedfooter"  : "on"
+}

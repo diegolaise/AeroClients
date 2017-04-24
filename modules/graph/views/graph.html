@@ -1,0 +1,237 @@
+
+<link rel="stylesheet" type="text/css" href="/modules/graph/css/sidebar.css"> 
+<link rel="stylesheet" type="text/css" href="/modules/graph/css/graph.css">
+
+<div ng-app="Graph" ng-init="initilizeGraph()" id="main">
+
+    <nav id="topbar" class="navbar navbar-fixed-top no-margin" >
+    
+ 		<div id="brand" class="navbar-header fixed-brand hidden-sm hidden-xs">
+            <span class="navbar-brand" title="Sdma Graph v{{_revision}}">
+                <img alt="AERO+" src="/assets/images/company-brand.gif">
+            </span>
+		</div>
+		
+		<div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                	<button id="menu-toggle-2" class="navbar-toggle collapse in" data-toggle="collapse"> 
+                		<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+                	</button>
+                </li> 
+            </ul>
+
+  			<ul class="nav navbar-nav hidden-sm hidden-xs">
+				<li><a>
+				<span id="request-fullscreen" class="glyphicon glyphicon-fullscreen"  title="Fullscreen ON/OFF"></span> 
+				</a></li> 
+			</ul>
+
+			<ul id="filepath" class="nav navbar-nav navbar-center hidden-xs">
+                <li style="max-width:408px;">
+					<a title="{{_activePath}}"> 
+					   <span class="fa fa-file-o"
+					   		 title="Click to select another file" 
+					   		 style="cursor:pointer"></span>
+					   <span class="ltab">{{shortPath()}}</span>
+					</a>
+				</li> 
+            </ul>  
+
+  			<ul id="userinfo" class="nav navbar-nav navbar-right hidden-md hidden-sm hidden-xs">				
+				<li style="margin-left:10px;cursor:default;">
+					<a title="{{_ALUrl}}">
+						<i class="glyphicon glyphicon-user"></i>
+						<span class="ltab">{{_login}}</span>
+				    </a>
+				 </li>  
+			</ul>
+		</div>
+    </nav>
+    
+    <div id="wrapper"> 
+    
+       <div class="orderMenu">
+			<ul>
+			  	<li><a> 
+				<i onclick="reorderParent();" title="Order Parents" class="fa fa-sort-amount-desc fa-border"></i>
+				<i onclick="reorderAll();" title="Order All" class="fa fa-bars fa-border"></i>
+				<i onclick="reorderChild();" title="Order Children"  class="fa fa-sort-amount-asc fa-border"></i>  
+				
+				<i onclick="moveAll();" title="Move down" class="fa fa-long-arrow-down fa-border"></i>
+				
+				<i onclick="decaler(true);" title="Move left" class="fa fa-long-arrow-left fa-border"></i>
+				<i onclick="decaler();" title="Move right"  class="fa fa-long-arrow-right fa-border"></i>
+				
+				<i onclick="moveAll(true);" title="Move up" class="fa fa-long-arrow-up fa-border"></i>                                 					  	        
+			   </a></li> 
+			</ul>
+		</div>
+		
+        <div id="sidebar-wrapper">
+        
+            <ul class="sidebar-nav nav-pills nav-stacked">
+
+				 <li class="titre activeData" ng-class="{hidden : isMultipleData()}">
+                    <a href="" title="actdata">
+                    	<span class="titre">ACTIVE DATA</span> 
+                    	<span class="rtab" style="margin-left:5%;"><i class="fa fa-angle-down"></i></span>
+                    	<span id="actdata" onclick="Event_ComboChange()" 
+                    		  title="Load selected active data" 
+                    		  class="glyphicon glyphicon-open ic-disabled pull-right">
+                        </span>
+                    </a>
+                    <ul class="nav-pills nav-stacked current">
+		                <li ng-repeat="(metaLbl, tOpts) in _hActiveData">
+							<a href="" class="metadata">
+							    <span class="fa-stack"><i class="fa fa-stack-1x" ng-class="getClass(metaLbl)"></i></span>
+								<span>{{metaLbl}}</span>
+ 								<select id="{{idOf(metaLbl)}}" title="{{metaName(metaLbl)}}">
+									<option ng-repeat="opt in tOpts track by $index" 
+											value="{{opt}}" title="{{$index}}"  
+											ng-selected="isSelected(metaLbl,opt)">{{opt}}</option>
+								</select> 
+							</a>
+						</li>
+					</ul>
+				</li>
+				
+                <!--========================== FILTER ===============================-->
+				<li class="titre">
+				    <a href="" title="filter"><span class="titre">FILTER</span>
+                    	<span class="rtab" style="margin-left:26%;"><i class="fa fa-angle-down"></i></span>
+                    </a>
+				</li>
+				
+				<li class="menu filter" title="VERSION">
+                    <a href="">
+                        <span class="fa-stack"><i class="fa fa-code-fork fa-stack-1x"></i></span>
+                        <span>Version</span><span class="fa fa-caret-up" style="margin-left:8%;"></span>
+                     	<span class="fa-stack pull-right" ng-class="{hidden : isEmpty(_hVersion)}">
+                    		<i id="all_version"class="fa fa-circle-o fa-stack-1x"></i>
+                    	</span>
+                    </a>
+                    <ul id="version" class="nav-pills nav-stacked submenu">
+                    	<li><a href="" title="Only last version">
+								<span class="badger">0</span>
+							    <span class="text-primary">Last</span>
+								<span class="fa fa-check-circle-o pull-right last" id="lastVersion"></span>
+							</a> 
+						</li>
+						<li ng-repeat="(pwdt, nb) in _hVersion">
+							<a href="" title="{{pwdt}}">
+							     <span class="badger">{{nb}}</span>
+							     <span class="">{{pwdt}}</span>
+								 <i class="fa fa-square-o pull-right"></i>
+							</a>
+						</li>
+					</ul>
+                </li>
+                
+                <li class="menu filter" title="EXTENSION">
+                	<a href="">
+                        <span class="fa-stack"><i class="fa fa-ellipsis-h fa-stack-1x"></i></span>
+                        <span>Extension</span><span class="fa fa-caret-up" style="margin-left:2%;"></span>
+                    	<span class="fa-stack pull-right" ng-class="{hidden : isEmpty(_hExtension)}">
+                    		<i id="all_extension" class="fa fa-check-circle-o fa-stack-1x"></i>
+                    	</span>
+                    </a>
+                    <ul  id="extension" class="nav-pills nav-stacked submenu">
+						<li ng-repeat="(pwdt, nb) in _hExtension">
+							<a href="" title="{{pwdt}}">
+							     <span class="badger">{{nb}}</span>
+							     <span class="">{{pwdt}}</span>
+								 <span class="fa fa-check-square-o pull-right"></span>
+							</a>
+						</li>
+					</ul>
+                </li>
+                  
+				<!-- ========================================================== -->
+				<li class="titre">
+				    <a href=""  title="edit">
+				        <span class="titre">EDIT</span>
+                    	<span class="rtab" style="margin-left:32%;"><i class="fa fa-angle-down"></i></span>
+                    </a>
+				</li>
+				
+				<li class="edit">
+				    <a href="javascript:collapse('#collapseAll')" title="Collapse all parents">
+				    	<span class="fa-stack"><i class="fa fa-navicon fa-stack-1x"></i></span>
+				    	<span class="">Collapse all</span>
+				    	<span class="fa-stack pull-right switch">
+				    		<i id="collapseAll" class="fa fa-toggle-off fa-stack-1x"></i>
+				    	</span>
+				    </a> 
+				</li>
+				
+				<li class="edit">
+				    <a href="javascript:toggleCheckboxes('#showCheck');" title="Show check-boxes allowing to choose">
+				    	<span class="fa-stack"><i class="fa fa-edit fa-stack-1x"></i></span>
+				    	<span class="">Toggle Check</span>
+				    	<span class="fa-stack pull-right switch">
+				    		<i id="showCheck" class="fa fa-toggle-off fa-stack-1x"></i>
+				    	</span>
+				    </a> 
+				</li>
+
+ 				<li class="exportItem menu-p edit" title="PARENT CHECK"  id="ancestrCheckAll"> 
+				    <a href="javascript:checkAll('#chckancestr', false);" title="Check and select all children">
+				    	<span class="fa fa-check"></span>
+				    	<span class="lemsp">Check Parents</span>
+				    	<span class="fa fa-square-o pull-right" id="chckancestr"></span>
+				    </a> 
+				</li>
+				
+				<li class="exportItem menu-c edit" id="childCheckAll"> 
+				    <a href="javascript:checkAll('#chckchild', true)" title="Check and select all children">
+				    	<span class="fa fa-check"></span>
+				    	<span class="lemsp">Check Children</span>
+				    	<span class="fa fa-square-o pull-right" id="chckchild"></span>
+				    </a> 
+				</li>
+				
+				<li class="exportItem menu-p edit" id="hideUncheck"> 
+				    <a href="javascript:hideUchecked('#hUchk')" title="Hide unchecked parents">
+				    	<span class="fa fa-adjust"></span>
+				    	<span class="lemsp">Hide Unchecked</span>
+				    	<span class="fa fa-square-o pull-right" id="hUchk"></span>
+				    </a> 
+				</li>
+				
+               <li class="titre">
+                   <a href="" id="exportedFiles" title="links">
+                    	<span class="titre">EXPORT</span> 
+                    	<span class="rtab" style="margin-left:22%;"><i class="fa fa-angle-down"></i></span>
+                    	<span id="doExporting" onclick="exportFiles()" title="Do Exporting"
+                    		  class="fa fa-cloud-upload ic-disabled pull-right"></span>
+                   </a>
+                    
+                  <ul class="links submenu">
+					<li ng-repeat="(fname, path) in _exported">
+						<a href="" title="{{path}}" style="white-space: nowrap;">
+ 					 		<span class="fa-stack"><i class="fa fa-download fa-stack-1x"></i></span>
+					 		<span class="exportText" title="Click to download this file">{{fname}}</span>
+					 		<!-- <span class="exportText" ng-click="exportSelected($event, path)" title="Click to download this file">{{fname}}</span> -->
+					 		<span class="fa-stack pull-right" title="Click to delete file">
+					 			<i class="fa fa-trash-o fa-stack-1x" title="{{path}}"></i>
+					 		</span>
+						</a> 
+					</li>
+					<li><a style="color:transparent;cursor:none;">-</a></li>
+				  </ul>
+              </li> 
+              
+              <li class="bottom-sidebar"><a style="color:transparent;cursor:none;">-</a></li>
+            </ul>
+            
+        </div><!-- sidebar-wrapper -->
+         
+		<!-- MAIN Page Content -->
+        <div id="main" class="container"></div> 
+        
+    </div><!--end -wrapper--> 
+
+	<script type="text/javascript">var _SVG = $('#main').connect();</script>	
+	
+</div>

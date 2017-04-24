@@ -1,0 +1,1253 @@
+@CHARSET "UTF-8";
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Open Sans Light'), local('OpenSans-Light'), url(./fonts/OpenSans-Light.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url(./fonts/OpenSans.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Open Sans Semibold'), local('OpenSans-Semibold'), url(./fonts/OpenSans-Semibold.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url(./fonts/OpenSans-Bold.woff) format('woff');
+} 
+
+/* MS IE fullscreen */
+:-ms-fullscreen {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+}
+
+/* AVOID WARNING */
+.sidebar-collapse , .sortable-column , .widgetContainer, .sortable-item
+, .studies, .profileSetting, .ui-sortable, .noDefault
+, .widgetLabel, .newView, .widgetName, .viewName, .personalView
+, .s-skin-0, .s-skin-1,  .s-skin-4, .s-skin-3 {
+	color: inherit;
+}
+
+html.wait, html.wait * { cursor: wait !important; }
+body.wait, body.wait * { cursor: wait !important; }
+@-webkit-keyframes blinker {
+  from {opacity: 1.0;}
+  to {opacity: 0.0;}
+}
+.blink{
+	text-decoration: blink;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}
+
+span.glyphicon.glyphicon-info-sign {
+	margin-right:8px; 
+	cursor:pointer;
+}
+/** ---------------
+	Habillage
+------------------- */
+.cgreen 	{ color: rgb(26, 179, 148); }
+.cblue 		{ color: rgb(14, 154, 239); }
+
+/* Backgrounds */
+.bg-green 		{ background-color: rgb(26, 179, 148); }
+.bg-blue 		{ background-color: rgb(14, 154, 239); }
+.bg-dark 		{ background-color: #3b3f4f; } /* sombre */
+.bg-dark-dark 	{ background-color: #2e313d; } /*tres sombre */
+.bg-dark-brown 	{ background-color: #4c4a49; } /*sombre marron*/
+
+/* Fond gris : #F5F5F5: Non car le menu a droite sera coupe
+ cf: body style-blue.css  
+  bleu fonce  #001239
+  bleu azure #01B0EE
+*/
+/* body { 
+   background-color: #F5F5F5; gris de fond
+   height: 100%; 
+   padding:0; margin:0;
+} */
+
+
+/* Left Bare menu skin vert */
+.skin-0 #wrapper .navbar-default  {
+	min-height: 100%;
+	background-color: rgb(47, 64, 80); /*sombre vert*/
+}
+
+.skin-0 .navbar-static-top { 
+    background-color: rgb(47, 64, 80); /*sombre vert*/
+}
+
+#page-wrapper {
+    background: rgb(244, 246, 250);
+}
+
+/* Couleur barre haut : skin Bleu */
+.skin-1 .navbar-static-top {
+    background: #3b3f4f; /*sombre */
+}
+
+/* Bare menu skin Bleu*/
+.skin-1 #wrapper .navbar-default  {
+	min-height: 100%;
+  	background-color: #4c4a49; /*sombre marron*/
+}
+
+/* Bare menu skin purple */
+.skin-3 #wrapper .navbar-default  {
+	min-height: 100%;
+  	background-color: #3E2C42; /*violet*/
+}
+.skin-3 .navbar-static-top {
+    background: #3E2C42; /*sombre */
+}
+
+#wrapper {
+    width: 100%;
+    -ms-overflow-x: hidden; 
+} 
+
+#page-wrapper { 
+    min-height: 100%;
+}
+
+/* Bare de Logo  */
+.nav .brand {
+  height: 59px;
+  padding: 10px;
+  background: #2e313d; /*Tres sombre*/
+}
+
+/* Afficher logo */
+.brand-element {
+  display:block;
+  text-align:center;
+}
+
+/* Masquer logo en mini */
+body.mini-navbar .brand-element {
+  display:none;
+}
+
+.log-element {
+  padding-top:0px !important;
+}
+
+span.text-navy {
+	margin-left:10px;
+	margin-right:5px;
+}
+
+.text-navy {  
+   font-size:13px;
+   font-weight: 100;
+} 
+
+.viewIcons a i, #views a i {
+	cursor:pointer; 
+}
+
+.viewIcons a i, .viewIcons a span  {
+   font-size:14px;
+  cursor:pointer; 
+}
+
+.topMenu > li > a {
+  	line-height: 20px;  
+}
+
+.topMenu li {
+ 	padding: 0px;
+	margin: 0px;
+}
+
+.topMenu li i {
+	margin-right:10px;
+}
+
+.topMenu .divider {
+	margin:0px;
+}
+
+.topMenu  > li > a:focus, .topMenu > li > a:hover {
+    background-color: #ddd;
+}
+
+/** ----------------------------- 
+*  STELIA SKIN (s-skin-4)
+--------------------------*/
+
+.skin-4
+, .skin-4 .navbar-static-top
+, .skin-4 .navbar-fixed-top
+, .skin-4 #wrapper .navbar-default
+, .skin-4 .nav .brand  {
+	background: #001239 !important;
+}
+.skin-4 .nav .brand {
+	border-style: solid;
+	border-color: #2e313d; /* #2e313d; rgb(244, 246, 250)*/
+	border-width: 0px 1px 1px 0px;
+}	
+
+.setings-item.company-skin {
+    font-weight: 600;
+    text-align: center;
+    background: #001239;
+}
+.panel-company
+{
+    border-color: #001239;
+}
+.bg-company, .panel-company > .panel-heading {
+    color: rgb(255, 255, 255);
+    background-color: #001239;
+}
+
+/** -------------------- Group border ---------------------------*/ 
+/* .panel.panel-default { border-color: #ddd; }
+.panel.panel-success { border-color: #001239; } 
+.panel.panel-warning { border-color: rgb(248, 172, 89); } 
+.panel.panel-danger { border-color: rgb(237, 85, 101); } 
+
+.panel.panel-company  { border-color: #001239; }
+.panel.panel-dark { border-color: #3b3f4f; } 
+*/
+
+.panel-heading.ibox-title {
+    cursor: move;
+}
+.panel-heading.ibox-title .panel-controls {
+    cursor: default;
+}
+
+/** --------------- New group new widget bottom box ------------- */
+.newGroup, .newWidget { 
+	float: right !important;
+	margin-left:5px;
+}
+.newGroup .btn, .newWidget .btn {
+	font-size : 8px;
+	border:1px solid #ddd;
+	border-radius:0px; 
+}
+
+
+/* ------------------ Box Vide ------------------ */
+.emptyBox {
+	-moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    user-drag: none; 
+}
+
+.column.emptyColumn { 
+	border: 1px dotted #DDDDDD;  
+	border-radius: 0px;
+	position:relative; 
+	word-wrap: break-word;
+
+	height: 60px;
+	background: #F5F5F5; /*rgb(245, 245, 245)*/
+	
+	cursor: pointer;
+}
+
+/* Contenu Box Vide */ 
+.emptyColumn:before, .emptyColumn:after {
+   position: absolute;
+   display: block;
+   top: 50%;
+   left: 45%;
+
+   -webkit-transform: translateY(-50%);
+   -moz-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+
+   content: "+";
+   font-size: 16px;
+   font-weight: 200;
+   
+   cursor: pointer;
+   
+   border : 1px solid #ddd;
+   border-radius: 50%;
+   padding : 0px 8px;
+   
+    background:#E7EAEC;
+}
+
+.emptyColumn:before:hover, .emptyColumn:after:hover {
+	cursor: pointer;  
+}
+
+.fa.fa-spinner {
+   position: absolute;
+   display: block;
+   left: 50%;
+
+   -webkit-transform: translateY(-50%);
+   -moz-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%);
+
+   font-size: 18px;
+   font-weight: 100;
+}
+
+.centered {
+   position: relative;
+   display: block;
+   left: 45%;
+   padding-top:20px;
+
+   -webkit-transform: translateY(-50%);
+   -moz-transform: translateY(-50%);
+   -ms-transform: translateY(-50%);
+   transform: translateY(-50%); 
+}
+
+/** Ecart Profile gauche */
+.nav-header {
+    padding: 30px 25px 25px 25px;
+}
+
+/* Decaler icone remove */
+/* .panel-controls a.panel-control-remove {
+   padding-left : 15px !important; 
+} */
+
+/* Decaler a gauche icone collapse */
+.panel-controls a.panel-control-collapse {
+	position: absolute;
+	left: -45px;
+}
+
+/* Decaler a gauche icone collapse */
+.panel-controls a.panel-control-refresh {
+	position: absolute;
+	left: -25px;
+}
+
+/** ---------------------
+   GROUP Heading
+------------------------*/
+
+/** Group container */
+.widgetContainer {
+  background: rgb(245, 245, 245);
+  margin-bottom:10px; 
+  border:1px solid #ddd;
+  border-radius: 0px;
+}
+
+/* Title : CAO */
+.column .panel-title {
+  font-size : 14px;
+  font-weight:200;
+  padding:0px;
+}
+
+/* Heading bar, le reste vient bootstrap panel heading */
+.panel-heading.column {
+  /*background : #fff;*/ /*#F5F5F5; ne pas colorer sinon couleur non modifiable*/  
+  border-radius: 0px;
+  
+  /*border-left:1px solid #ddd; 
+  border-right:1px solid #ddd; */
+  /* border:1px solid #ddd; */
+  
+  height: 32px;
+  cursor : move;
+  padding: 7px 5px 8px 10px; /* Centrage du titre Grroup*/
+}
+
+/* Icones group */
+.panel-heading.column .panel-controls
+, .panel-heading.ibox-title .panel-controls {
+  float: right;
+  position: relative;
+  display: block; 
+  font-size : 9px;  /* font des icones */
+  padding-top:2px;  
+}
+ 
+/* Group conteneur */
+.ibox.sortable-list {
+    padding: 0px 0px 5px 0px; /*!!! Attention mettre un mini sinon not droppable */
+    min-height: 50px;   
+}
+
+/* Icones group */
+.panel-heading.ibox-title .panel-controls {
+   /*cursor: pointer; */
+    padding-left: 10px;
+    float : right !important;
+
+    height: 100%;
+    padding: 15px 5px 8px 0px; 
+    border-left: 1px solid rgba(0, 0, 0, 0.06); /* rgb(221, 221, 221);*/
+    background: #F5F5F5; /*rgba(0, 0, 0, 0.028); /*rgb(255, 255, 255); */   
+}
+
+/** Couleur font widget bleu et vert */
+.float-e-margins.panel-primary .panel-heading h5,
+.panel-primary .column .panel-controls a:after,
+.panel-info .column .panel-controls a:after {
+	color: rgb(244, 246, 250);
+}
+
+/** Couleut font widget blanc */
+.panel-default .panel-heading h5 {
+	color: #999 !important;
+}
+
+/** ---------------------
+   WIDGET 
+------------------------*/
+
+/* Heading */
+.panel-heading.ibox-title {
+  margin: 0px !important;
+  padding: 0px; /*7px 5px 8px 10px;*/
+
+  /* bord gris du haut */
+  border-width: 4px 1px 1px 1px;
+  border-style: solid solid solid solid;
+  border-color: #E7EAEC; 
+  /*background: rgb(245, 245, 245);*/
+  
+  height: 38px; 
+  text-align:center; 
+}
+
+/* Title */
+.panel-heading.ibox-title {
+	display: table;
+	width : 100%; 
+}
+
+/* Texte de titre */
+.panel-heading.ibox-title h5 {
+    padding: 14px 0px 2px 10px;
+    font-weight:500; 
+
+    word-wrap : break-word;
+    text-align:left;
+    
+/* width : 57%;  */
+/*  display: table;
+    clear:both; */
+    
+    margin:0px;
+    border:none;
+}
+
+/** Badge version */
+ .panel-controls span.badge.badge-version {
+    position: absolute;
+    display: none; 
+    
+    top: -7px;  /* -7px : au dessus du 'x' (delete); 40px; au desssous*/
+    right: -10px; 
+    padding: 3px 6px;
+    opacity: 0.95;
+    z-index:10;
+} 
+
+.thumbnail span.badge.badge-version {
+    position: absolute;
+    top: 1px;  
+    left:56%;
+    padding: 3px 6px;
+    opacity: 0.95;
+    z-index:10;
+    font-size:7px;
+} 
+
+.media-body {
+	margin-top: 6px;
+}
+
+.feed-element .badge.badge-version { 
+	 font-size : 7px;
+  	 margin: 2px ;
+}
+
+.media-body-l {
+	margin-top: 2px;
+}
+
+/* Number of element */
+.nbElt {
+ 	position: absolute;
+    display: none;
+    
+    min-width: 10px;
+    padding: 3px 5px;
+    margin-top: 15px;
+    margin-left: 15px; 
+    
+    font-size: 9px;
+    font-weight: 600;
+    color: rgb(103, 106, 108);
+    
+    line-height: 1;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-align: center;
+    
+    background-color: #ddd;
+    border-radius: 5px;  
+}
+
+/* ====== WIDGET Container ====== */
+.sortable-item .ibox-content {
+    border: 1px solid #E7EAEC;
+	padding: 5px 5px 0px 5px;
+    
+    border-image: none;
+    color: inherit;
+    background-color: #FFF;    
+    font-size:10px;
+    
+    min-height: 50px; 
+    max-height: 350px; 
+    overflow: hidden;
+} 
+
+#side-menu .panel {
+/* 	border-radius: 4px; border: 1px solid transparent; 
+	border-image: none; margin-bottom: 20px; 
+	box-shadow: 0px 1px 1px rgba(0,0,0,0.05); 
+	background-color: rgb(255, 255, 255); 
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05); */
+	 margin-bottom: 0px;
+	 background-color: transparent !important;
+}
+
+.topText {
+	margin-left:0px;
+	padding-left:0px;
+	cursor: default;
+}
+
+/*==========================================================
+  NAV LEFT MENU
+=========================================================== */
+
+/** Css left datatoggle sidebar menu */
+.femWidget [data-toggle=collapse] {
+	padding-bottom:0px;
+	cursor:pointer;
+}
+
+/** Cursor on left widget */
+.femWidget .sortable-list .sortable-item a {
+	cursor : move !important;
+}
+
+/** --- Menu item content srolling  --- */
+.side-items ul {
+ 	max-height: 315px;
+	overflow: auto;
+}
+
+@media all and (max-width:768px) {
+	.side-items ul {
+		mx-height: 115px;
+		overflow: auto;
+	}
+}
+
+@media all and (min-width:1200px) {
+	.side-items ul {
+		max-height: 415px;
+		overflow:auto;
+	} 
+}
+
+@media all and (min-width:992px) {
+	.side-items ul {
+		max-height: 215px;
+		overflow:auto;
+	}
+}
+
+.nav.nav-second-level li a, a .fa.plus { 
+	cursor : pointer; 
+}
+
+/* Left menu bar View */
+.nav-label {
+	color:#fff;
+	text-transform:uppercase;
+}
+
+/* Don't add background of hover new view items */
+.views a, .views a:link, .views a:hover, .views a:visited {
+	background:none;
+}
+
+
+/** -----------------------------
+	Widget GRID
+-------------------------------*/
+.feed-element {
+    padding: 0px !important;
+    margin: 0px !important;
+}
+
+.thumbnail {
+	border:none;
+}
+
+.thumbnail .caption {
+	padding:2px;
+	margin:0px;
+}
+
+.img-grid {
+    width: 34px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin:0px; 
+    padding:0px; 
+}
+
+.dfem-grid {
+    width: 38px;
+    margin:0px; 
+    padding:0px; 
+}
+.doc-grid {
+    width: 30px;
+    margin:0px; 
+    padding:0px; 
+}
+
+.img-list {
+    width: 24px;
+    padding: 2px 0px;
+    border-radius: 5px;
+}
+.doc-list { 
+    width:22px;
+	border-radius: 2px;
+    padding: 2px 0px;
+}
+ 
+h7 {
+	font-size :8px;
+	font-weight: 100;
+/* 	max-width: 60px; */
+/* 	word-wrap:break-word; */
+}
+
+/*==========================================================
+  Arrow study widget toggle
+=========================================================== */
+.arrow {
+    float: right;
+}
+
+.arrow.fa::before {
+    content: "\f104";
+    font-size:14px; 
+}
+
+/* Active fleche down */
+.active > a > .arrow.fa::before {
+    content: "\f107"; 
+    font-size:14px;
+    font-weight:600;
+    color:#fff;
+}
+
+.navbar-default .nav > .femWidget > a:focus
+, .navbar-default .nav > .views > a:focus {
+    background: none !important;
+    outline: none  !important;
+}
+
+/* .nav.navbar-center {
+	margin-left:80px;
+} */
+
+.pr10 {
+	padding-right: 20px;
+}
+
+/*==========================================================
+  Navbar Dropdown Menu Helpers
+=========================================================== */
+/* Both the Menu Merge & the Disable Arrow Settings 
+ * do not use the top margin for dropdowns */
+.navbar-nav > li.dropdown.menu-merge,
+.navbar-nav  > li.dropdown.disable-arrow {
+  /* For btn dropdowns */
+  /* For normal dropdowns */
+}
+.navbar-nav  > li.dropdown.menu-merge > .navbar-btn.open .dropdown-menu,
+.navbar-nav  > li.dropdown.disable-arrow > .navbar-btn.open .dropdown-menu {
+  margin-top: 15px;
+}
+.navbar-nav  > li.dropdown.menu-merge.open .dropdown-menu,
+.navbar-nav  > li.dropdown.disable-arrow.open .dropdown-menu {
+  margin-top: 1px;
+}
+/* Modify for style when in contextual navbars (bg-primary, etc) */
+.navbar-nav[class*='bg-'] > li.dropdown.menu-merge.open .dropdown-menu,
+.navbar-nav[class*='bg-'] > li.dropdown.menu-merge > .navbar-btn.open .dropdown-menu {
+  border-top: 0;
+}
+.navbar-nav[class*='bg-'] > li.dropdown.menu-merge.open .dropdown-menu:after,
+.navbar-nav[class*='bg-'] > li.dropdown.menu-merge > .navbar-btn.open .dropdown-menu:after {
+  border-bottom-color: #fafafa;
+}
+/* Disable Arrow Setting */
+.navbar-nav > li.dropdown.disable-arrow.open .dropdown-menu:after,
+.navbar-nav > li.dropdown.disable-arrow > .navbar-btn.open .dropdown-menu:after {
+  display: none;
+}
+/* Modify for style when in contextual navbars (bg-primary, etc) */
+.navbar-nav[class*='bg-'] > li.dropdown.disable-arrow.open .dropdown-menu,
+.navbar-nav[class*='bg-'] > li.dropdown.disable-arrow > .navbar-btn.open .dropdown-menu {
+  border-top: 0;
+}
+
+/** -------------------------------------------
+ * Profile settings
+ -------------------------------------------*/
+#image_preview ul
+{
+	margin: 0px;
+	padding: 0px;
+	list-style-type: none; 
+}
+
+#image_preview ul li {
+	display: inline;
+}
+
+#image_preview ul li.caption {
+    position: absolute;
+    right: 15px;
+}
+
+#profile-form div.fileinputs {
+	position: relative;
+}
+
+#profile-form div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+#profile-form input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+	width:1px;
+}
+
+ #profile-form div.fakefile input {
+	height:34px;
+	width:360px;
+	margin:2px 4px 2px;
+	border:1px solid #dddddd;
+	border-radius:4px;
+} 
+
+
+/** --------------- USER MEDIA ------------- */
+.nav-header .media {
+    color: #999;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.img-avatar {
+	width:35px;
+    margin: -8px 5px 0px 0px;
+    border-radius: 50%;
+    border: 2px solid #888;
+    padding: 0px;
+}
+
+.nav-header .media-left img {
+    max-width: 45px;
+    border: 2px solid #888;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+.nav-header .media-left, .nav-header .media-right, .nav-header .media-body {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.nav-header .media-author {
+	padding-top: 5px;
+	color: #fff;
+	text-align : left;
+} 
+
+.nav-header .media-links {
+} 
+
+.nav-header .media:first-child {
+    margin-top: 0px;
+    padding-top:0px !important;
+}
+
+
+/* --------------------------- */ 
+/* Position des menu dans le nav bar */
+.navbar > ul {
+	margin: 9px 10px  0px 0px;
+}
+
+/* Block navbar top */
+.navbar-right,  .navbar-right li {
+	display : inline-block;
+}
+
+.placeholders {
+	/*margin-bottom: 30px;*/
+	text-align: center;
+}
+
+.media-body a { 
+	font-size :10px;
+	font-weight: 100;
+	color: gray;	
+}
+
+.media-body-l a { 
+	font-size :10px;
+	font-weight: 100;
+	color:gray;
+}
+
+.plus {
+    float: right;
+}
+
+.plus.fa::before {
+    content: "\f196";
+    color:#fff;
+}
+
+.active > a > .plus.fa::before {
+    content: "\f196";
+    color:#fff;
+}
+
+/** Menu ITEMS : COMMON/PERSONNAL*/
+.nav-second-level li a {
+    padding: 7px 5px 7px 25px;
+}
+
+.nav-second-level li.active a  {
+     padding: 7px 5px 7px 22px; 
+}
+
+/** Navbar padding */
+.nav > li > a, .nav > li > a:focus, .nav > li > a:active, .nav > li > a:hover {
+    background: transparent; 
+    cursor: pointer; 
+    padding-top: 8px 
+}
+ 
+.nav > li > a i {
+    margin-right: 8px;
+} 
+ 
+.nav.navbar-left > li a, .nav.navbar-top-links > li a {
+	cursor:pointer;
+}
+
+.pt15 {
+	padding-top : 15px;
+}
+.pb15 {
+	padding-bottom : 15px;
+}
+.pb5 {
+	padding-bottom : 5px;
+}
+.pr5 {
+	padding-right : 5px;
+}
+.pl5 {
+	padding-left : 5px;
+} 
+
+ .toast-top-center { 
+ 	top : 5%;
+ 	z-index:1000;
+}
+.toast-top-right {
+	top:5%;
+	font-size:14px;
+	z-index:1000;
+}
+.toast-title {
+/* 	margin-bottom: 10px;
+	padding-bottom: 6px; */
+	/* border-bottom: 1px solid #fff; */*
+	font-size: 10px !important;
+}
+
+/*==========================================================
+ SHARE Bootbox
+============================================================*/
+.lbl {
+	padding-left : 5px;
+}
+
+.bootbox-body ul  {
+	padding:0px 5px;
+	margin:0px 5px;
+}
+.bootbox-body ul li { 
+	padding:0px 2px;
+	margin:0px 2px;
+	line-height : 10px;
+}
+
+.bootbox-body ul li.divider {
+	padding:0px;
+	margin:0px;
+	line-height : 2px;
+}
+
+#shareboxFrm {
+  	max-height: 350px;
+  	width : 400px;
+}
+
+/*==========================================================
+  WIDGET SETTINGS
+============================================================*/
+
+/* Style of the widget bootbox */
+.widget-box .modal-content {
+	width : 700px;
+	top : 40px;
+	left : -10px;
+}
+
+.widget-box .modal-body {
+	padding    : 20px 30px 10px 30px;
+	font-weight: 200;
+	font-size  : 14px;
+	background : rgb(244, 246, 250); 
+	max-height : 600px;
+	overflow   : auto;
+} 
+
+.modal-body {
+	padding    : 20px;
+/* 	font-weight: 200;
+	font-size  : 14px;
+	max-height : 600px;
+	overflow   : auto; */
+} 
+
+.modal-header {
+  background:#ddd;
+}
+
+.widget-box .modal-title {
+	font-size : 12px;
+	font-weight:600;
+}
+
+.input-md {
+ 	margin-top : 4px;
+ 	height : 22px;
+	padding : 0px 0px;
+	border-radius:0px !important;
+}
+
+.input-xs {
+ 	margin-top : 4px;
+	padding : 0px;
+	width : 50px;
+}
+
+.btn-large {
+	width : 120px;
+	height: 35px;
+}
+
+.wdt-settings {
+	margin:0px;
+	padding:0px;
+}
+
+.wdt-settings .empty { 
+	background:rgb(244, 246, 250);
+}
+
+
+.wdt-settings table {
+	width:100%;
+} 
+
+.wdt-settings table th {
+    padding : 0px 4px;
+    font-weight : 100;
+    text-align  : center;
+    background  : #ddd; 
+}
+ 
+.wdt-settings table td {
+    border : 1px solid #ddd;
+	padding: 0px;
+    height : 22px;
+    margin : 0px;
+    font-size : 13px;
+    word-wrap : break-word;
+}
+
+.wdt-settings td select{
+    border    : none;
+    font-size : 11px; 
+	margin    : 0px;
+ 	height    : 21px;
+	padding   : 0px; 
+	left : 0; top : 0; border : 0;
+}
+
+.wdt-settings .ix { 
+	color     : #df5640; 
+	text-align: center;
+	cursor    : pointer;
+	width     : 20px;
+	max-width : 20px;
+	border    : none;
+	font-weight:100;
+}
+
+.wdt-settings .empty,
+.wdt-settings .iad { 
+	text-align : center;
+	cursor     : pointer;
+	width      : 20px;
+	max-width  : 20px;
+  	font-size  : 14px;
+ 	border     : none; 
+}
+
+.wdt-settings .hidden { 
+	display : none;
+}
+
+.wdt-settings .iad { 
+	background:transparent;
+}
+
+.wdt-settings .separator {
+	border:none;
+	width:2px;
+	background:transparent;
+	padding:0px;
+	margin:0px;
+}
+
+.wdt-settings .open { 
+	text-align: center !important;
+	cursor    : pointer;
+   	font-size : 10px;
+  	height 	  : 100%;
+  	background: #fff;
+  	width     : 20px;
+}
+ 
+.wdt-settings .delLine, .wdt-settings .addBefore,
+.wdt-settings .delClass,
+.wdt-settings .pad {
+	cursor : pointer;
+	text-align: center !important;	
+	
+  	font-size :10px; 
+  	font-weight:200;
+  	
+  	width  : 18px;
+  	max-width: 18px;  
+}
+
+.wdt-settings .input-group li {
+	text-align  :center;
+	padding-left:2px; 
+	border-bottom:1px solid #ddd;
+	
+} 
+.wdt-settings .dropdown-menu {
+	min-width : 100px;
+}
+.wdt-settings .input-group li a {
+	padding:0px;
+	margin:0px; 
+}
+
+.wdt-settings .input-group
+, .wdt-settings .form-control { 
+    font-size  : 11px !important ;  
+    background : #fff;
+}
+
+.wdt-settings .dropdown-menu > li > a {
+	line-height:15px;
+}
+.wdt-settings .dropdown-menu {
+	font-size :10px !important ; 
+}
+ 
+.wdt-settings input { 
+	width: 100%; 
+	height: 100%; 
+	padding: 0px 4px;
+	left:0; bottom:0; border:0; 
+}
+ 
+#allVersion {
+	margin-top:10px;
+	margin-left:0px;
+}
+
+#widgetfrm label {
+	text-align:left !important;
+}
+
+#widgetfrm legend label {
+	font-weight: normal !important;
+}
+
+#wdgVersion {
+	display: inline;
+	font-size :14px; 
+	font-weight :200; 
+}
+
+#wdgVersion td {
+	padding-left:5px;
+}
+
+#wdgVersion td label {
+	padding-top:5px;
+	font-size :16px; 
+}
+
+#treeview-searchable {
+	border : 1px solid #fff;
+	border-radius: 5px;
+	height 	: 450px;
+	width 	: 100%;
+	overflow: auto;
+	white-space: nowrap;
+	margin:0px;
+}
+
+#treeview-searchable .list-group-item {
+  padding : 5px 15px;
+}
+
+#selectable-output {
+	font-size :10px;
+	border:#ddd;
+}
+
+.widget-tree .modal-footer {
+	margin: 0px;
+}
+.btn {
+	border-radius : 0px;
+}
+
+.onoffswitch-label {
+    border-radius: 0px;
+}
+
+/* Pas de poitille au focus */
+.btn:focus, a:focus {
+    outline: none;
+}
+
+/**=================== SETTINGS ===================*/
+
+.theme-config {
+    top: 10px;
+    right: 0px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.theme-config-box {
+    margin-right: -225px; 
+    position: relative;
+    z-index: 2000;
+    transition-duration: 0.8s;
+}
+
+.show.theme-config-box {
+    margin-right: 0px;
+}
+
+i.widgetName, i.commonWidget, i.viewName, i.viewAll {
+	font-style: normal !important;
+}
+
+.topbutton {
+	margin:0px 25px;
+	font-size:14px;
+}
+.side-items ul li{
+	line-height: 12px;
+}
+
+.views.side-items a {
+	 padding-bottom: 6px !important;
+} 
+
+.brand {
+	padding-top:2px !important;
+	border-right: 1px solid gray !important;
+	border-bottom: 1px solid gray !important;
+}

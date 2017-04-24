@@ -1,0 +1,32 @@
+
+<div ng-app="Tree" ng-init="initilizeTree()">
+
+	<form class="form-horizontal">
+		<fieldset>
+	
+			<div class="form-group">
+	
+				<div class="col-md-6">
+					<input type="text" class="form-control" id="tree-search"
+						placeholder="Search ..." value="">
+				</div>
+	
+				<div class="col-md-3">
+					<input type="checkbox" id="chk-exact-match" value="false"><span
+						style="padding: 5px">Exact Match</span></br> <input type="checkbox"
+						id="chk-ignore-case" value="false"><span
+						style="padding: 5px">Ignore Case</span>
+				</div>
+	
+			</div>
+	
+			<div class="form-group">
+				<div id="treeview-searchable" class="col-md-12"></div>
+			</div>
+	
+			<div id="selectable-output"></div>
+	
+		</fieldset>
+	</form>
+
+</div>

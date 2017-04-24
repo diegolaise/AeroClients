@@ -1,0 +1,52 @@
+
+<div class="middle-box text-center">
+	<h1 class="logo-name">AERO TOOL</h1>
+	<h6>Choose an application and Login in</h6> 
+</div>
+
+<div class="middle-box text-center">
+ 	<i ng-if="dataLoading" class="fa fa-4x fa-spinner fa-spin"></i>
+ 	
+	<form name="form" ng-submit="login()" role="form" id="myform">
+	
+		<div class="form-group appli">
+			<label class="radio-inline" title="Data viewer"> 
+				<i class="fa fa-4x fa-language"></i><br>
+				<input type="radio" name="project" value="viewer" ng-model="project"> 
+				<span>Viewer</span>
+			</label> 
+			<label class="radio-inline" title="Study viewer"> 
+				<i class="fa fa-4x fa-bar-chart"></i><br> 
+				<input type="radio" name="project" value="study" ng-model="project"> 
+				<span>Study</span>
+			</label> 
+			<label class="radio-inline" title="Jobs monitoring"> 
+				<i class="fa fa-4x fa-link"></i><br> 
+				<input type="radio" name="project" value="graph" ng-model="project"> 
+				<span>Graph</span>
+			</label>
+		</div>
+	
+		<div class="form-group">
+			<!-- <label for="username">Username</label> <i class="fa fa-key"></i>  -->
+			<input type="text" name="username" id="username" class="form-control" ng-model="username" placeholder="Login *" required />
+			<span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+		</div>
+		<div class="form-group">
+			<!-- <label for="password">Password</label> <i class="fa fa-lock"></i>  -->
+			<input type="password" name="password" id="password" class="form-control" ng-model="password" placeholder="Password *" required /> 
+			<span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+		</div>
+		<div class="form-actions m-tt">
+			<button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary block full-width m-b">Login</button>
+        </div>
+		
+	</form>
+</div>
+
+<div ng-show="error" class="alert alert-danger m-tt center">
+	<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">x</a> 
+	{{error}}
+</div>
+
+

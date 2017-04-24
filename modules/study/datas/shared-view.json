@@ -1,0 +1,1288 @@
+{
+	"view-type": "default",
+	"version": "1.1",
+	"info": "The SDMA default views",
+	"views": 
+	[
+		{
+			"name": "GFEM Extract Certif",
+			"id": "gfem-extract-certif",
+			"study": "/Projects/A330_WV052",
+			"content": 
+			[
+				{
+					"group": "GFEM Model",
+					"options": 
+					{
+						"color": "panel-default"
+					},
+
+					"widgets": 
+					[
+						{
+							"id": "model-data_shared-certif",
+							"label": "Model Data",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "Last",
+								"_PATTERN_": 
+								[
+									".neut",
+									".op2",
+									".dat"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Description",
+										"Value": "GFEM data"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "model-validation_shared-certif",
+							"label": "Model Validation",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									".h3d",
+									".jpg"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Description",
+										"Value": "GFEM validation"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									{
+										"_files_": ".neut|.op2|.dat",
+										"_properties_": 
+										[
+											{
+												"Namespace": "General",
+												"Name": "Description",
+												"Value": "GFEM data"
+											}
+										]
+									}
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						}
+					],
+
+					"column": "0"
+				},
+
+				{
+					"group": "GFEM Loads",
+					"options": 
+					{
+						"color": "panel-default"
+					},
+
+					"widgets": 
+					[
+						{
+							"id": "loads-data_shared-certif",
+							"label": "Data",
+							"view": "list",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									".neut",
+									".op2"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "Loads",
+										"Name": "Family",
+										"Value": "Static"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "loads-validation_shared-certif",
+							"label": "Load Validation",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									".h3d",
+									".jpg"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Description",
+										"Value": "LOAD validation"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						}
+					],
+
+					"column": "0"
+				},
+
+				{
+					"group": "Extraction Data",
+					"widgets": 
+					[
+						{
+							"id": "extraction-data_shared-certif",
+							"label": "Group file",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "FEM group file"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "generic-file_shared-certif",
+							"label": "Generic file",
+							"view": "list",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Generic sheet"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "dpsn3_shared-certif",
+							"label": "DPSN3",
+							"view": "grid",
+							"column": "1",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Analysis point data file (DPSN3)"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "PSN3-session_shared-certif",
+							"label": "PSN3 session",
+							"view": "grid",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Analysis point data file (PSN3 Session)"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "DPSN4_shared-certif",
+							"label": "DPSN4",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Analysis point data file (DPSN4)"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						}
+					],
+
+					"column": "1"
+				},
+
+				{
+					"group": "Extraction Results",
+					"widgets": 
+					[
+						{
+							"id": "global_shared-certif",
+							"label": "Global",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "Last",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Extraction results file"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									{
+										"_files_": ".neut|.op2",
+										"_properties_": 
+										[
+											{
+												"Namespace": "General",
+												"Name": "Description",
+												"Value": "GFEM data"
+											}
+										]
+									}
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "interaction_intermediary_shared-certif",
+							"label": "Interaction Intermediary",
+							"view": "list",
+							"search": 
+							{
+								"_VERSION_": "Last",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Interaction results file"
+									},
+
+									{
+										"Namespace": "Study Context",
+										"Name": "Work Package",
+										"Value": "Lower Shell"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Certification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									{
+										"_files_": "*.neut|*.op2",
+										"_properties_": 
+										[
+											{
+												"Namespace": "General",
+												"Name": "Description",
+												"Value": "GFEM data"
+											}
+										]
+									}
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							},
+
+							"column": "2",
+							"color": "panel-default"
+						}
+					],
+
+					"column": "2"
+				},
+
+				{
+					"id": "interaction_shared-certif",
+					"label": "Interaction",
+					"view": "grid",
+					"column": "2",
+					"color": "panel-default",
+					"search": 
+					{
+						"_VERSION_": "",
+						"_PATTERN_": 
+						[
+							
+						],
+
+						"_PROPERTY_": 
+						[
+							{
+								"Namespace": "General",
+								"Name": "Type",
+								"Value": "Extraction results file"
+							},
+
+							{
+								"Namespace": "Data Validity",
+								"Name": "Study Type",
+								"Value": "Certification"
+							}
+						],
+
+						"_PARENT_": 
+						[
+							{
+								"_files_": "",
+								"_properties_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Interaction results file"
+									}
+								]
+							}
+						],
+
+						"_CHILD_": 
+						[
+							
+						]
+					}
+				}
+			]
+		},
+
+		{
+			"name": "Dossier Certif",
+			"id": "dossier-certif",
+			"study": "/Projects/A330_WV052/",
+			"content": 
+			[
+				{
+					"id": "dossier-bar_common",
+					"label": "Chart Doc",
+					"view": "bar",
+					"type": "chart",
+					"search": 
+					{
+						"_VERSION_": "",
+						"_PATTERN_": 
+						[
+							
+						],
+
+						"_PROPERTY_": 
+						[
+							{
+								"Namespace": "General",
+								"Name": "Type",
+								"Value": "Model dossier"
+							},
+
+							{
+								"Namespace": "General",
+								"Name": "Type",
+								"Value": "Stress dossier"
+							},
+
+							{
+								"Namespace": "Data Validity",
+								"Name": "Study Type",
+								"Value": "Certification"
+							}
+						],
+
+						"_PARENT_": 
+						[
+							
+						],
+
+						"_CHILD_": 
+						[
+							
+						],
+
+						"_METADATA_": 
+						[
+							{
+								"Namespace": "General",
+								"Name": "Percentage of completion"
+							}
+						]
+					},
+
+					"column": "0",
+					"color": "panel-default"
+				},
+
+				{
+					"id": "dossier-certif",
+					"label": "Certif Doc",
+					"view": "list",
+					"search": 
+					{
+						"_VERSION_": "",
+						"_PATTERN_": 
+						[
+							
+						],
+
+						"_PROPERTY_": 
+						[
+							{
+								"Namespace": "Data Validity",
+								"Name": "Study Type",
+								"Value": "Certification"
+							},
+
+							{
+								"Namespace": "General",
+								"Name": "Type",
+								"Value": "Stress dossier"
+							},
+
+							{
+								"Namespace": "General",
+								"Name": "Type",
+								"Value": "Model dossier"
+							}
+						],
+
+						"_PARENT_": 
+						[
+							
+						],
+
+						"_CHILD_": 
+						[
+							
+						]
+					},
+
+					"column": "1",
+					"color": "panel-default",
+					"type": ""
+				}
+			]
+		},
+
+		{
+			"name": "GFEM Extract Justif",
+			"id": "gfem-extract-justif",
+			"study": "/Projects/A330_WV052",
+			"content": 
+			[
+				{
+					"group": "GFEM Model",
+					"options": 
+					{
+						"color": "panel-default"
+					},
+
+					"widgets": 
+					[
+						{
+							"id": "model-data_shared-justif",
+							"label": "Model Data",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "Last",
+								"_PATTERN_": 
+								[
+									".neut",
+									".op2",
+									".dat"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Description",
+										"Value": "GFEM data"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "model-validation_shared-justif",
+							"label": "Model Validation",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									".h3d",
+									".jpg"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Description",
+										"Value": "GFEM validation"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									{
+										"_files_": ".neut|.op2|.dat",
+										"_properties_": 
+										[
+											{
+												"Namespace": "General",
+												"Name": "Description",
+												"Value": "GFEM data"
+											}
+										]
+									}
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						}
+					],
+
+					"column": "0"
+				},
+
+				{
+					"group": "GFEM Loads",
+					"options": 
+					{
+						"color": "panel-default"
+					},
+
+					"widgets": 
+					[
+						{
+							"id": "loads-data_shared-justif",
+							"label": "Data",
+							"view": "list",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									".neut",
+									".op2"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "Loads",
+										"Name": "Family",
+										"Value": "Static"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "loads-validation_shared-justif",
+							"label": "Load Validation",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									".h3d",
+									".jpg"
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Description",
+										"Value": "LOAD validation"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						}
+					],
+
+					"column": "0"
+				},
+
+				{
+					"group": "Extraction Data",
+					"widgets": 
+					[
+						{
+							"id": "extraction-data_shared-justif",
+							"label": "Group file",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "FEM group file"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "generic-file_shared-justif",
+							"label": "Generic file",
+							"view": "list",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Generic sheet"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "dpsn3_shared-justif",
+							"label": "DPSN3",
+							"view": "grid",
+							"column": "1",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Analysis point data file (DPSN3)"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "PSN3-session_shared-justif",
+							"label": "PSN3 session",
+							"view": "grid",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Analysis point data file (PSN3 Session)"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "DPSN4_shared-justif",
+							"label": "DPSN4",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Analysis point data file (DPSN4)"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						}
+					],
+
+					"column": "1"
+				},
+
+				{
+					"group": "Extraction Results",
+					"widgets": 
+					[
+						{
+							"id": "global_shared-justif",
+							"label": "Global",
+							"view": "grid",
+							"color": "panel-default",
+							"search": 
+							{
+								"_VERSION_": "Last",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Extraction results file"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									{
+										"_files_": ".neut|.op2",
+										"_properties_": 
+										[
+											{
+												"Namespace": "General",
+												"Name": "Description",
+												"Value": "GFEM data"
+											}
+										]
+									}
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							}
+						},
+
+						{
+							"id": "interaction_intermediary_shared-justif",
+							"label": "Interaction Intermediary",
+							"view": "list",
+							"search": 
+							{
+								"_VERSION_": "Last",
+								"_PATTERN_": 
+								[
+									
+								],
+
+								"_PROPERTY_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Interaction results file"
+									},
+
+									{
+										"Namespace": "Study Context",
+										"Name": "Work Package",
+										"Value": "Lower Shell"
+									},
+
+									{
+										"Namespace": "Data Validity",
+										"Name": "Study Type",
+										"Value": "Justification"
+									}
+								],
+
+								"_PARENT_": 
+								[
+									{
+										"_files_": "*.neut|*.op2",
+										"_properties_": 
+										[
+											{
+												"Namespace": "General",
+												"Name": "Description",
+												"Value": "GFEM data"
+											}
+										]
+									}
+								],
+
+								"_CHILD_": 
+								[
+									
+								]
+							},
+
+							"column": "2",
+							"color": "panel-default"
+						}
+					],
+
+					"column": "2"
+				},
+
+				{
+					"id": "interaction_shared-justif",
+					"label": "Interaction",
+					"view": "grid",
+					"column": "2",
+					"color": "panel-default",
+					"search": 
+					{
+						"_VERSION_": "",
+						"_PATTERN_": 
+						[
+							
+						],
+
+						"_PROPERTY_": 
+						[
+							{
+								"Namespace": "General",
+								"Name": "Type",
+								"Value": "Extraction results file"
+							}, 
+							{
+								"Namespace": "Data Validity",
+								"Name": "Study Type",
+								"Value": "Justification"
+							}
+						],
+
+						"_PARENT_": 
+						[
+							{
+								"_files_": "",
+								"_properties_": 
+								[
+									{
+										"Namespace": "General",
+										"Name": "Type",
+										"Value": "Interaction results file"
+									}
+								]
+							}
+						],
+
+						"_CHILD_": 
+						[
+							
+						]
+					}
+				}
+			]
+		}
+	]
+}

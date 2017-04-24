@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SDMA Study Viewer help</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+	
+	<link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+	<script src="../libs/js/jquery-1.12.1.min.js"></script>
+	<script src="../libs/bootstrap/bootstrap.min.js"></script>
+  
+  	<link rel="stylesheet" type="text/css" href="../libs/css/sdma.css" />
+	<link href="../libs/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+	 <style>
+		body {
+			height:100%;  
+		}
+		
+		ul.nav-pills { 
+			position: fixed;
+		} 
+		
+		@media screen and (max-width: 810px) {
+			div.col-sm-9 div {
+				margin-left: 150px;
+			}
+		}
+		
+		.nav.nav-pills li {
+			border-radius: 0px;
+		}
+		
+		.menu {
+			margin-bottom: 0px;
+			padding-bottom: 0px;
+		}
+		
+		.sub {
+			line-height: 5px;
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		.subtitle {
+			padding-left: 20px;
+			font-size: 12px;
+		}
+		
+		.brand {
+			 background:#002B62;
+			 padding:0px 0px 6px 15px
+		 }
+		 
+		 #title {
+		 	 width : 100%;
+		 	 background:#002B62;
+		 	 color:#ddd;
+ 		 	 left: -100px; 
+		 } 
+ 
+		div.col-sm-9 { 
+			overflow: auto; 
+		}
+		
+/* 		div.col-sm-9 div {
+			min-height: 80px; 
+		} */
+		
+		div.col-sm-9 img {
+		 	position:relative;
+		 	left:30%;
+		 }
+		 div.col-sm-9 .fr {
+		 	float:right;
+		 	left:0px;
+		 }
+		 div.col-sm-9 .fl {
+		 	left:20px;
+		 }
+		 div.col-sm-9 .none 
+		 {
+		 	left:0px !important;
+		 	right:0px !important;
+		 }
+		 div.col-sm-9 h4 {
+		 	padding-top:25px;
+		 }
+		 div.col-sm-9 h2 {
+		 	padding-top:35px;
+		 }
+</style>
+</head>
+
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="25">
+
+<div class="container-fluid">
+	<div class="row">
+  
+		<nav class="col-sm-3" id="myScrollspy" style="top:20px;">
+		  <ul class="nav nav-pills nav-stacked" style="background:#f5f5f5;width:20%">
+		  
+		  	<li class="brand"><img src="/images/company-brand.gif" width="180px"></li>
+		  	<li><span style="padding-left:4px"> </span></li>
+		  	
+		  	<li class="active"><a href="#home">Getting Started</a></li>
+		    <li class="menu"><a href="#view">View</a></li>
+		    <li class="sub"><a href="#view1"><span class="subtitle">Create a view</span></a></li>
+		    <li class="sub"><a href="#view2"><span class="subtitle">Re-use a view</span></a></li>
+		    <li class="sub"><a href="#view3"><span class="subtitle">Save a view</span></a></li>   
+
+		   <li class="menu"><a href="#widget">Widget</a></li>
+		   <li class="sub"><a href="#widget1"><span class="subtitle">Create a widget</span></a></li>
+		   <li class="sub"><a href="#widget2"><span class="subtitle">Move a widget</span></a></li>
+		   <li class="sub"><a href="#widget3"><span class="subtitle">Delete a widget</span></a></li> 
+		   <li class="sub"><a href="#widget4"><span class="subtitle">Update a widget</span></a></li>   
+		     
+		    <li><a href="#sharing">Sharing</a></li>
+		    <li><a href="#setting">Setting</a></li>
+		    <li><a href="#profile">User Profile</a></li>
+		  </ul>
+		</nav>
+    
+		<div class="col-sm-9"> 
+
+		 	<div id="home">
+		 		<h1>Getting Started</h1>
+				<p>The global idea of the tool are to :</p>
+				<ul>
+					<li>Construct a personal View</li>
+					<li>Add new or existing widgets on it</li>
+					<li>Save the view to its profile</li>
+					<li>Share components (view or widget) with other people, if needed</li>
+				</ul>
+		 	</div>
+		
+			<div id="view">
+				<h2>View</h2>
+				<p>A view is like a Dashboard.
+					<br/>It's a page that the user car create/append a widgets, grouping them, according to his business needs.
+					<br/>
+					<br/>Each view must associated with a defined study.
+					<img src="./img/help/study.png" width="300px" class="fr">
+					<br/>A study can be selected from the navbar dropdown on the top of the the page
+					<br/>If you change a study of an existing view, all data will be refreshed.
+					<br/>And you have to save the view to keep the changes.
+				</p>
+			</div>
+			<div id="view1">
+				<h4>How to create an empty view ?</h4>
+				<ul>
+					<li>By using the top navbar menu view icon :
+						<i class="fa fa-file-text-o" title="Create new view"></i></li>
+					<li>By using the top navbar dropdown menu : VIEW : -> New View 
+					<br/><br/><img src="./img/help/createView_1.png"><br/><br/></li>
+					<li>By using the left sidebar view icon : VIEWS/PERSONAL <i class="fa fa-plus-square-o"></i>
+						<br /> <br /><img src="./img/help/createView_2.png"></li>
+				</ul>
+			</div>
+			<div id="view2">
+				<h4>How to re-use an existing View ?</h4>
+				<ul>
+					<li>Select an existing or a shared view on the left sidebar</li>
+					<li>Do SaveAs with VIEW : -> SaveAs ont the top navbar</li>
+					<li>Give a new name</li>
+					<li>Update what you need</li> 
+				</ul>
+			</div>
+			<div id="view3">
+				<h4>How to save View ?</h4>
+				<p>
+					When anything was changed on a view : color, name, widgets positions, add/delete a widget ... 
+					<br/>the view must be saved, to keep the changes.
+					<br/>
+					<br/>After each modification, a warning on the top navbar appears ont the right, that porpose to save the view.
+					<br/>And the floppy disk icon <i class="fa fa-floppy-o" style="color:#df5640"></i>
+						on the top navabar turns red. 
+					<br/>
+					<br>Click on this icon, save the view. Or do menu VIEW -> Save
+					<br/>The view is saved to server into the user profile, and can be retrieve anywhere, 
+					when the user logs with the same profile on the same server.
+					<br/>
+					<br/> <span style="color:#df5640"><b>Warning :</b> Because of multi-servers on 'Stelia Analysis library' infrastructure,
+					<br>If you was logged on a server number 001 (eg: http://p-a030-app-<b>001</b>.mycorp.corp) 
+					you cannot retrieve the same view(s) that you have registered on 
+					the server 002 http://p-a030-app-<b>002</b>.mycorp.corp), the last time.	
+					</span>		 
+				</p>
+			</div>
+		
+			<div id="widget">
+				<h2>Widget</h2>
+				<p>A widget allow to show specific search from the database. Criteria of widget specification are on :<br/></p>
+				<ul>
+					<li>Filename or folder content</li>
+					<li>Matadata and version</li>
+				</ul> 
+
+				<p>
+					<br/>Widget can be added, deleted, renamed, collapsed and moved from a group to another one 
+					by using its top right icons. 
+					<br/><img src="./img/help/icons.png">
+				</p>
+				
+				<p>Widget can grouped into a column to categorizes the business datas. 
+					A <b>group</b>, like a widget, is a widgets container with a named header and that can created, moved, collapsed and deleted.
+					<br/><img src="./img/help/group.png" width="300px"> 
+				</p>
+				
+				<p>A Widget can have 4 kinds</p>
+				<ul>
+					<li>DEFAULT or COMMON : is a shared widget, visible by all people and can drop in any view</li>
+					<li>SHARED   : is a widget belong to a shared view, but was not saved into a common widgets, 
+								<br>to reuse/update it in a view, it need to save to personnal</li>
+					<li>PERSONAL : is a personal widget that saved by the user locally</li>
+					<li>OWNER    : is a owner widget that belong to PERSONAL VIEW but not saved to PERSONAL widget
+								<br>to reuse it in a view, it need to save to personal</li>
+				</ul>
+			</div>
+			
+			<div id="widget1"> 
+				<h4>How to create or add a widget to its view ?</h4>
+				<p>There are 3 ways to create a widget </p>
+				<ul>
+					<li>Use <button>+Widget</button> button on the bottom of each column on the view page
+						<br/><img src="./img/help/widget-new.png" width="300px"><br/><br/>
+					</li>
+					<li>Drag and drop : WIDGETS/PERSONAL <i class="fa fa-arrows"></i> New Widget
+					item from the left sidebar menu into the right column in the view
+					<br/> <span><img src="./img/help/widget-sidebar.png"></span><br/><br/></li>
+					<li>Drag and drop existing (COMMON or PERSONAL) widget from the left WIDGETS sidebar</li>
+				</ul>
+			</div>
+		
+			<div id="widget2"> 
+				<h4>How to move a widget ?</h4>
+				<p>To move a widget or a group, point to the head title bar of the widget or group, 
+					the cursor <i class="fa fa-arrows"></i> apprears,
+					then, move the widget to allowed positions on the view page.
+					<br/>Allowed positions are all gray areas, that are above or below widgets when drag,
+					and are, in all cases, above these <img src="./img/help/buttons.png" height="30px" class="none"> buttons
+					<br/>
+				</p>
+			</div>
+		
+			  <div id="widget3"> 
+					<h4>How to delete a widget ?</h4>
+					<p>
+					To delete a widget or a group from a view, use the icon : <i class="fa fa-close"></i> on its header title.
+					<br/>Thus, don't remove the widget from the server, but only from the current view.
+					</p>
+					<p>
+					To delete a widget definitively, from the server, find the widget item on le WIDGETS/PERSONAL list sidebar and do delete with 
+						<i class="fa fa-trash"></i>
+					</p>
+					<p>Only an administrator can delete a common widget or shared view </p>
+					
+					<h4>How to view a widget specification ?</h4>
+					<p>A widget specification can view by clicking on its <i class="fa fa-wrench"></i> icon, if it is on a view.
+					 	<br/>Or by clicking to the item, if it is on the left sidebar menu
+					</p> 
+			</div>
+					 
+			<div id="widget4"> 
+				<h4>How to set or update a widget ?</h4>
+				<p>From the top right of the widget icons.
+				To 'quick' update a widget (name, title color, presentation) use the icon : <i class="fa fa-pencil"></i>
+				<br/>change what you need, and  use the floppy <i class="fa fa-floppy-o" style="color:blue"></i> to close and save changes
+				<br/><br/><img src="./img/help/widget-set.png" width="300px"><br/>
+				<br/>
+				<br/>To update a widget specification, use the icon <i class="fa fa-wrench"></i> on the widget header icons.
+				<br/>The following panel are shown :<br/>
+				<br/><img src="./img/help/widget-update.png" class="fl"><br/>
+				</p>
+				
+				<p>The panel is divide on to 4 areas :</p>
+				<ul>
+					<li>On the top, we have the attributes of the widget : name
+						, view content presentation (view type) that can be : grid, list or link
+						<br/>They can also set with the 'quick' update<br/><br/></li>
+						
+					<li><b>Target</b> area allow the specification of the expected result(s)
+						<br>The Pattern of the result file, for example : extensions (*.xx), folder container (*/tmp/*), specific name (*/Model_v*)
+						<br>The Pattern and Metadata are independent<br/><br/>
+					</li>
+					<li><b>Parent</b> area allow to specify the parent(s) criteria(s) of the expected result(s)
+						<br>The Pattern of the result parent file
+						<br>The Metadata of the result parent
+						<br>The Pattern and Metadata are associated, but one pattern car have many metadata<br/><br/>
+					</li>
+					<li><b>Children</b> area that is use to specify the children criteria(s) of the expected result(s)
+						<br>The Pattern of the result children file
+						<br>The Metadata of the result children
+						<br>The Pattern and Metadata are associated, but one pattern car have many metadata<br/><br/>
+					</li>
+				</ul>
+				<p>The user can use the icons : <i class="fa fa-plus"></i>
+					or  <i class="fa fa-plus-square-o"></i> to add new line on each group
+					<br/>and use the icons : <i class="fa fa-close"></i> to remove line on table</p> 
+			</div>
+			
+			<div id="sharing"> 
+				<h2>Sharing</h2>
+				<p>A personal view and widget can be shared to all or specific people using the application.</p>
+				<img src="./img/help/share-select.png" class="fr">
+				<ul>
+					<li>To share a view, use top menu VIEW -> Share
+					<br>Choose which people you want to share, and valid</li>
+					<li>Select DEFAULT for all users, or a user login for specific,</li> 
+					<li>The shared view will belong to VIEW/SHARED list of all users, or into its PERSONAL list for specific user
+					<br/><span style="padding-left:4px"> </span></li>
+				
+					<li>To share a widget, use <i class="fa fa-share-alt"></i> on the title bar of the widget
+					<br>Choose which people you want to share, and valid</li>
+					<li>Select DEFAULTfor all users or a login for s specific,
+						the shared widget or will belong WIDGETS/COMMON list, or into its WIDGETS/PERSONAL list for specific user</li>
+				</ul>
+					
+			</div>
+			
+			<div id="setting"> 
+				<h2>Setting</h2>
+				<p>Setting, is accessed on the top right navbar with icon : 
+				<img src="./img/help/setting-icon.png" height="30px" class="fl"> 
+				<br/>Setting allow to customize the aplication, with </p>
+				<ul>
+					<li>TIMER : switch on/off the data refresh</li>
+					<li>CONFIGURATION : show/collapse some panel and menu</li> 
+					<li>SKINS : allow to change the theme</li> 
+				</ul>
+				<img src="./img/help/setting.png" height="500px">
+			</div>
+						 
+			<div id="profile"> 
+				<h2>User Profile</h2>
+				<p>The user can set it's profile information by giving it's real name, photo, mail ...</p>
+				<ul>
+					<li>Click on the login in the top navabar</li>
+					<li>Or Click on : <i class="fa fa-cog"></i> Profile link in the left sidebar<br/>
+						<img src="./img/help/profile-set.png" width="150px"><br/><br/></li>
+				</ul>
+				<p>A popup window is shown to fill or update your personal information :<br/>
+					<br/><img src="./img/help/profile.png" width="500px" class="fl">
+				</p>
+			</div>
+			 
+		</div><!--col-sm-9-->
+		
+  </div><!--row -->
+</div><!--container-fluid--> 
+<script>
+$(document).ready(function() {
+/* 	$(".dropdown a.dropdown-toggle").click(function() {
+		var id = $(this).attr("for");
+		window.location.hash = id;
+	}); */
+	
+/* 	$(".nav.nav-pills li a").click(function(e) {
+		//e.preventDefault();
+		$($(this).attr("href"))[0].scrollIntoView();
+		scrollBy(0, -80); $(window).height() * 0.2 
+	}); */
+/*  	$('body').scrollspy({ target: "#myScrollspy", offset: 200 });  */
+})
+</script>
+</body>
+</html>                                		

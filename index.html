@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="aero-app">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+    <title>Aero tool</title> 
+    <link rel="icon" href="/assets/images/brand.ico">
+    
+    <link rel="stylesheet" href="/assets/libs/bootstrap/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="/assets/libs/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/assets/stylesheets/style.css">
+  </head>
+
+  <body class="gray-bg">  
+  	<div id="spinner" class="spinner"></div>
+    <div class="container" ng-view></div>
+   	
+	<!-- jquery & Angular -->
+    <script src="/assets/libs/js/jquery-3.1.1.min.js"></script>
+    <script src="/assets/libs/angular/angular.js"></script>
+    <script src="/assets/libs/angular/angular-route.js"></script>
+    <script src="/assets/libs/angular/angular-resource.js"></script> 
+    <script src="/assets/libs/angular/angular-cookies.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="/assets/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="/assets/libs/bootstrap/bootbox.min.js"></script>
+    <script src="/assets/libs/js/jquery.ui.touch-punch.min.js"></script> 
+    
+    <!-- Application -->
+    <script src="/scripts/util.js"></script>
+    <script src="/scripts/app.js"></script>
+    
+    <!--  Authentication -->
+    <script src="/modules/authentication/auth-services.js"></script>
+    <script src="/modules/authentication/auth-ctrl.js"></script>
+    
+    <!-- Library -->
+    <script src="/assets/libs/js/screenfull.js"></script> 
+    <script src="/assets/libs/js/jquery.zoomooz.min.js"></script> 
+	<script src="/modules/graph/js/slimscroll.js"></script>	
+    <script src="/assets/libs/js/treeview.js"></script>
+    
+	<!-- Graph -->
+	<script src="/modules/graph/js/g-util.js"></script>	
+	<script src="/modules/graph/js/line.js"></script>	
+	<script src="/modules/graph/js/entry.js"></script>
+	<script src="/modules/graph/js/container.js"></script> 
+	<script src="/modules/graph/js/draw.js"></script>
+	<script src="/modules/graph/graph-services.js"></script>
+	<script src="/modules/graph/graph-ctrl.js"></script>
+	<script type="text/javascript" src="/modules/graph/js/g-events.js"></script>
+
+    
+  </body>
+  
+</html>

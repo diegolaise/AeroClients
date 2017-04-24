@@ -1,0 +1,1 @@
+angular.module("server-queries", ["server-queries.conf", "ngResource"]);
