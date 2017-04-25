@@ -5,7 +5,8 @@
  *==================================================================*/
 
 //angular.element(document.body).scope()
-var _oAppScope;
+var $graphScope = null;
+
 var _IS_IE = (window.navigator.userAgent.toLowerCase().indexOf("trident")>=0
 				|| window.navigator.userAgent.toLowerCase().indexOf("msie")>=0);
 
@@ -460,12 +461,12 @@ function getObject($div) {
  * @param fdelegate
  */
 function SaveExportedFile(fileName, jsData, fdelegate) {
-	var filePath = _oAppScope._tmp + fileName;
+	var filePath = $graphScope._tmp + fileName;
 	
 	$.ajax({ type 	: "POST" 
-		, url   	: _oAppScope.httpUrl() + "fileHandler.jsp?action=create&path="+filePath +_oAppScope.params("&")
+		, url   	: $graphScope.httpUrl() + "fileHandler.jsp?action=create&path="+filePath +$graphScope.params("&")
 		, beforeSend	: function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic "+ _oAppScope._logStr); 
+			xhr.setRequestHeader("Authorization", "Basic "+ $graphScope._logStr); 
 			xhr.setRequestHeader("WWW-authenticate", "database");
 		}
 		, dataType 	: 'text'
@@ -491,12 +492,12 @@ function SaveExportedFile(fileName, jsData, fdelegate) {
  * @param fdelegate
  */
 function RemoveExportedFile(filePath, fdelegate) { 
-	var filename = filePath.replace(_oAppScope._tmp, "");
+	var filename = filePath.replace($graphScope._tmp, "");
 	
 	$.ajax({ type : "POST"
-		, url     : _oAppScope.httpUrl() + "fileHandler.jsp?action=remove&path="+filePath +_oAppScope.params("&")
+		, url     : $graphScope.httpUrl() + "fileHandler.jsp?action=remove&path="+filePath +$graphScope.params("&")
 		, beforeSend	: function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic "+ _oAppScope._logStr); 
+			xhr.setRequestHeader("Authorization", "Basic "+ $graphScope._logStr); 
 			xhr.setRequestHeader("WWW-authenticate", "database");
 		}
 		, dataType : 'text'

@@ -86,25 +86,34 @@ function updateEvents(iLevel) {
 	//if (iLevel) resetPosition(iLevel);
 
 	//Not allow to drag inside entry
-	$(".entry").draggable({drag: function(event, ui){return false;}}); 
-
-	$(".ibox-c, .entry-c").draggable({ 
-		drag: function(event, ui) { 
-			_SVG.redrawLines(); 
-		} //drag
-		, stop: function(event, ui) {
-			_SVG.redrawLines();
-
-			//Reorder levels  
-			var id = ui.helper[0].id
-			var path = $("#"+id).attr("for");
-			var oEntry = getEntry(path);
-			if (oEntry) reorderLevel(oEntry._iLevel); 
-		}//stop
-	});  
+	try {
+		$(".entry").draggable({drag: function(event, ui){return false;}}); 
+	
+		$(".ibox-c, .entry-c").draggable({ 
+			drag: function(event, ui) { 
+				_SVG.redrawLines(); 
+			} //drag
+			, stop: function(event, ui) {
+				_SVG.redrawLines();
+	
+				//Reorder levels  
+				var id = ui.helper[0].id
+				var path = $("#"+id).attr("for");
+				var oEntry = getEntry(path);
+				if (oEntry) {
+					reorderLevel(oEntry._iLevel); 
+				}
+			}//stop
+		});  
+	}
+	catch(err) {
+		console.log("Err: Not draggable entry: " + err);
+	}
 
 	//- REDRAW
-	if ( ! (_oAppScope.$$phase) ) _oAppScope.$apply(); 
+	if ( ! ($graphScope.$$phase) ) {
+		$graphScope.$apply(); 
+	}
 	_SVG.redrawLines();
 
 	//Show popover
@@ -426,8 +435,8 @@ function exportFiles() {
 				var wasSavedfunc = function(href) { 
 					if (href) {
 						//Show link  
-						_oAppScope.addExported(filename);
-						_oAppScope.$apply(); 
+						$graphScope.addExported(filename);
+						$graphScope.$apply(); 
 
 						//bootbox.alert("Datas was Exported successfully !" );
 
@@ -436,7 +445,7 @@ function exportFiles() {
 					}
 				}
 
-				if ( ! _oAppScope.exists(filename)) 
+				if ( ! $graphScope.exists(filename)) 
 					SaveExportedFile(filename, tabExported, wasSavedfunc); 
 				else {
 					bootbox.confirm({ size: "medium"
@@ -812,10 +821,10 @@ function Event_ComboChange(){
 	if (n>0) version = version.substring(0,n).trim();
 
 	//Reload with new parameter  
-	var path = _oAppScope._oDataActive.shortPath() +"?ver="+ version; 
+	var path = $graphScope._oDataActive.shortPath() +"?ver="+ version; 
 
 	//Reload
-	_oAppScope.changeActiveData(path, true);
+	$graphScope.changeActiveData(path, true);
 
 	$("#actdata").removeClass("ic-enabled");
 	$("#actdata").addClass("ic-disabled");
@@ -887,7 +896,7 @@ $(document).delegate('.toActiveData', 'click', function(e) {
 			, callback: function(bOk) {
 				if (bOk) { 
 					if (_ZOOM_BOX) bootbox.hideAll();
-					_oAppScope.changeActiveData(path, false);
+					$graphScope.changeActiveData(path, false);
 				}
 			} 
 	}); 
@@ -1089,7 +1098,7 @@ $(document).delegate('.filter span.fa-circle-o, .filter span.fa-check-circle-o',
 function Event_filename() {} 
 //============================================================== 
 $(document).delegate('.filename', 'click', function(e) {
-	var href = _oAppScope._ALUrl + "/content/files" + $(this).attr("title");
+	var href = $graphScope._ALUrl + "/content/files" + $(this).attr("title");
 	window.open(href, "_blank", "width=900, height=700, scrollbars=yes");
 });
 
@@ -1267,6 +1276,7 @@ function runScreenFull() {
 function READY() {} //- READY
 //============================================================== 
 $(document).ready(function() {
+	
 	//$("#main").zoomTarget();
 	//--- Allow fullcreeen
 	runScreenFull(true); 

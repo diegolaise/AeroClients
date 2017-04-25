@@ -49,7 +49,7 @@ function initGraph(activeDataPath, tDatas, bOnlyUpdate) {
 				_INSTANCES[path] = oEntry;
 				
 				//Update list
-				_oAppScope.updateList(oEntry);
+				$graphScope.updateList(oEntry);
 			} 
 	  
 			//Get container 
@@ -143,8 +143,10 @@ function drawActiveData(oDataInitial) {
 				   }
 			});	   
 		}
-		else //Add event for all
-			updateEvents(0); 
+		else {
+			//Add event for all
+			updateEvents(0);
+		} 
 		
 		//Hide Square Checks for start
 		$(".exportItem.menu-p").hide();
@@ -263,32 +265,25 @@ function getEntryData(path, isChildren, callbackFunct) {
 		return;
 	}
 	
-	var url = _oAppScope.httpUrl() + "getEntry.jsp?children="+isChildren + _oAppScope.params("&") + "&path=" + path;
-	$.ajax({ type		: "GET"
-			, url		: encodeURI(url)
-			, beforeSend: function(xhr) {
-				xhr.setRequestHeader("Authorization", "Basic "+ _oAppScope._logStr); 
-				xhr.setRequestHeader("WWW-authenticate", "database");
-			}   
-			, async		: true //must true for parallels
-			, dataType	: "json" 
-			, success	: function (obj) {  
-				var oEntry = new Entry(obj);
-				_INSTANCES[path] = oEntry;
-				
-				//console.log("Entry get: " + path);
-				if (callbackFunct) {
-					callbackFunct(oEntry);
-				}
-			}
-			, error: function (data) {  
-				var errorMessage = JSON.stringify(data.responseText);
-				bootbox.alert(""+ data.responseText);
-				if (callbackFunct) {
-					callbackFunct(null);
-				}
-			}
-	});	
+	$graphScope.expandEntry(path, isChildren, function (obj, err) { 
+		if (err) { 
+			var errorMessage = JSON.stringify(err.responseText);
+			bootbox.alert(""+ data.responseText);
+			if (callbackFunct) {
+				callbackFunct(null);
+			} 
+		}
+		else {
+			var oEntry = new Entry(obj);
+			_INSTANCES[path] = oEntry;
+
+			//console.log("Entry get: " + path);
+			if (callbackFunct) {
+				callbackFunct(oEntry);
+			} 
+		}
+	}); 
+
 }
  
 /**
@@ -540,7 +535,7 @@ function expandEntry(oEntry, bIsChild, callback) {
 		}  
 
 		//Append version, extension
-		_oAppScope.updateList(oEntryToDraw);
+		$graphScope.updateList(oEntryToDraw);
 		
 		//If not all created : do nothing
 		if (NbEntryCreated < iTotalToCreate) { 

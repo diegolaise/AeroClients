@@ -7,6 +7,7 @@ angular.module('Authentication')
 	
 		//Set default to graph
 		$scope.project = 'graph';
+		$scope.dataLoading = false;
 		
 		// reset login status
 		AuthenticationService.ClearCredentials();

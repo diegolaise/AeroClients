@@ -362,6 +362,8 @@ a span {
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+  
+/*   margin-left:3%; */
 }
 
 /* Active data combobox */ 
@@ -378,7 +380,8 @@ a span {
 	font-size    : 10px;
 	margin-right : 6px; 
 	width        : 98px; 
-	cursor       :pointer;
+	cursor       : pointer;
+	line-height	 : 15px;
 }
 
 /*-----------------------------------*/

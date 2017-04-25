@@ -19,30 +19,38 @@
     <div class="container" ng-view></div>
    	
 	<!-- jquery & Angular -->
-    <script src="/assets/libs/js/jquery-3.1.1.min.js"></script>
+    <script src="/assets/libs/jquery/jquery-3.1.1.min.js"></script>
+    
     <script src="/assets/libs/angular/angular.js"></script>
     <script src="/assets/libs/angular/angular-route.js"></script>
     <script src="/assets/libs/angular/angular-resource.js"></script> 
     <script src="/assets/libs/angular/angular-cookies.js"></script>
     
-    <!-- Bootstrap -->
+    <!-- Bootstrap & jquery tools -->
     <script src="/assets/libs/bootstrap/bootstrap.min.js"></script>
-    <script src="/assets/libs/bootstrap/bootbox.min.js"></script>
-    <script src="/assets/libs/js/jquery.ui.touch-punch.min.js"></script> 
+    <script src="/assets/libs/bootstrap/bootbox.min.js"></script> 
+    
+    <script src="/assets/libs/jquery/jquery-ui.min.js"></script>
+    <script src="/assets/libs/jquery/jquery.ui.touch-punch.min.js"></script> 
+    <script src="/assets/libs/jquery/jquery.zoomooz.min.js"></script>
+    
+    <!-- JS Library -->
+    <script src="/assets/libs/js/screenfull.js"></script>  
+	<script src="/assets/libs/js/slimscroll.js"></script>	
     
     <!-- Application -->
     <script src="/scripts/util.js"></script>
     <script src="/scripts/app.js"></script>
     
-    <!--  Authentication -->
+    <!-- Authentication -->
     <script src="/modules/authentication/auth-services.js"></script>
     <script src="/modules/authentication/auth-ctrl.js"></script>
-    
-    <!-- Library -->
-    <script src="/assets/libs/js/screenfull.js"></script> 
-    <script src="/assets/libs/js/jquery.zoomooz.min.js"></script> 
-	<script src="/modules/graph/js/slimscroll.js"></script>	
+
+    <!-- Tree -->
     <script src="/assets/libs/js/treeview.js"></script>
+    <script src="/modules/tree/tree-services.js"></script>
+	<script src="/modules/tree/tree-ctrl.js"></script>
+	<script src="/modules/tree/tree.js"></script>
     
 	<!-- Graph -->
 	<script src="/modules/graph/js/g-util.js"></script>	
@@ -52,9 +60,8 @@
 	<script src="/modules/graph/js/draw.js"></script>
 	<script src="/modules/graph/graph-services.js"></script>
 	<script src="/modules/graph/graph-ctrl.js"></script>
-	<script type="text/javascript" src="/modules/graph/js/g-events.js"></script>
-
-    
+	<!-- <script src="/modules/graph/js/g-events.js"></script> -->
+	
   </body>
   
 </html>

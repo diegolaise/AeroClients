@@ -15,20 +15,20 @@ angular.module('Graph')
 .controller('GraphController', ['$scope', '$location', '$http', '$routeParams', '$rootScope', '$cookieStore', 'GraphService',
 	function ($scope, $location, $http, $routeParams, $rootScope, $cookieStore, GraphService) {
 
-	$scope.project 		= "graph";
 	$scope._revision 	= _REVISION;
-	$scope._brandIcon   = "/assets/images/company-brand.gif";
+	$scope._brandIcon   = "/assets/images/brand-icon.gif";
 
 	//Exported files path
 	$scope._tmp 		= "/datas/graph/";
-
 	$scope._ALUrl = location.protocol + "//" + location.host;
 
 	//User parameters
-	$scope._sessionId = ""; 
-	$scope._login 	  = "";
-	$scope._logStr	  = "";
-
+	$scope._login = "";
+	var _userInfos = {
+			sessionId : ""  
+			, logStr  : ""
+	};
+	 
 	//Active data infos
 	$scope._activePath = "";
 	$scope._oDataActive = null;
@@ -42,7 +42,7 @@ angular.module('Graph')
 	$scope._hActiveData = {};
 
 	//-----------------------------
-	_oAppScope = $scope; //Init scope
+	$graphScope = $scope; //Init scope
 	//----------------------------- 
 
 	/** INITIALIZE */
@@ -61,64 +61,65 @@ angular.module('Graph')
 		//addSpin(); 
 		spin();
 		
-		$scope._sessionId  = $rootScope.globals.currentUser.sessionId;
-		$scope._logStr 	   = $rootScope.globals.currentUser.authdata;
-		$scope._login 	   = $rootScope.globals.currentUser.username;
+		_userInfos.sessionId= $rootScope.globals.currentUser.sessionId;
+		_userInfos.logStr 	= $rootScope.globals.currentUser.authdata;
+		$scope._login 	    = $rootScope.globals.currentUser.username;
+		
 		$scope._activePath = $routeParams.activePath || $rootScope.globals.currentUser.active_path;
 
 		//Initialize xhr log string  
 		$scope._tmp += $scope._login + "/"; 
-
-		//var dConfig = parseParameters($location.path());
-		//$scope._sessionId   = dConfig[_SESSION_ID]; 	
-		//var tParam 	  	  = dConfig[_PARAMETER]; 
-		//if (tParam.length>0) $scope._logStr 	= tParam[0]; 
-		//if (tParam.length>1) $scope._activePath = cleanText(tParam[1]); 
 			
 		//---------------------------------
 		// Get list of exported files 
 		//--------------------------------- 
-//		$scope.listExportedFile();
+		//listExportedFile();
 
 		//---------------------------------
 		// Load active data
 		//---------------------------------
-		$scope.loadActiveData(false, hideSpin);
+		loadActiveData(false, hideSpin);
 
 		//--------------------------------
 		// Store au cas ou
 		//--------------------------------
-		$scope.store();
+		//$scope.store();
 	};
 	
-	$scope.httpUrl = function() {
-		return  GraphService.GetHttpUrl() + '/';
-	}
+//	$scope.httpUrl = function() {
+//		return  GraphService.GetHttpUrl() + '/';
+//	}
 
 	/** Load active data */
-	$scope.loadActiveData = function(bOnlyUpdate, callback) {
+	var loadActiveData = function(bOnlyUpdate, callback) {
 		
 		if ( ! $scope._activePath ) {
 			//TODO : propose to select a file
+			//Show tree view here
 			
-			if (callback) callback(false);
+			if (callback) {
+				callback(false);
+			}
 			return;
 		}
 
+		//Load many active data
 		var tabDatas = $scope._activePath.split(","); 
 		if (tabDatas.length>1) { 
-			$scope.loadDatas(tabDatas, bOnlyUpdate, callback); 
+			loadDatas(tabDatas, bOnlyUpdate, callback); 
 			return;
 		}; 
 
 		//Clear metadatas
 		$scope._hActiveData = {};
 		
-		//Parse data loading
-		//Request
-		GraphService.getDatas($scope._activePath, 1,  function(jdata) { 	
-			console.log("Datas: " +  JSON.stringify(jdata, null, 4) + " " + Object.keys(jdata));
+		//Read data info
+		GraphService.getDataInfo($scope._activePath, 1,  function(jdata) { 	
 			
+			//console.log("Datas found: " +  JSON.stringify(jdata, null, 4) + " " + Object.keys(jdata));
+			console.log("loadActiveData end ...");
+			
+			//Initialize sidebar
 			if (jdata && Object.keys(jdata).length>0) {
 				
 				//Init graph and active data object
@@ -135,38 +136,48 @@ angular.module('Graph')
 					$scope._hActiveData["Version"] = tabVersions; 
 					$.each(tabVersions, function(idx, ver) {
 						var dMeta = dMetadataByVersion[ver];
-						if (ver === $scope._oDataActive._version) tabVersions[idx] += " *";
-	
-						$.each(_TABKEY, function(label, name) { 
-							var val = dMeta[name];
-							if (!val) val = "";
-	
-							if (ver === $scope._oDataActive._version) val += " *";
-							else val += " (v"+ver+")";
-							if (! (label in $scope._hActiveData) ) { 
-								$scope._hActiveData[label] = [val];
+						if (dMeta) {
+							if (ver === $scope._oDataActive._version) {
+								tabVersions[idx] += " *";
 							}
-							else {
-								$scope._hActiveData[label].push(val);
-							}
-	
-						}); 
+		
+							$.each(_TABKEY, function(label, name) { 
+								var val = dMeta[name];
+								if (!val) {val = "";}
+		
+								if (ver === $scope._oDataActive._version) {
+									val += " *";}
+								else {
+									val += " (v"+ver+")";
+								}
+								if (! (label in $scope._hActiveData) ) { 
+									$scope._hActiveData[label] = [val];
+								}
+								else {
+									$scope._hActiveData[label].push(val);
+								}
+							});
+						}
 					}); 
 				}
 			}
 			//Call back
-			if (callback) callback(true);
+			if (callback) {
+				callback(true);
+			}
 		}
 		, function(err, status, headers, config) {
 			bootbox.alert("Read active data Error <br>" + $scope.log(err));
 			//Call back
-			if (callback) callback(false);
+			if (callback) {
+				callback(false);
+			}
 		});
 		
 	};
 
 	/** Load many active datas */
-	$scope.loadDatas = function(tabDatas, bOnlyUpdate, callback) { 
+	var loadDatas = function(tabDatas, bOnlyUpdate, callback) { 
 
 		var N = tabDatas.length; 
 
@@ -185,7 +196,9 @@ angular.module('Graph')
 			$scope._oDataActive = initGraph(showPath, tDataRes, bOnlyUpdate);
 
 			//console.log("Entry get: " + path);
-			if (callback) callback(tDataRes.length>0);
+			if (callback) {
+				callback(tDataRes.length>0);
+			}
 		}
 
 		var sUrl = $scope.httpUrl() + "getEntry.jsp?children=both"+$scope.params("&")+"&path=";
@@ -206,6 +219,13 @@ angular.module('Graph')
 				endLoading(null);
 			});  
 		}
+	}
+	
+	/**
+	 * Load entry
+	 */
+	$scope.expandEntry = function(path, children, callback) {
+		GraphService.getEntry(path, children, callback);
 	}
 
 	/** Change the active data */
@@ -228,7 +248,7 @@ angular.module('Graph')
 			hideSpin();
 			_SLIDE = false;
 		} 
-		$scope.loadActiveData(bOnlyUpdate, endLoading);
+		loadActiveData(bOnlyUpdate, endLoading);
 	};
 
 	/** Get user parameter */
@@ -270,7 +290,7 @@ angular.module('Graph')
 	/**---------------------------------
 	 * Get list of exported files 
 	 *--------------------------------- */
-	$scope.listExportedFile = function(callback) { 
+	var listExportedFile = function(callback) { 
 		//Request
 		$http({ method	: "GET"
 			, url	    : $scope.httpUrl() + "fileHandler.jsp?action=list"+$scope.params("&")+"&path="+$scope._tmp 

@@ -3,6 +3,19 @@
  * 					 Entry Object
  * 
  *==================================================================*/
+var METADATA = [ "Version"	
+			, "From tool"
+			, "From process"
+			, "Description"
+			, "Type"
+			, "Data Origin"
+			, "Status"
+			, "Study Type"
+			, "Aircraft"
+			, "Program"
+			, "Creation version"
+			]; 
+
 function Entry(jData) { 
 	this._type 	  = "ENTRY";
 	this._id	  = "box";
@@ -121,13 +134,26 @@ function Entry(jData) {
 	this.tooltip = function() {
 		if (!this._metadata) return "";
 		var str = ""; var sep = "";
-		$.each(this._metadata, function(key, val) {
-			str += sep + "<label style='width:70px;'>"+key+"</label>:&emsp;"+val+"";
-			sep = "<br>";
+		var v = this._version;
+		var o = this._metadata;
+		
+		$.each(METADATA, function(idx, k) {
+			var key = METADATA[idx];
+			var val = "";
+			if (key === "Version") {
+				val = v;
+			}
+			else if (o.hasOwnProperty(key)){
+				val = o[key];
+			}
+			if (key !== "version") {
+				str += sep + "<label style='width:70px;'>"+key+"</label>:&emsp;"+val+"";
+				sep = "<br>";
+			}
 		});
 		
-		//Don't show all version
-		str += "<br><label style='width:70px;'>Versions</label>:&emsp;" + this._allVersions.toString();
+		//Show all versions
+		str += "<br><label style='width:70px;'>All versions</label>:&emsp;" + this._allVersions.toString();
 		return  str;
 	};
 	

@@ -1,21 +1,22 @@
 /**
- * 
+ * AERO Client APP
  */
 'use strict';
 
-// declare modules
+// common modules
 angular.module('Authentication', ['ngResource']);
-angular.module('Graph', []);
+angular.module('Tree', []);
+
+// app modules
+angular.module('Graph', ['Tree']);
 
 // <your PC network name or your PC network ip>'
 // Add external ip o th server, Working with local host and not willing to be reached from network
 var host = '127.0.0.1'; //TODO : set ip of the server
 var port = 3000;
 
-angular.module('aero-app', ['Authentication', 'ngRoute',  'ngCookies', 'Graph'])
-
+angular.module('aero-app', ['Authentication', 'ngRoute',  'ngCookies', 'Tree', 'Graph'])
 .constant('SERVER_URL', 'http://' + host + ':' + port)
-
 .config(['$routeProvider', function ($routeProvider) {
 
     $routeProvider	
