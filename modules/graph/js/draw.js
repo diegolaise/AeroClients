@@ -65,7 +65,9 @@ function initGraph(activeDataPath, tDatas, bOnlyUpdate) {
 	}
 	  
 	//Draw the active data;
-	if (oActiveData) drawActiveData(oActiveData);
+	if (oActiveData) {
+		drawActiveData(oActiveData);
+	}
 	return oActiveData;
 }
 
@@ -224,7 +226,7 @@ function toggleConnector($span, bIsChild) {
 	_IS_TO_HIDE = false; 
 	
 	//Show children
-    var $elt = $span.closest("div");
+    var $elt   = $span.closest("div");
     var oEntry = getObject($elt);
     
 	//------------ HIDE ---------------
@@ -264,8 +266,8 @@ function getEntryData(path, isChildren, callbackFunct) {
 		}
 		return;
 	}
-	
-	$graphScope.expandEntry(path, isChildren, function (obj, err) { 
+	console.log("Call $graphScope.expandEntry: " + path)
+	$graphScope.expandEntry(path, (isChildren ? "children" : "parent"), function (obj, err) { 
 		if (err) { 
 			var errorMessage = JSON.stringify(err.responseText);
 			bootbox.alert(""+ data.responseText);
@@ -453,10 +455,14 @@ function createContainers(oEntry, iLevel, oPrecedent) {
 function expandEntry(oEntry, bIsChild, callback) {
 	  
 	var tabToCreate = (bIsChild ? oEntry._cLinks : oEntry._pLinks);
-	if (!tabToCreate) return;
+	if (!tabToCreate) {
+		return;
+	}
 	
 	var iTotalToCreate  = tabToCreate.length;
-	if (iTotalToCreate==0) return;
+	if (iTotalToCreate ===0 ) {
+		return;
+	}
 	
 	//- WAIT
 	wait();
@@ -471,7 +477,7 @@ function expandEntry(oEntry, bIsChild, callback) {
 	var iLevel = oEntry._iLevel + (bIsChild ? 1 : (-1));
 	
 	//Callback function
-	var NbEntryCreated = 0;   
+	var NbEntryCreated = 0; //index of entry created  
 	var tOrphanEntries = [];
 	var tEntries 	   = [];
 	var tBoxToCreate   = [];
@@ -481,17 +487,19 @@ function expandEntry(oEntry, bIsChild, callback) {
 	//-----------------------------------------------	
 	var drawCallback = function(oEntryToDraw) {  
 		//Add add Parent
-		if (bIsChild)
+		if (bIsChild) {
 			oEntryToDraw.addParent(oEntry);
-		else
+		}
+		else {
 			oEntry.addParent(oEntryToDraw);
+		}
 		
 		//Create Childs containers  
 		var boxContainer = createContainers(oEntryToDraw, iLevel, oEntry); 
 		
 		// DRAW child or parent entry (create HTML)
 		oEntryToDraw.draw(iLevel, lastCreatedList);
-		NbEntryCreated++;
+		NbEntryCreated++;  /////NEXT CREATED
 		
 		if (!boxContainer) {
 			tOrphanEntries.push(oEntryToDraw); //Entry without container
@@ -499,7 +507,7 @@ function expandEntry(oEntry, bIsChild, callback) {
 			if (_IS_TO_HIDE) { 
 				oEntryToDraw.mask();
 				wait(true); 
-				return false;
+				return;
 			}
 		}
 		else {
@@ -515,7 +523,7 @@ function expandEntry(oEntry, bIsChild, callback) {
 			if (_IS_TO_HIDE) { 
 				ct.jDom().hide();
 				wait(true); 
-				return false;
+				return;
 			}
 			
 			//Save the container to create
@@ -524,8 +532,9 @@ function expandEntry(oEntry, bIsChild, callback) {
 			}
 
 			//Handle Group number
-			var num = boxContainer.handleEntryNumber();
+			boxContainer.handleEntryNumber();
 			
+//			var num = boxContainer.handleEntryNumber();			
 //			if ( !_IS_IE && num == _MAX_ENTRIES) {
 ////				boxContainer.panelBody().slimScroll({height : '100%'}); 
 ////				boxContainer.panelBody().css("height", "115px");
@@ -540,7 +549,8 @@ function expandEntry(oEntry, bIsChild, callback) {
 		//If not all created : do nothing
 		if (NbEntryCreated < iTotalToCreate) { 
 			wait(_IS_TO_HIDE);
-			return;
+			nextActiveData();  //// call NEXT CREATED
+			return; //break
 		}
 		
 		//-------------------------------------------
@@ -548,8 +558,9 @@ function expandEntry(oEntry, bIsChild, callback) {
 		//-------------------------------------------
 		//- Order box according to theirs contents number
 		var orderedBoxes = [];
-		if (tBoxToCreate.length==1)
+		if (tBoxToCreate.length==1) {
 			orderedBoxes = tBoxToCreate;
+		}
 		else {
 			$.each(tBoxToCreate, function(j, box) { 
 				var nb = box.boxNumToDraw();
@@ -559,7 +570,7 @@ function expandEntry(oEntry, bIsChild, callback) {
 						//Insert before
 						orderedBoxes.splice(k, 0, box);
 						bFound = true;
-						return false;//Break
+						return false; //Break
 					}
 				});
 				if (!bFound) {
@@ -574,18 +585,21 @@ function expandEntry(oEntry, bIsChild, callback) {
 			if (cont.isGroup()) {
 				tabContainers.push(cont);
 			}
-		   else { 
+		    else { 
 			   //Push only its own entries
 			   $.each(cont._entries, function(z, entry) {
-				   if ( $.inArray(entry, tEntries)>= 0)
+				   if ( $.inArray(entry, tEntries)>= 0){
 					   tabContainers.push(entry);
+				   }
 			   });
 		   }
 		});
 		 
 		$.each(tabContainers, function(ix, oBoxToLink) {
 			
-			if (! oBoxToLink.isVisible()) return true; //continue
+			if (! oBoxToLink.isVisible()) {
+				return true; //continue
+			}
 			
 			var bCollapse = false;
 			
@@ -596,35 +610,21 @@ function expandEntry(oEntry, bIsChild, callback) {
 				if (oBoxToLink._container && oBoxToLink._container._entries.length>1) {
 					bCollapse = true; 
 				}
-				
-//				if (!_IS_IE) {
-//					console.log(" FF Obox width" + oBoxToLink.panelBody().width() 
-//								+ " " + oBoxToLink.panelBody().outerWidth()
-//								);
-//					
-//					var $entry1 = oBoxToLink._entries[0].jDom();
-//					console.log(" FF Obox width" + $entry1.width() 
-//							+ " " + $entry1.outerWidth() );
-//				}
-//				else {
-//					console.log(" IE Obox width" + oBoxToLink.panelBody().width() 
-//							+ " " + oBoxToLink.panelBody().outerWidth()
-//							);
-//				var $entry1 = oBoxToLink._entries[0].jDom();
-//				console.log(" IE Obox width" + $entry1.width() 
-//						+ " " + $entry1.outerWidth() );
-//				}
 			}
 			 
 			var cont   = oBoxToLink._container;
-			if (!cont) cont = oBoxToLink;
+			if (!cont) {
+				cont = oBoxToLink;
+			}
 			
 			var idx = indexOf(cont); 
 			if ((idx<0 || cont._position.top <= 0))
 			{  
 				var pos = (bIsChild ? getChildPos(cont, oEntry) : getParentPos(cont, oEntry));
 				cont.setPosition(pos);
-				if (idx<0) saveElement(cont);
+				if (idx<0) {
+					saveElement(cont);
+				}
 			}
 			else if (!bCollapse) { 
 				moveNextToDown(cont); 
@@ -639,27 +639,29 @@ function expandEntry(oEntry, bIsChild, callback) {
 					 drawLine(oEntry, entry, bIsChild); 
 				});				
 			} 
-			else if ( oBoxToLink.isEntry() ) 
+			else if ( oBoxToLink.isEntry() ) {
 				drawLine(oEntry, oBoxToLink, bIsChild);
+			}
 			else { 
 				var gpBox = getUnifiedGroup(oBoxToLink); 
-				
-				if (gpBox == oBoxToLink) 
+
+				if (gpBox == oBoxToLink) {
 					drawLine(oEntry, oBoxToLink, bIsChild);
+				}
 				else { 
 					if (gpBox != null) { 
 						oBoxToLink = gpBox;
 					}
-					
+
 					oBoxToLink.display();
 					oBoxToLink.handleEntryNumber();
-					
+
 					$.each(oBoxToLink._entries, function(i, obj) {
 						if ( tabToCreate.indexOf(obj._path)>=0 ) {
 							drawLine(oEntry, obj, bIsChild);
 						}
 					});
-					
+
 					//Move after
 					if (gpBox != null) {   
 						moveNextToDown(oBoxToLink);
@@ -669,16 +671,28 @@ function expandEntry(oEntry, bIsChild, callback) {
 		});
 
 		//Do Callback
-		if (callback) callback(iLevel); 
+		if (callback) {
+			callback(iLevel); 
+		}
 		
-	}//end drawCallback
+	}//----------- End drawCallback -----------------
 
 	//-----------------------------------------------
-	// Create all parent of active data
+	// Create all parent/children of active data
 	//----------------------------------------------- 
-	$.each(tabToCreate, function(i, pPath) { 
-		if (_IS_TO_HIDE) { wait(true); return; }
-		 
+	//$.each(tabToCreate, function(i, pPath) {
+//			if (_IS_TO_HIDE) { 
+//				wait(true); 
+//				return false; //break
+//			}
+	 
+	var nextActiveData = function() {
+		if (NbEntryCreated >= iTotalToCreate) {
+			return; //End
+		}
+		
+		var pPath = tabToCreate[NbEntryCreated];
+ 
 		//Get entry to create if exists
 		var oNodeCreated = getEntry(pPath);		
 		if (!oNodeCreated || !oNodeCreated.drawed()) {  
@@ -686,10 +700,12 @@ function expandEntry(oEntry, bIsChild, callback) {
 		}
 		else {   
 			 
-			if (bIsChild)
+			if (bIsChild){
 				oNodeCreated.addParent(oEntry);
-			else
+			} 
+			else {
 				oEntry.addParent(oNodeCreated);
+			}
 			
 			 //Show entry, if was just hidden, redraw -> draw the line
 			 if ( oNodeCreated.canShow() ) {
@@ -706,17 +722,22 @@ function expandEntry(oEntry, bIsChild, callback) {
 					 drawLine(oEntry, oNodeCreated._container, bIsChild);
 					 oNodeCreated.handleEntryNumber();
 				 }
-				 else
+				 else {
 					connectChildOrParent(oEntry, oNodeCreated, bIsChild);
+				 }
 			 }
 
-			 //Callback for cascade expand
+			 //--- Callback for cascade expand ///////
 			 var afterExpand = function() {
-				NbEntryCreated++;
+				NbEntryCreated++;  /////NEXT CREATED
 				
 				if (NbEntryCreated >= iTotalToCreate) { 
-					if (callback) 
+					if (callback) {
 						callback(iLevel); 
+					}
+				}
+				else {
+					nextActiveData(); /// Call Next Created
 				}
 			 }
 			 
@@ -729,7 +750,14 @@ function expandEntry(oEntry, bIsChild, callback) {
 				 afterExpand();
 			 }
 		}
-	});
+	} ////END nextActiveData
+	
+	if (_IS_TO_HIDE) { 
+		wait(true);  
+	}
+	else {
+		nextActiveData();
+	}
 	
 	//Update last number
 	$(".badger", $("#lastVersion").parent()).html(lastCreatedList.length);

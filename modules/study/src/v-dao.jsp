@@ -240,7 +240,7 @@ public ArrayList<String> searchFolders(String sRootPath, String searcExpressions
 			for( String path : allResults) {
 				if (path.equals(sFolderPath)) continue; //Skip self
 				if (path.indexOf("?ver=")>0) continue;  //Skip files (versionned)
-				if (bUserSkipped(path)) continue; 		//Skip USER Trash folder  
+				if (skipPath(path)) continue; 		//Skip USER Trash folder  
 				if (! path.matches(foldRegExp) )  continue; //SKIP unmatched
 				
 				//Get folder only 
@@ -328,7 +328,7 @@ public JSONArray getAllSubfolders(String sRootPath, String searchPattern) throws
 		for( String path : allResults) {
 			if (path.equals(sFolderPath)) continue; //Skip self
 			if (path.indexOf("?ver=")>0) continue;  //Skip files (versionned)
-			if (bUserSkipped(path)) continue; 		//Skip USER folder  
+			if (skipPath(path)) continue; 		//Skip USER folder  
 			if (! path.matches(pathRegEx) )  continue; //SKIP unmatched
 			
 			//Get folder only 
@@ -441,7 +441,7 @@ public boolean findMatchedParentsOrChilds( final boolean bSreachParent 					 //
 		//print(" ---- " ); 
  		for (final String sPath : lstResToCheck) { 
  			//FILTER
- 			if ( bUserSkipped(sPath) ) continue;
+ 			if ( skipPath(sPath) ) continue;
  			
  			//print("    sPath: " + sPath);
  			try { 
@@ -485,7 +485,7 @@ public boolean findMatchedParentsOrChilds( final boolean bSreachParent 					 //
 
 	// Start thread for the first half of the numbers
 	for (final String resTarget : lstResToCheck) {
-		if ( bUserSkipped(resTarget) ) continue;
+		if ( skipPath(resTarget) ) continue;
 		
 		//print(" Find: " + resTarget); 
 		FutureTask<List<String>> futureTask = new FutureTask<List<String>>(
@@ -544,7 +544,7 @@ public ArrayList<String> getTargetChildsOrParents(String sPath   //The concerned
 												, ArrayList<String> lParentOrChildTosearch //the parent or child filter
 												) throws Exception {
 	
-	if (bUserSkipped(sPath)) return null;
+	if (skipPath(sPath)) return null;
 	 
 	AnalysisLibraryDAO dao = AnalysisLibraryDAOFactory.getDao(); 
 	List<QName> lqName = null; //Arrays.asList( new QName[]{ new QName("DAV:", "displayname") });
@@ -566,7 +566,7 @@ public ArrayList<String> getTargetChildsOrParents( AnalysisLibraryDAO dao
 		, Collection<Link> allLinks) throws Exception {
 
 	//Skip files in USER folder
-	if (bUserSkipped(sPath)) return null;
+	if (skipPath(sPath)) return null;
 
 	ArrayList<String> lstRecursiveLaunch = null;
 	
@@ -574,7 +574,7 @@ public ArrayList<String> getTargetChildsOrParents( AnalysisLibraryDAO dao
 
 		String resUid = (bSreachParent ? lnk.getResource2Uid() : lnk.getResource1Uid() );
 		String resPath = dao.resourceUidToPath(resUid);
-		if (bUserSkipped(resPath)) continue;
+		if (skipPath(resPath)) continue;
 		
 		if (lParentOrChildTosearch.contains(resPath)) {
 			//FOUND : break;
@@ -603,7 +603,7 @@ public JSONArray searchByFilename(String sRootPath
 									, boolean bGetResult    	 //If Get result for GUI
 ) throws Exception {
 
-	if (bUserSkipped(sRootPath)) return new JSONArray(); 
+	if (skipPath(sRootPath)) return new JSONArray(); 
 	
 	AnalysisLibraryDAO dao = AnalysisLibraryDAOFactory.getDao();
 
@@ -667,7 +667,7 @@ public JSONArray searchByFilename(String sRootPath
 		}
 		//Get path
 		String path = cPath.toString();
-		if (bUserSkipped(path)) continue; 
+		if (skipPath(path)) continue; 
 
 		//Get version
 		String version = cPath.getVersion();
@@ -748,7 +748,7 @@ public CopyOnWriteArrayList<String> getAllParentOrChildrenFor(final ArrayList<St
 	// Start thread for the first half of the numbers
 	for (final String path : lParentOrChildTosearch) { 
 		//Skip files in USER folder
-		if ( bUserSkipped(path) ) continue;
+		if ( skipPath(path) ) continue;
 		
 		final LinkDirection lnkType = (bSreachParent ? LinkDirection.From : LinkDirection.To);
 		

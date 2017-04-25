@@ -49,7 +49,7 @@
 	//==================================================================
 	//Skip 99-USERS Folder & TRASH
 	//==================================================================
-	public boolean bUserSkipped(String path) {
+	public boolean skipPath(String path) {
 		if (path == null) return true;
 		String sPath = path.toUpperCase().trim();
 		if  (   sPath.indexOf("/99-USERS/") > 0

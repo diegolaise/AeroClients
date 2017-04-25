@@ -11,7 +11,7 @@ void ALtreeInfo(String sPath, JSONArray jsResult, int iLevel, boolean bFolderOnl
 
 	//Skip USER folder
 	//if (!sPath.endsWith("/")) sPath += "/";
-	if (bUserSkipped(sPath)) return; 
+	if (skipPath(sPath)) return; 
 	 
 	CacheablePath cpath = new CacheablePath(sPath);
 	String filename  = cpath.getBaseName();

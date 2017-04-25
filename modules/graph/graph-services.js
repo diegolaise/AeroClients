@@ -22,7 +22,7 @@ angular.module('Graph')
 			
 		}, function(err) {
 			console.log("getDataInfo failed !" + err.responseText);
-			errorHandler(err);
+			if (errorHandler) errorHandler(err);
 		});
 
 	};
@@ -39,24 +39,26 @@ angular.module('Graph')
 			
 		}, function(err) {
 			console.log("getDatas failed !" + err.responseText);
-			errorHandler(err);
+			if (errorHandler) errorHandler(err);
 		});
 
 	};
 	
 	/**
-	 * Load active data
+	 * Get entry informations
 	 */
-	service.getEntry= function(filepath, lnk_dir, successHandler, errorHandler) {
-
-		var myhttp = $resource(SERVER_URL + "/getEntry/:filepath/:lnkdir");
-		myhttp.get({filepath: filepath, lnkdir:lnk_dir}, function(res) {
-			console.log("getDataInfo success !");
+	service.getEntry= function(filepath, lnkname, successHandler, errorHandler) { 
+		var myhttp = $resource(SERVER_URL + "/getEntry/:path/:lnkdir");		
+		console.log("Call service.getEntry: " + filepath);
+		myhttp.get({ path: filepath.split(","), lnkdir:lnkname }, function(res) {
+			console.log("getEntry success ! " + path);
 			successHandler(res.data); //data.$promise);
 			
 		}, function(err) {
-			console.log("getDataInfo failed !" + err.responseText);
-			errorHandler(err);
+			console.log("getEntry failed ! " + path + " " + err.responseText);
+			if (errorHandler) {
+				errorHandler(err);
+			}
 		});
 
 	};

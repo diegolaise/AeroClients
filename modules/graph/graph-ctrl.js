@@ -224,8 +224,8 @@ angular.module('Graph')
 	/**
 	 * Load entry
 	 */
-	$scope.expandEntry = function(path, children, callback) {
-		GraphService.getEntry(path, children, callback);
+	$scope.expandEntry = function(path, lnkname, callback) {
+		GraphService.getEntry(path, lnkname, callback);
 	}
 
 	/** Change the active data */
