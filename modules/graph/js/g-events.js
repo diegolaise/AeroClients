@@ -770,44 +770,30 @@ $(document).delegate('.check', 'click', function(e) {
 });
 
 //=============================================================
-//TRASH 
+// TRASH EXPORTED FILE
 //=============================================================
-function Event_ExportTrashed(){}
-$(document).delegate('.fa.fa-trash-o', 'click', function(e) { 
-	e.preventDefault(); e.stopPropagation();
-	var $this = $(this);
-
-	var href = $(this).attr("title");
-
-	var filename = href.substring(href.lastIndexOf("/") + 1);
-	filename = filename.substring(0, filename.indexOf(".json"));
-
-	bootbox.confirm({ size:"medium"
-		, title: "Remove file '<b>" + filename + "</b>' from the server"
-		, message: "Are you sure ?"
-			, callback: function(bOk) {
-				if (bOk) {
-					$this.closest("li").remove();
-					RemoveExportedFile(href); 
-				}
-			} 
-	});
-});
-
-//=============================================================
-//DOWNLOAD IMPORT  
-//=============================================================
-function Event_ExportOpenClick(){}
-$(document).delegate('.exportText', 'click', function(e) { 
-	//---
-	// This is Used instead of href, 
-	// beacause : allow to stop propagation when click on delete icon
-	//---
-	e.stopPropagation();
-	var href = $(this).parent().attr("title");
-	window.open(href);
-});
-
+//function Event_ExportTrashed(){}
+//$(document).delegate('.fa.fa-trash-o', 'click', function(e) { 
+//	e.preventDefault(); e.stopPropagation();
+//	var $this = $(this);
+//
+//	var href = $(this).attr("title");
+//
+//	var filename = href.substring(href.lastIndexOf("/") + 1);
+//	filename = filename.substring(0, filename.indexOf(".json"));
+//
+//	bootbox.confirm({ size:"medium"
+//		, title: "Remove file '<b>" + filename + "</b>' from the server"
+//		, message: "Are you sure ?"
+//			, callback: function(bOk) {
+//				if (bOk) {
+//					$this.closest("li").remove();
+//					RemoveExportedFile(href); 
+//				}
+//			} 
+//	});
+//});
+ 
 //=============================================================
 //HANDLE SELECT CHANGE  
 //=============================================================

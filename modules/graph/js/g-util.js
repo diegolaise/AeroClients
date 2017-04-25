@@ -486,34 +486,7 @@ function SaveExportedFile(fileName, jsData, fdelegate) {
 	});	
 }
 
-/**
- * Remove exported file
- * @param filePath
- * @param fdelegate
- */
-function RemoveExportedFile(filePath, fdelegate) { 
-	var filename = filePath.replace($graphScope._tmp, "");
-	
-	$.ajax({ type : "POST"
-		, url     : $graphScope.httpUrl() + "fileHandler.jsp?action=remove&path="+filePath +$graphScope.params("&")
-		, beforeSend	: function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic "+ $graphScope._logStr); 
-			xhr.setRequestHeader("WWW-authenticate", "database");
-		}
-		, dataType : 'text'
-		, async : false 
-		//, data  : {} 
-		, success : function() {
-			if (fdelegate)  fdelegate(true);
-			bootbox.alert("The File "+ filename + " was deleted !");  
-		},
-		error : function(err) { 
-			console.log(err.responseText); 
-			bootbox.alert("Failed to remove: " + filename + " !<br><br>" + err.responseText);
-			if (fdelegate) fdelegate(false); 
-		}
-	});	
-}
+
 
 /**
  * Create last path from a list

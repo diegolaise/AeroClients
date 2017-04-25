@@ -19,16 +19,12 @@ angular.module('Graph')
 	$scope._brandIcon   = "/assets/images/brand-icon.gif";
 
 	//Exported files path
-	$scope._tmp 		= "/datas/graph/";
+	$scope._tmp 		= "Exported/";
 	$scope._ALUrl = location.protocol + "//" + location.host;
 
 	//User parameters
 	$scope._login = "";
-	var _userInfos = {
-			sessionId : ""  
-			, logStr  : ""
-	};
-	 
+
 	//Active data infos
 	$scope._activePath = "";
 	$scope._oDataActive = null;
@@ -60,12 +56,9 @@ angular.module('Graph')
 		
 		//addSpin(); 
 		spin();
-		
-		_userInfos.sessionId= $rootScope.globals.currentUser.sessionId;
-		_userInfos.logStr 	= $rootScope.globals.currentUser.authdata;
-		$scope._login 	    = $rootScope.globals.currentUser.username;
-		
-		$scope._activePath = $routeParams.activePath || $rootScope.globals.currentUser.active_path;
+
+		$scope._login 	    = $rootScope.globals.currentUser.username; 
+		$scope._activePath  = $routeParams.activePath || $rootScope.globals.currentUser.active_path;
 
 		//Initialize xhr log string  
 		$scope._tmp += $scope._login + "/"; 
@@ -73,22 +66,13 @@ angular.module('Graph')
 		//---------------------------------
 		// Get list of exported files 
 		//--------------------------------- 
-		//listExportedFile();
+		listExportedFile();
 
 		//---------------------------------
 		// Load active data
 		//---------------------------------
 		loadActiveData(false, hideSpin);
-
-		//--------------------------------
-		// Store au cas ou
-		//--------------------------------
-		//$scope.store();
 	};
-	
-//	$scope.httpUrl = function() {
-//		return  GraphService.GetHttpUrl() + '/';
-//	}
 
 	/** Load active data */
 	var loadActiveData = function(bOnlyUpdate, callback) {
@@ -102,6 +86,9 @@ angular.module('Graph')
 			}
 			return;
 		}
+		
+		// Store active data
+		$scope.store();
 
 		//Load many active data
 		var tabDatas = $scope._activePath.split(","); 
@@ -167,7 +154,7 @@ angular.module('Graph')
 			}
 		}
 		, function(err, status, headers, config) {
-			bootbox.alert("Read active data Error <br>" + $scope.log(err));
+			bootbox.alert("Read active data Error <br>" + showlog(err));
 			//Call back
 			if (callback) {
 				callback(false);
@@ -180,49 +167,53 @@ angular.module('Graph')
 	var loadDatas = function(tabDatas, bOnlyUpdate, callback) { 
 
 		var N = tabDatas.length; 
+		
+		bootbox.alert("TO DO");
 
-		//Path to handle
-		var showPath = (N==1 ? $scope._activePath : ""); 
-
-		var tDataRes = [];
-		var endLoading = function(jdata) {
-			if (jdata) {
-				tDataRes.push(jdata);
-			}
-
-			if (--N>0)  return;
-
-			//Init Graph
-			$scope._oDataActive = initGraph(showPath, tDataRes, bOnlyUpdate);
-
-			//console.log("Entry get: " + path);
-			if (callback) {
-				callback(tDataRes.length>0);
-			}
-		}
-
-		var sUrl = $scope.httpUrl() + "getEntry.jsp?children=both"+$scope.params("&")+"&path=";
-		for (var i=0; i<tabDatas.length; i++) {
-			//console.log( i + " : " + tabDatas[i]);
-			$http({ method	: "GET" 
-							, url		: sUrl + tabDatas[i]
-							, headers 	: $scope.xhrHeader() 
-							, dataType	: "json"
-							, async		: true //must true for parallels
-							//, data		: angular.toJson(tabDatas,4)
-
-			}).success(function(jdata) {  
-				endLoading(jdata);
-
-			}).error(function (err, status, headers, config) { 
-				console.log("Read active data ! "+ err); //JSON.stringify(err.responseText)); 
-				endLoading(null);
-			});  
-		}
+//		//Path to handle
+//		var showPath = (N==1 ? $scope._activePath : ""); 
+//
+//		var tDataRes = [];
+//		var endLoading = function(jdata) {
+//			if (jdata) {
+//				tDataRes.push(jdata);
+//			}
+//
+//			if (--N>0)  {
+//				return;
+//			}
+//
+//			//Init Graph
+//			$scope._oDataActive = initGraph(showPath, tDataRes, bOnlyUpdate);
+//
+//			//console.log("Entry get: " + path);
+//			if (callback) {
+//				callback(tDataRes.length>0);
+//			}
+//		}
+//
+//		var sUrl = $scope.httpUrl() + "getEntry.jsp?children=both"+$scope.params("&")+"&path=";
+//		for (var i=0; i<tabDatas.length; i++) {
+//			//console.log( i + " : " + tabDatas[i]);
+//			$http({ method	: "GET" 
+//							, url		: sUrl + tabDatas[i]
+//							, headers 	: $scope.xhrHeader() 
+//							, dataType	: "json"
+//							, async		: true //must true for parallels
+//							//, data		: angular.toJson(tabDatas,4)
+//
+//			}).success(function(jdata) {  
+//				endLoading(jdata);
+//
+//			}).error(function (err, status, headers, config) { 
+//				console.log("Read active data ! "+ err); //JSON.stringify(err.responseText)); 
+//				endLoading(null);
+//			});  
+//		}
 	}
 	
 	/**
-	 * Load entry
+	 * Load entry for draw.js
 	 */
 	$scope.expandEntry = function(path, lnkname, callback) {
 		GraphService.getEntry(path, lnkname, callback);
@@ -240,34 +231,22 @@ angular.module('Graph')
 		$scope._hExtension = {}; 
 		$scope._oDataActive = null;
 
-		var endLoading = function(bOk) {
-			if (bOk)  $scope.store();//not working, because no cache
+		loadActiveData(bOnlyUpdate, function(bOk) {
+			if (bOk) {
+				$scope.store();//not working, because no cache
+			}
 
 			//Force to refresh views;
-			if ( ! $scope.$$phase ) $scope.$apply();
+			if ( ! $scope.$$phase ) {
+				$scope.$apply();
+			}
 			hideSpin();
 			_SLIDE = false;
-		} 
-		loadActiveData(bOnlyUpdate, endLoading);
-	};
-
-	/** Get user parameter */
-	$scope.params = function(sep) { 
-		if (!sep) sep = "";
-		var p = sep + "sessionId="+$scope._sessionId; 
-		return p;
-	};
-
-	/** Get xhrHeader log string */ 
-	$scope.xhrHeader = function() { 
-		return {  "Content-Type"		: "application/json" 
-				, "WWW-authenticate": "database" 
-				, "Authorization"   : "Basic " + $scope._logStr 
-		}; 
+		});
 	};
 
 	/** Show log */
-	$scope.log = function(err) {
+	var showlog = function(err) {
 		var sErr = (""+err);
 		if (typeof err === 'object') {
 			sErr = err.responseText;
@@ -291,47 +270,48 @@ angular.module('Graph')
 	 * Get list of exported files 
 	 *--------------------------------- */
 	var listExportedFile = function(callback) { 
-		//Request
-		$http({ method	: "GET"
-			, url	    : $scope.httpUrl() + "fileHandler.jsp?action=list"+$scope.params("&")+"&path="+$scope._tmp 
-			, dataType  : "json"   
-			, data	    : {}   
-		    , headers   : $scope.xhrHeader()
-
-		}).success(function(reponse) {  
-			if (reponse.trim()!="") {
-				var tExpFiles = reponse.split(",");
-				for (var i=0; i<tExpFiles.length; i++) {
-					var fileName = tExpFiles[i];
-					fileName = fileName.replace(/[\n\t\r]/g,"").trim();
-					$scope.addExported(fileName);
-				}
-
-				if (tExpFiles.length==0) { 
-					if ( $("#exportedFiles").next().is(':visible') )
-						$("#exportedFiles").trigger("click");
-				}
-				else  if ( !$("#exportedFiles").next().is(':visible') )
-					$("#exportedFiles").trigger("click");
+		console.log("listExportedFile ...");
+		
+		GraphService.getListFiles($scope._tmp, function(tExpFiles) {
+				
+			for (var i=0; i<tExpFiles.length; i++) {
+				var fileName = tExpFiles[i];
+				fileName = fileName.replace(/[\n\t\r]/g,"").trim();
+				$scope.addExported(fileName);
 			}
-			if (callback) callback(reponse);
-		})
-		.error(function (err, status, headers, config) {
-			$scope.log(err);
-			if (callback) callback();
-		});
+
+			if (tExpFiles.length==0) { 
+				if ( $("#exportedFiles").next().is(':visible') ) {
+					$("#exportedFiles").trigger("click");
+				}
+			}
+			else  if ( !$("#exportedFiles").next().is(':visible') ) {
+				$("#exportedFiles").trigger("click");
+			}
+
+			if (callback) {
+				callback(reponse);
+			}
+		}), function(err) {
+			showlog(err);
+			if (callback) {
+				callback();
+			}
+		}
 	};
 
 	/** Add exported file */
 	$scope.addExported = function(fname) {
 		var skey = fname;
 		var i = fname.lastIndexOf(".");
-		if (i>0)//Remove extension
-			skey = fname.substring(0,i); 
+		if (i>0) {
+			//Remove extension
+			skey = fname.substring(0,i); 	
+		}
 
 		//Cut
-		if (skey.length > 22) {
-			skey = skey.substring(0, 22) + " ..";
+		if (skey.length > 16) {
+			skey = skey.substring(0, 8) + " ... " + skey.substring(skey.length - 9);
 		}	
 		$scope._exported[skey] = $scope._tmp + fname;		
 	}
@@ -373,10 +353,12 @@ angular.module('Graph')
 		var version = oEntry._version 
 		if (version) { 
 			version = "v"+ version; 
-			if (version in $scope._hVersion)
+			if (version in $scope._hVersion){
 				$scope._hVersion[version] += 1;
-			else
+			}
+			else {
 				$scope._hVersion[version] = 1;
+			}
 		}
 	};
 
@@ -405,32 +387,47 @@ angular.module('Graph')
 	};
 
 	$scope.getSelected = function(label, val) {
-		if ( $scope.isSelected(label, val) == "selected") 
+		if ( $scope.isSelected(label, val) == "selected") {
 			return "active";
+		}
 		return "";
 	}
 
 	$scope.checkClass = function(label, val) {
-		if ( $scope.isMultipleData() || !$scope._oDataActive) return "fa fa-circle-o";
+		if ( $scope.isMultipleData() || !$scope._oDataActive) {
+			return "fa fa-circle-o";
+		}
 		var name = $scope.metaName(label)
-		if (val == $scope._oDataActive.metadata(name))
+		if (val == $scope._oDataActive.metadata(name)){
 			return "fa fa-check-circle-o text-primary";
+		}
 		return "fa fa-circle-o";
 	};
 
 	$scope.activeTag = function(label, val) {
-		if ( $scope.isMultipleData() || !$scope._oDataActive) return "";
+		if ( $scope.isMultipleData() || !$scope._oDataActive) {
+			return "";
+		}
 		var name = $scope.metaName(label)
-		if (val == $scope._oDataActive.metadata(name))
+		if (val == $scope._oDataActive.metadata(name)) {
 			return "*";
+		}
 		return "";
 	};
 
 	$scope.getClass = function(label) { 
-		if (label == "Version" ) return "fa-code-fork";
-		if (label == "Process" ) return "fa-cogs";
-		if (label.indexOf("Study")>=0 ) return "fa-graduation-cap";
-		if (label == "Tool" ) return "fa-wrench";
+		if (label == "Version" ) {
+			return "fa-code-fork";
+		}
+		if (label == "Process" ) {
+			return "fa-cogs";
+		}
+		if (label.indexOf("Study")>=0 ) {
+			return "fa-graduation-cap";
+		}
+		if (label == "Tool" ) {
+			return "fa-wrench";
+		}
 
 		return "fa-gavel";
 	}
@@ -440,9 +437,6 @@ angular.module('Graph')
 	};
 
 	$scope.store = function(param) {
-//		if (!_B_HASH) return;
-//		if (!param) param = encodeURIComponent($scope._logStr + _SEP + $scope._activePath);
-//		setStorage($scope._sessionId, param);
 		$rootScope.globals = $cookieStore.get('globals') || {};
 		$rootScope.globals.currentUser.active_path = $scope._activePath;
 	}
@@ -492,16 +486,39 @@ angular.module('Graph')
 	};
 	
 	/// EVENTS //////////////////////////////////////////////
-	/**
-	 * //TODO : a tester par rapport au $(document).delegate('.exportText', 'click', function(e) 
-	 */
-	$scope.exportSelected = function($event, href) {
+	
+	$scope.getExported = function($event, href) {
 		$event.stopPropagation();
 		//---
 		// This is Used instead of href, 
-		// beacause : allow to stop propagation when click on delete icon
+		// because : allow to stop propagation when click on delete icon
 		//---
 		window.open(href);
+	};
+	 
+	$scope.delExported  = function(e, href) { 
+		e.preventDefault(); 
+		e.stopPropagation(); 
+		
+		var filename = href.substring(href.lastIndexOf("/") + 1);
+		filename = filename.substring(0, filename.indexOf(".json"));
+
+		bootbox.confirm({ size:"medium"
+			, title: "Remove file '<br/><b>" + filename + "</b><br/>' from the server"
+			, message: "Are you sure ?"
+				, callback: function(bOk) {
+					if (bOk) { 
+						GraphService.removeExportedFile(href, function(success) {
+							if (success) {
+								$this.closest("li").remove();
+							}
+							else {
+								console.log("Failed to remove exported file !");
+							}
+ 						}); 
+					}
+				} 
+		});
 	};
 
 }]); //----- END graph controller -------

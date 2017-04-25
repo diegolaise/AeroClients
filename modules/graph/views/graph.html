@@ -231,10 +231,9 @@
 					<li ng-repeat="(fname, path) in _exported">
 						<a href="" title="{{path}}" style="white-space: nowrap;">
  					 		<span class="fa-stack"><i class="fa fa-download fa-stack-1x"></i></span>
-					 		<span class="exportText" title="Click to download this file">{{fname}}</span>
-					 		<!-- <span class="exportText" ng-click="exportSelected($event, path)" title="Click to download this file">{{fname}}</span> -->
+					 		<span class="exportText" title="Click to download this file" ng-click="getExported($event,path)">{{fname}}</span>
 					 		<span class="fa-stack pull-right" title="Click to delete file">
-					 			<i class="fa fa-trash-o fa-stack-1x" title="{{path}}"></i>
+					 			<i class="fa fa-trash-o fa-stack-1x" ng-click="delExported($event,path)"></i>
 					 		</span>
 						</a> 
 					</li>

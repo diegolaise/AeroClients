@@ -17,7 +17,7 @@ angular.module('Graph')
 
 		var myhttp = $resource(SERVER_URL + "/getDatas/:level/:filepath");
 		myhttp.get({filepath: filepath, level:ilevel}, function(res) { //encodeURIComponent(
-			console.log("getDataInfo success !");
+			//console.log("getDataInfo success !");
 			successHandler(res.data); //data.$promise);
 			
 		}, function(err) {
@@ -34,7 +34,7 @@ angular.module('Graph')
 
 		var myhttp = $resource(SERVER_URL + "/getDatas/:level/:filepath");
 		myhttp.get({filepath: filepath, level:ilevel}, function(res) { //encodeURIComponent(
-			console.log("getDatas success !");
+			//console.log("getDatas success !");
 			successHandler(res.data); //data.$promise);
 			
 		}, function(err) {
@@ -48,8 +48,9 @@ angular.module('Graph')
 	 * Get entry informations
 	 */
 	service.getEntry= function(filepath, lnkname, successHandler, errorHandler) { 
-		var myhttp = $resource(SERVER_URL + "/getEntry/:path/:lnkdir");		
 		console.log("Call service.getEntry: " + filepath);
+		var myhttp = $resource(SERVER_URL + "/getEntry/:path/:lnkdir");		
+		
 		myhttp.get({ path: filepath.split(","), lnkdir:lnkname }, function(res) {
 			console.log("getEntry success ! " + path);
 			successHandler(res.data); //data.$promise);
@@ -62,6 +63,33 @@ angular.module('Graph')
 		});
 
 	};
+	
+	service.getListFiles = function(tmp_path, successHandler, errorHandler) { 
+		var myhttp = $resource(SERVER_URL + "/getListFiles/:path");	
+		myhttp.get({path : tmp_path}, function(res) {
+			successHandler(res.data); 
+		}
+		, function(err) { 
+			if (errorHandler) {
+				errorHandler(err);
+			}
+		});
+	};
+	
+	/**
+	 * Remove exported file
+	 * @param filePath
+	 * @param fdelegate
+	 */
+	service.removeExportedFile = function(filePath, fdelegate)  {
+		var myhttp = $resource(SERVER_URL + "/removeFiles/:path");	
+		myhttp.get( {path : filePath.split(",")}, function(success) {
+				if (fdelegate) {
+					fdelegate(success);
+				}  
+			} 
+		);	
+	}
 
 	return service;
 }]);
