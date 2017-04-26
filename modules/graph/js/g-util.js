@@ -11,7 +11,6 @@ var _IS_IE = (window.navigator.userAgent.toLowerCase().indexOf("trident")>=0
 				|| window.navigator.userAgent.toLowerCase().indexOf("msie")>=0);
 
 
-
 /** CONSTANTS - GLOBAL VAR */
 var _TABKEY = { "Tool"		: "From tool" 
 				, "Process"	: "From process"
@@ -23,9 +22,6 @@ function toId(metaLbl) {
 	var id = metaLbl.replace(/ /g, "_");
 	return "a_" + id;
 }
-
-//======================== URL ==========================
-//var _SERVER_URL = ""; //"./src/";
 
 /**------------------------------------------------------------------
  * 			GRAPH/DRAW GLOBAL VARS 

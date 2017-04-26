@@ -13,12 +13,6 @@ var _TempColumn = {};
 function initGraph(activeDataPath, tDatas, bOnlyUpdate) {
 	
 	//Reset instances if only update
-//	if (bOnlyUpdate) { //Marceh mal
-//		$.each(_INSTANCES, function(x, obj) {
-//			obj.reset();
-//		});
-//	}
-//	else 
 	_INSTANCES = {};
 
 	//-----------------------------------
@@ -758,6 +752,291 @@ function expandEntry(oEntry, bIsChild, callback) {
 	else {
 		nextActiveData();
 	}
+	
+	//Update last number
+	$(".badger", $("#lastVersion").parent()).html(lastCreatedList.length);
+}
+
+function expandEntry_old(oEntry, bIsChild, callback) {
+	  
+	var tabToCreate = (bIsChild ? oEntry._cLinks : oEntry._pLinks);
+	if (!tabToCreate) return;
+	
+	var iTotalToCreate  = tabToCreate.length;
+	if (iTotalToCreate==0) return;
+	
+	//- WAIT
+	wait();
+	 
+	//---- TOGGLE MINUS -----  
+	toggleToMinus(oEntry.connector(bIsChild));
+	
+	//Get Ordered last parent
+	var lastCreatedList = sortLastPath(tabToCreate);
+
+	//Next column index
+	var iLevel = oEntry._iLevel + (bIsChild ? 1 : (-1));
+	
+	//Callback function
+	var NbEntryCreated = 0;   
+	var tOrphanEntries = [];
+	var tEntries 	   = [];
+	var tBoxToCreate   = [];
+	
+	//-----------------------------------------------
+	// DRAW CALLBACK
+	//-----------------------------------------------	
+	var drawCallback = function(oEntryToDraw) {  
+		//Add add Parent
+		if (bIsChild)
+			oEntryToDraw.addParent(oEntry);
+		else
+			oEntry.addParent(oEntryToDraw);
+		
+		//Create Childs containers  
+		var boxContainer = createContainers(oEntryToDraw, iLevel, oEntry); 
+		
+		// DRAW child or parent entry (create HTML)
+		oEntryToDraw.draw(iLevel, lastCreatedList);
+		NbEntryCreated++;
+		
+		if (!boxContainer) {
+			tOrphanEntries.push(oEntryToDraw); //Entry without container
+			
+			if (_IS_TO_HIDE) { 
+				oEntryToDraw.mask();
+				wait(true); 
+				return false;
+			}
+		}
+		else {
+			//Entries to create
+			tEntries.push(boxContainer); 
+			
+			var ct = boxContainer._container; //Group
+			if (!ct) {
+				ct = boxContainer; //Container
+				tEntries.push(oEntryToDraw);
+			}
+			
+			if (_IS_TO_HIDE) { 
+				ct.jDom().hide();
+				wait(true); 
+				return false;
+			}
+			
+			//Save the container to create
+			if ($.inArray(ct, tBoxToCreate)<0) {
+				tBoxToCreate.push(ct); 
+			}
+
+			//Handle Group number
+			var num = boxContainer.handleEntryNumber();
+			
+//			if ( !_IS_IE && num == _MAX_ENTRIES) {
+////				boxContainer.panelBody().slimScroll({height : '100%'}); 
+////				boxContainer.panelBody().css("height", "115px");
+//				$(".slimScrollDiv").css("margin-top", "-4px");
+//			}
+			
+		}  
+
+		//Append version, extension
+		$graphScope.updateList(oEntryToDraw);
+		
+		//If not all created : do nothing
+		if (NbEntryCreated < iTotalToCreate) { 
+			wait(_IS_TO_HIDE);
+			return;
+		}
+		
+		//-------------------------------------------
+		// ALL ENTRY CREATED : DRAW BOXES & Position
+		//-------------------------------------------
+		//- Order box according to theirs contents number
+		var orderedBoxes = [];
+		if (tBoxToCreate.length==1)
+			orderedBoxes = tBoxToCreate;
+		else {
+			$.each(tBoxToCreate, function(j, box) { 
+				var nb = box.boxNumToDraw();
+				bFound = false;	
+				$.each(orderedBoxes, function(k, sbox) {
+					if (nb < sbox.boxNumToDraw()) {
+						//Insert before
+						orderedBoxes.splice(k, 0, box);
+						bFound = true;
+						return false;//Break
+					}
+				});
+				if (!bFound) {
+					orderedBoxes.push(box);
+				}
+			});
+		}
+		
+		//Get all containers to draw
+		var tabContainers = tOrphanEntries;
+		$.each(orderedBoxes, function(k, cont) {
+			if (cont.isGroup()) {
+				tabContainers.push(cont);
+			}
+		   else { 
+			   //Push only its own entries
+			   $.each(cont._entries, function(z, entry) {
+				   if ( $.inArray(entry, tEntries)>= 0)
+					   tabContainers.push(entry);
+			   });
+		   }
+		});
+		 
+		$.each(tabContainers, function(ix, oBoxToLink) {
+			
+			if (! oBoxToLink.isVisible()) return true; //continue
+			
+			var bCollapse = false;
+			
+			//Add IE scrolling only at the end
+			var num  = oBoxToLink.entryNumber();
+			//var num  = oBoxToLink.handleEntryNumber(); //_IS_IE);
+			if (num > _MAX_ENTRIES) {
+				if (oBoxToLink._container && oBoxToLink._container._entries.length>1) {
+					bCollapse = true; 
+				}
+				
+//				if (!_IS_IE) {
+//					console.log(" FF Obox width" + oBoxToLink.panelBody().width() 
+//								+ " " + oBoxToLink.panelBody().outerWidth()
+//								);
+//					
+//					var $entry1 = oBoxToLink._entries[0].jDom();
+//					console.log(" FF Obox width" + $entry1.width() 
+//							+ " " + $entry1.outerWidth() );
+//				}
+//				else {
+//					console.log(" IE Obox width" + oBoxToLink.panelBody().width() 
+//							+ " " + oBoxToLink.panelBody().outerWidth()
+//							);
+//				var $entry1 = oBoxToLink._entries[0].jDom();
+//				console.log(" IE Obox width" + $entry1.width() 
+//						+ " " + $entry1.outerWidth() );
+//				}
+			}
+			 
+			var cont   = oBoxToLink._container;
+			if (!cont) cont = oBoxToLink;
+			
+			var idx = indexOf(cont); 
+			if ((idx<0 || cont._position.top <= 0))
+			{  
+				var pos = (bIsChild ? getChildPos(cont, oEntry) : getParentPos(cont, oEntry));
+				cont.setPosition(pos);
+				if (idx<0) saveElement(cont);
+			}
+			else if (!bCollapse) { 
+				moveNextToDown(cont); 
+			} 
+			else {
+				EventG_HeadingClick($(oBoxToLink.id() + " .panel-heading"));
+				resetPosition(iLevel);
+			}
+			
+			if (oBoxToLink.isContainer()) { 
+				$.each(oBoxToLink._entries, function(x, entry) {
+					 drawLine(oEntry, entry, bIsChild); 
+				});				
+			} 
+			else if ( oBoxToLink.isEntry() ) 
+				drawLine(oEntry, oBoxToLink, bIsChild);
+			else { 
+				var gpBox = getUnifiedGroup(oBoxToLink); 
+				
+				if (gpBox == oBoxToLink) 
+					drawLine(oEntry, oBoxToLink, bIsChild);
+				else { 
+					if (gpBox != null) { 
+						oBoxToLink = gpBox;
+					}
+					
+					oBoxToLink.display();
+					oBoxToLink.handleEntryNumber();
+					
+					$.each(oBoxToLink._entries, function(i, obj) {
+						if ( tabToCreate.indexOf(obj._path)>=0 ) {
+							drawLine(oEntry, obj, bIsChild);
+						}
+					});
+					
+					//Move after
+					if (gpBox != null) {   
+						moveNextToDown(oBoxToLink);
+					}
+				} 
+			}  
+		});
+
+		//Do Callback
+		if (callback) callback(iLevel); 
+		
+	}//end drawCallback
+
+	//-----------------------------------------------
+	// Create all parent of active data
+	//----------------------------------------------- 
+	$.each(tabToCreate, function(i, pPath) { 
+		if (_IS_TO_HIDE) { wait(true); return; }
+		 
+		//Get entry to create if exists
+		var oNodeCreated = getEntry(pPath);		
+		if (!oNodeCreated || !oNodeCreated.drawed()) {  
+			getEntryData(pPath, bIsChild, drawCallback); 
+		}
+		else {   
+			 
+			if (bIsChild)
+				oNodeCreated.addParent(oEntry);
+			else
+				oEntry.addParent(oNodeCreated);
+			
+			 //Show entry, if was just hidden, redraw -> draw the line
+			 if ( oNodeCreated.canShow() ) {
+				 
+				 //SHOW
+				 oNodeCreated.display();
+				 
+				 if (_SVG.wasRemoved(oEntry.id(), oNodeCreated.id())) {
+					 drawLine(oEntry, oNodeCreated, bIsChild);
+					 oNodeCreated.handleEntryNumber();
+				 }
+				 else if ( oNodeCreated._container 
+						 && _SVG.wasRemoved(oEntry.id(), oNodeCreated._container.id())) {
+					 drawLine(oEntry, oNodeCreated._container, bIsChild);
+					 oNodeCreated.handleEntryNumber();
+				 }
+				 else
+					connectChildOrParent(oEntry, oNodeCreated, bIsChild);
+			 }
+
+			 //Callback for cascade expand
+			 var afterExpand = function() {
+				NbEntryCreated++;
+				
+				if (NbEntryCreated >= iTotalToCreate) { 
+					if (callback) 
+						callback(iLevel); 
+				}
+			 }
+			 
+			 //For If toggle minus (-) left => show parent cascade
+			 var $span = oNodeCreated.connector();
+			 if (isVisible($span) && $span.attr("class").indexOf("minus")>0) {
+				expandEntry(oNodeCreated, bIsChild, afterExpand);
+			 } 
+			 else {
+				 afterExpand();
+			 }
+		}
+	});
 	
 	//Update last number
 	$(".badger", $("#lastVersion").parent()).html(lastCreatedList.length);
