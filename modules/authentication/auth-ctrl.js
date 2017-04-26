@@ -51,11 +51,11 @@ angular.module('Authentication')
 //	        confirmation.message = "All data willl be lost.";
 //	        e.preventDefault();
 //	    });
-//	    
-//	    $scope.$on('onUnload', function (e) {
-//			AuthenticationService.ClearCredentials();
-//	        console.log('leaving page'); // Use 'Preserve Log' option in Console
-//	    });
+	    
+	    $scope.$on('onUnload', function (e) {
+			AuthenticationService.ClearCredentials();
+	        console.log('leaving page'); // Use 'Preserve Log' option in Console
+	    });
 		
 
 }]); ///-- End controller

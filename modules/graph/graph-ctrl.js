@@ -19,8 +19,7 @@ angular.module('Graph')
 	$scope._brandIcon   = "/assets/images/brand-icon.gif";
 
 	//Exported files path
-	$scope._tmp 		= "Exported/";
-	$scope._ALUrl = location.protocol + "//" + location.host;
+	$scope._exportDir 	= "Exported/"; 
 
 	//User parameters
 	$scope._login = "";
@@ -61,7 +60,7 @@ angular.module('Graph')
 		$scope._activePath  = $routeParams.activePath || $rootScope.globals.currentUser.active_path;
 
 		//Initialize xhr log string  
-		$scope._tmp += $scope._login + "/"; 
+		$scope._exportDir += $scope._login + "/"; 
 			
 		//---------------------------------
 		// Get list of exported files 
@@ -79,8 +78,7 @@ angular.module('Graph')
 		
 		if ( ! $scope._activePath ) {
 			//TODO : propose to select a file
-			//Show tree view here
-			
+			//Show tree view here 
 			if (callback) {
 				callback(false);
 			}
@@ -110,44 +108,57 @@ angular.module('Graph')
 			if (jdata && Object.keys(jdata).length>0) {
 				
 				//Init graph and active data object
-				$scope._oDataActive = initGraph($scope._activePath, jdata, bOnlyUpdate);
-	
-				//Read all meta-data by version once and keep it for all
-				if ($scope._oDataActive && $scope._oDataActive.isEntry()) {
-	
-					var dMetadataByVersion = $scope._oDataActive.get("metaByVersion");
-	
-					//Get all version for this data
-					var tabVersions = $scope._oDataActive._allVersions;
-	
-					$scope._hActiveData["Version"] = tabVersions; 
-					$.each(tabVersions, function(idx, ver) {
-						var dMeta = dMetadataByVersion[ver];
-						if (dMeta) {
-							if (ver === $scope._oDataActive._version) {
-								tabVersions[idx] += " *";
+				initGraph($scope._activePath, jdata, bOnlyUpdate, function(entry) {
+					
+					$scope._oDataActive = entry;
+					
+					//Read all meta-data by version once and keep it for all
+					if ($scope._oDataActive && $scope._oDataActive.isEntry()) {
+		
+						var dMetadataByVersion = $scope._oDataActive.get("metaByVersion");
+		
+						//Get all version for this data
+						var tabVersions = $scope._oDataActive._allVersions;
+		
+						//Get current version
+						var currentVersion = $scope._oDataActive._version;
+						
+						$scope._hActiveData["Version"] = tabVersions; 
+						$.each(tabVersions, function(idx, v) {
+							var dMeta;
+							var ver = (""+v);
+							if ( ver === currentVersion) {
+								dMeta = $scope._oDataActive._metadata; 
+								//tabVersions[idx] = ver + "    *";
+								tabVersions[idx] = "* " + ver;
 							}
+							else {
+								dMeta = dMetadataByVersion[ver];
+							} 
 		
 							$.each(_TABKEY, function(label, name) { 
-								var val = dMeta[name];
-								if (!val) {val = "";}
-		
+								var val = (dMeta ? dMeta[name] :  "");
+								
+								//var sep = "    (v"+ver+")";
+								var sep = "v"+ver+": ";
 								if (ver === $scope._oDataActive._version) {
-									val += " *";}
-								else {
-									val += " (v"+ver+")";
-								}
+									//sep = "    *"; 
+									sep = "* ";
+								} 
+								val = sep + val;
 								if (! (label in $scope._hActiveData) ) { 
 									$scope._hActiveData[label] = [val];
 								}
 								else {
 									$scope._hActiveData[label].push(val);
 								}
-							});
-						}
-					}); 
-				}
-			}
+							}); 
+						}); 
+						 
+					}
+				}); //end initGraph 
+			}//if has data
+			
 			//Call back
 			if (callback) {
 				callback(true);
@@ -168,6 +179,7 @@ angular.module('Graph')
 
 		var N = tabDatas.length; 
 		
+		callback(true);
 		bootbox.alert("TO DO");
 
 //		//Path to handle
@@ -216,7 +228,9 @@ angular.module('Graph')
 	 * Load entry for draw.js
 	 */
 	$scope.expandEntry = function(path, lnkname, callback) {
-		GraphService.getEntry(path, lnkname, callback);
+		GraphService.getEntry(path, lnkname, function(data) {
+			callback(data[0]);
+		});
 	}
 
 	/** Change the active data */
@@ -241,30 +255,9 @@ angular.module('Graph')
 				$scope.$apply();
 			}
 			hideSpin();
-			_SLIDE = false;
+			slide(false);
 		});
 	};
-
-	/** Show log */
-	var showlog = function(err) {
-		var sErr = (""+err);
-		if (typeof err === 'object') {
-			sErr = err.responseText;
-			if (!sErr) sErr = err.data.responseText;
-			if (sErr) {
-				var i = sErr.indexOf("<body");
-				if (i>0) {
-					j = sErr.indexOf("/body>");
-					sErr = sErr.substring(i+6, j-1);
-				} 
-			}
-			else {
-				sErr = JSON.stringify(err, null, 4);
-			}
-		}
-		console.log("ERROR: \n" + sErr.replace(/<\//g, "\n</") );
-		return sErr;
-	}
 
 	/**---------------------------------
 	 * Get list of exported files 
@@ -272,7 +265,7 @@ angular.module('Graph')
 	var listExportedFile = function(callback) { 
 		console.log("listExportedFile ...");
 		
-		GraphService.getListFiles($scope._tmp, function(tExpFiles) {
+		GraphService.getListFiles($scope._exportDir, function(tExpFiles) {
 				
 			for (var i=0; i<tExpFiles.length; i++) {
 				var fileName = tExpFiles[i];
@@ -313,12 +306,41 @@ angular.module('Graph')
 		if (skey.length > 16) {
 			skey = skey.substring(0, 8) + " ... " + skey.substring(skey.length - 9);
 		}	
-		$scope._exported[skey] = $scope._tmp + fname;		
+		$scope._exported[skey] = $scope._exportDir + fname;		
 	}
 
+	/** Check if has exported */
 	$scope.hasExported = function() {
 		return (Object.keys($scope._exported).length>0);
 	}
+	
+	/**
+	 * Save exported file to json
+	 * @param fileName
+	 * @param jsData
+	 * @param fdelegate
+	 */
+	$scope.saveExportedFile = function(fileName, jsData, fdelegate) {
+		var filePath = $scope._exportDir + fileName;
+		GraphService.saveFile(filePath, function(success, err) {
+			if (success) { 
+				bootbox.alert("Datas was Exported successfully !", function() {
+					if (fdelegate) {
+						fdelegate(filePath); 
+					}
+				} );
+			}
+			else {
+				var errorMessage = showlog(err); 
+				bootbox.alert("Failed to save file <br> " + fileName + "<br><br>" + errorMessage);;
+				if (fdelegate) {
+					fdelegate("");  
+				}
+			}
+		});
+	}
+
+	/// BINDING /////////////////////////////////////////////////////////
 
 	/** Check if exists exported file */
 	$scope.exists = function(fname) {
@@ -376,13 +398,14 @@ angular.module('Graph')
 			name = _TABKEY[label];
 		return name;
 	};
-
+ 
 	$scope.isSelected = function(label, val) {
-		if ( $scope.isMultipleData() || !$scope._oDataActive) return "";
-		var name = $scope.metaName(label);
-
-		var value = $scope._oDataActive.metadata(name) + " *"; 
-		if (val == value) return "selected";
+		if ( $scope.isMultipleData() || !$scope._oDataActive) {
+			return "";
+		}
+		if ( (""+val).indexOf("*")>=0) {
+			return "selected";
+		}
 		return "";
 	};
 
@@ -445,8 +468,9 @@ angular.module('Graph')
 	$scope.shortPath = function() { 
 
 		if ($scope._activePath.indexOf(",")>0) {
-			if ($scope._oDataActive)
+			if ($scope._oDataActive) {
 				return $scope._oDataActive._label;
+			}
 			return "";
 		}
 
@@ -485,17 +509,53 @@ angular.module('Graph')
 		return $scope._activePath;
 	};
 	
+	///
 	/// EVENTS //////////////////////////////////////////////
+	///
 	
-	$scope.getExported = function($event, href) {
-		$event.stopPropagation();
+	/** Active data change */
+	$scope.activeDataChange  = function(e) {
+		slide(true);
+		
+		//Read checked version
+		var version = $("#a_Version :selected").text(); 
+		version = version.replace('*', '');
+
+		//Reload with new parameter  
+		var path = getPath($scope._activePath) + "?ver=" + version.trim(); 
+
+		//Reload
+		$scope.changeActiveData(path, true);
+
+		$("#actdata").removeClass("ic-enabled");
+		$("#actdata").addClass("ic-disabled");
+	}
+	
+	/** Open/load the exported file */
+	$scope.openExported = function(e, href) {
+		e.preventDefault(); 
+		e.stopPropagation();
 		//---
 		// This is Used instead of href, 
 		// because : allow to stop propagation when click on delete icon
 		//---
 		window.open(href);
 	};
-	 
+	
+	$scope.getExported = function(e, href) {
+		var filename = href.substring(href.lastIndexOf("/") + 1);
+
+		GraphService.download(href, function(data) {
+			var url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], {type:'application/json'}));
+			var a = document.createElement('a');
+			a.href = url;
+			a.download = filename;
+			a.target = '_blank';
+			a.click();
+		});
+	}
+	
+	/** Remove exported file */
 	$scope.delExported  = function(e, href) { 
 		e.preventDefault(); 
 		e.stopPropagation(); 
@@ -504,21 +564,56 @@ angular.module('Graph')
 		filename = filename.substring(0, filename.indexOf(".json"));
 
 		bootbox.confirm({ size:"medium"
-			, title: "Remove file '<br/><b>" + filename + "</b><br/>' from the server"
-			, message: "Are you sure ?"
-				, callback: function(bOk) {
+			, title   : "Remove following file from the server : <br/><b>" + filename + "</b>"
+			, message : "Are you sure ?"
+			, callback: function(bOk) {
 					if (bOk) { 
 						GraphService.removeExportedFile(href, function(success) {
 							if (success) {
-								$this.closest("li").remove();
+								e.currentTarget.closest("li").remove();
 							}
 							else {
 								console.log("Failed to remove exported file !");
 							}
  						}); 
 					}
-				} 
+			}//end callback
 		});
 	};
+	
+	/** Reorder graph children */
+	$scope.reorderChild = function(e) {	
+		restorePosition(true);
+		_SVG.redrawLines();
+	}
 
-}]); //----- END graph controller -------
+	/** Reorder graph parents */
+	$scope.reorderParent = function(e) {	
+		restorePosition(false);
+		_SVG.redrawLines();
+	}
+
+	/** Reorder graph entries */
+	$scope.reorderAll = function(e) {
+		initialPosition($scope._oDataActive);
+		
+		//Restore parent
+		restorePosition(false);
+		
+		//Restore child
+		restorePosition(true);
+		
+		//Redraw
+		_SVG.redrawLines();
+	}	
+
+	/** Move graph up/down  */
+	$scope.moveAll = function(bUp) {
+		moveAll(bUp);
+	}
+	
+	$scope.decaler = function(toLeft) {
+		decaler(toLeft);
+	}
+
+}]); //--============================= END graph controller --=============================//

@@ -1,27 +1,21 @@
 
 <!-- 
 <link rel="stylesheet" type="text/css" href="/modules/graph/css/sidebar.css"> 
-<link rel="stylesheet" type="text/css" href="/modules/graph/css/graph.css">
- -->
+<link rel="stylesheet" type="text/css" href="/modules/graph/css/graph.css"> 
+-->
+
 <script type="text/javascript">
-	/// Load css ///////
-	var fileref=document.createElement("link")
-	fileref.setAttribute("rel", "stylesheet")
-	fileref.setAttribute("type", "text/css")
-	fileref.setAttribute("href", "/modules/graph/css/sidebar.css");
-	document.getElementsByTagName("head")[0].appendChild(fileref);
-	
-	var fileref2=document.createElement("link")
-	fileref2.setAttribute("rel", "stylesheet")
-	fileref2.setAttribute("type", "text/css")
-	fileref2.setAttribute("href", "/modules/graph/css/graph.css");
-	document.getElementsByTagName("head")[0].appendChild(fileref2);
-	
-	/* //for javascript
-	    var fileref=document.createElement('script')
-        fileref.setAttribute("type","text/javascript")
-        fileref.setAttribute("src", filename)
-    */
+	/// Load graph css ///////
+	[ '/modules/graph/css/sidebar.css'
+	, '/modules/graph/css/graph.css'	  
+	].forEach( function(cssfile) {
+		var fileref = document.createElement("link")
+		fileref.setAttribute("rel", "stylesheet")
+		fileref.setAttribute("type", "text/css")
+		fileref.setAttribute("href", cssfile);
+		
+		document.getElementsByTagName("head")[0].appendChild(fileref);
+	})
 </script>
 
 <div ng-app="Graph" ng-init="initilizeGraph()">
@@ -60,7 +54,7 @@
 
   			<ul id="userinfo" class="nav navbar-nav navbar-right hidden-md hidden-sm hidden-xs">				
 				<li style="margin-left:10px;cursor:default;">
-					<a title="{{_ALUrl}}" ng-href="#/login">
+					<a title="Logout ..." ng-href="#/login">
 						<i class="glyphicon glyphicon-user"></i>
 						<span class="ltab">{{_login}}</span>
 				    </a>
@@ -74,16 +68,16 @@
        <div class="orderMenu">
 			<ul>
 			  	<li><a> 
-				<i onclick="reorderParent();" title="Order Parents" class="fa fa-sort-amount-desc fa-border"></i>
-				<i onclick="reorderAll();" title="Order All" class="fa fa-bars fa-border"></i>
-				<i onclick="reorderChild();" title="Order Children"  class="fa fa-sort-amount-asc fa-border"></i>  
+				<i ng-click="reorderParent()" title="Order Parents" class="fa fa-sort-amount-desc fa-border"></i>
+				<i ng-click="reorderAll()" title="Order All" class="fa fa-bars fa-border"></i>
+				<i ng-click="reorderChild()" title="Order Children" class="fa fa-sort-amount-asc fa-border"></i>  
 				
-				<i onclick="moveAll();" title="Move down" class="fa fa-long-arrow-down fa-border"></i>
+				<i ng-click="moveAll()" title="Move down" class="fa fa-long-arrow-down fa-border"></i>
 				
-				<i onclick="decaler(true);" title="Move left" class="fa fa-long-arrow-left fa-border"></i>
-				<i onclick="decaler();" title="Move right"  class="fa fa-long-arrow-right fa-border"></i>
+				<i ng-click="decaler(true)" title="Move left" class="fa fa-long-arrow-left fa-border"></i>
+				<i ng-click="decaler()" title="Move right" class="fa fa-long-arrow-right fa-border"></i>
 				
-				<i onclick="moveAll(true);" title="Move up" class="fa fa-long-arrow-up fa-border"></i>                                 					  	        
+				<i ng-click="moveAll(true)" title="Move up" class="fa fa-long-arrow-up fa-border"></i>                                 					  	        
 			   </a></li> 
 			</ul>
 		</div>
@@ -96,8 +90,7 @@
                     <a href="" title="actdata">
                     	<span class="titre">ACTIVE DATA</span> 
                     	<span class="rtab" style="margin-left:5%;"><i class="fa fa-angle-down"></i></span>
-                    	<span id="actdata" onclick="Event_ComboChange()" 
-                    		  title="Load selected active data" 
+                    	<span id="actdata" ng-click="activeDataChange()" title="Load selected active data" 
                     		  class="glyphicon glyphicon-open ic-disabled pull-right">
                         </span>
                     </a>
@@ -105,12 +98,12 @@
 		                <li ng-repeat="(metaLbl, tOpts) in _hActiveData">
 							<a href="" class="metadata">
 							    <span class="fa-stack"><i class="fa fa-stack-1x" ng-class="getClass(metaLbl)"></i></span>
-								<span>{{metaLbl}}</span>
+								<span>{{metaLbl}}</span>  
  								<select id="{{idOf(metaLbl)}}" title="{{metaName(metaLbl)}}">
 									<option ng-repeat="opt in tOpts track by $index" 
 											value="{{opt}}" title="{{$index}}"  
 											ng-selected="isSelected(metaLbl,opt)">{{opt}}</option>
-								</select> 
+								</select>
 							</a>
 						</li>
 					</ul>
@@ -230,8 +223,10 @@
                   <ul class="links submenu">
 					<li ng-repeat="(fname, path) in _exported">
 						<a href="" title="{{path}}" style="white-space: nowrap;">
- 					 		<span class="fa-stack"><i class="fa fa-download fa-stack-1x"></i></span>
-					 		<span class="exportText" title="Click to download this file" ng-click="getExported($event,path)">{{fname}}</span>
+ 					 		<span class="fa-stack" title="Download this file">
+ 					 			<i class="fa fa-download fa-stack-1x" ng-click="getExported($event,path)"></i>
+ 					 		</span>
+					 		<span class="exportText" ng-click="openExported($event,path)">{{fname}}</span>
 					 		<span class="fa-stack pull-right" title="Click to delete file">
 					 			<i class="fa fa-trash-o fa-stack-1x" ng-click="delExported($event,path)"></i>
 					 		</span>

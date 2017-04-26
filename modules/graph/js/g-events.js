@@ -392,6 +392,8 @@ function toggleCheckboxes(id) {
  * EXPORT FILES
  */
 var _SLIDE = false;
+function slide(val) { _SLIDE = val; }
+
 function exportFiles() {
 	_SLIDE = true;
 
@@ -445,8 +447,9 @@ function exportFiles() {
 					}
 				}
 
-				if ( ! $graphScope.exists(filename)) 
-					SaveExportedFile(filename, tabExported, wasSavedfunc); 
+				if ( ! $graphScope.exists(filename)) {
+					$graphScope.saveExportedFile(filename, tabExported, wasSavedfunc); 
+				}
 				else {
 					bootbox.confirm({ size: "medium"
 						, title : "A file named <b>"+fName+"</b> is already exist"
@@ -463,7 +466,7 @@ function exportFiles() {
 							}
 					, callback:  function(ok) {
 						if (ok) { 
-							SaveExportedFile(filename, tabExported, wasSavedfunc);
+							$graphScope.saveExportedFile(filename, tabExported, wasSavedfunc);
 						}
 					}
 					}); 
@@ -797,24 +800,6 @@ $(document).delegate('.check', 'click', function(e) {
 //=============================================================
 //HANDLE SELECT CHANGE  
 //=============================================================
-function Event_ComboChange(){
-	_SLIDE = true;
-
-	//Read checked version
-	var version = $("#a_Version :selected").text(); 
-
-	var n = version.indexOf("*");
-	if (n>0) version = version.substring(0,n).trim();
-
-	//Reload with new parameter  
-	var path = $graphScope._oDataActive.shortPath() +"?ver="+ version; 
-
-	//Reload
-	$graphScope.changeActiveData(path, true);
-
-	$("#actdata").removeClass("ic-enabled");
-	$("#actdata").addClass("ic-disabled");
-}
 
 $(document).delegate('.metadata select', 'change', function(e) { 
 	e.stopPropagation();

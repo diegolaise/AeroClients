@@ -50,13 +50,13 @@ angular.module('Graph')
 	service.getEntry= function(filepath, lnkname, successHandler, errorHandler) { 
 		console.log("Call service.getEntry: " + filepath);
 		var myhttp = $resource(SERVER_URL + "/getEntry/:path/:lnkdir");		
-		
-		myhttp.get({ path: filepath.split(","), lnkdir:lnkname }, function(res) {
-			console.log("getEntry success ! " + path);
+		var tPath = filepath.split(","); 
+		myhttp.get({ path: tPath, lnkdir:lnkname }, function(res) {
+			console.log("getEntry success ! " + filepath);
 			successHandler(res.data); //data.$promise);
 			
 		}, function(err) {
-			console.log("getEntry failed ! " + path + " " + err.responseText);
+			console.log("getEntry failed ! " + tPath + " " + err.responseText);
 			if (errorHandler) {
 				errorHandler(err);
 			}
@@ -89,6 +89,12 @@ angular.module('Graph')
 				}  
 			} 
 		);	
+	}
+
+	service.download = function(path, callback) {  
+		$http.get(path).success(function(data, status, headers, config) {
+			callback(data); 
+		}); 
 	}
 
 	return service;

@@ -3,13 +3,12 @@
  * 			GLOBAL TOOL : VARIABLES & FUNCTIONS
  * 
  *==================================================================*/
+/** The angular scope */
+var $graphScope = null; //angular.element(document.body).scope()
 
-//angular.element(document.body).scope()
-var $graphScope = null;
-
+/** Check if IE explorer */
 var _IS_IE = (window.navigator.userAgent.toLowerCase().indexOf("trident")>=0
 				|| window.navigator.userAgent.toLowerCase().indexOf("msie")>=0);
-
 
 /** CONSTANTS - GLOBAL VAR */
 var _TABKEY = { "Tool"		: "From tool" 
@@ -17,11 +16,6 @@ var _TABKEY = { "Tool"		: "From tool"
 				, "Status"	: "Status" 
 				, "Study"	: "Study Type"
 };
-
-function toId(metaLbl) {
-	var id = metaLbl.replace(/ /g, "_");
-	return "a_" + id;
-}
 
 /**------------------------------------------------------------------
  * 			GRAPH/DRAW GLOBAL VARS 
@@ -63,6 +57,9 @@ var _MIN_MAX_BORDER = {};
 var _IS_HIDDEN_PARENT = false;
 var _IS_HIDDEN_CHILD = false;
 
+/**------------------------------------------------------------------
+ * 			TOOLS FUNCTIONS
+ *------------------------------------------------------------------*/
 function cleanText(sTxt) {
 	if (sTxt==null) return "";
 	return sTxt.replace(/[\n\t\r]/g,"").trim();
@@ -87,6 +84,29 @@ function getObj(jData, sKey) {
 		jData[sKey] = {};
 	}
 	return jData[sKey];
+}
+
+/**
+ * Convertiot to ID
+ * @param metaLbl
+ * @returns
+ */
+function toId(metaLbl) {
+	var id = metaLbl.replace(/ /g, "_");
+	return "a_" + id;
+}
+
+/**
+ * Get path whitout version
+ * @param href
+ * @returns
+ */
+function getPath(href) {
+	var i = href.indexOf("?");
+	if (i<0) {
+		return href;
+	} 
+	return href.substring(0,i);
 }
 
 /**
@@ -232,7 +252,7 @@ function toggleToMinus($span) {
 
 /**=================================================================
  * 
- * 					Persistence Object
+ * 					Graph Handling
  * 
  *==================================================================*/
 
@@ -315,6 +335,8 @@ function saveElement(obj) {
 
 /**
  * Rabaisser les siblings apres oEntry
+ * @param oEntry
+ * @returns
  */ 
 function moveNextToDown(oEntry) {
 	
@@ -362,6 +384,8 @@ function moveNextToDown(oEntry) {
 
 /**
  * Reoreder after collapse
+ * @param oEntry
+ * @returns
  */
 function upNextPosition(oEntry) {
 	
@@ -451,40 +475,6 @@ function getObject($div) {
 }
 
 /**
- * Save exported file to json
- * @param fileName
- * @param jsData
- * @param fdelegate
- */
-function SaveExportedFile(fileName, jsData, fdelegate) {
-	var filePath = $graphScope._tmp + fileName;
-	
-	$.ajax({ type 	: "POST" 
-		, url   	: $graphScope.httpUrl() + "fileHandler.jsp?action=create&path="+filePath +$graphScope.params("&")
-		, beforeSend	: function(xhr) {
-			xhr.setRequestHeader("Authorization", "Basic "+ $graphScope._logStr); 
-			xhr.setRequestHeader("WWW-authenticate", "database");
-		}
-		, dataType 	: 'text'
-		, async 	: false
-		, data  	: { "data" : angular.toJson(jsData, 4) } 
-		, success 	: function(path) { 
-			bootbox.alert("Datas was Exported successfully !", function() {
-				if (fdelegate) fdelegate(filePath); 
-			} );
-		}
-		, error 	: function(err) { 
-			console.log("Save Error: " + err.responseText);
-			//var errorMessage = JSON.stringify(err);
-			bootbox.alert("Failed to save file <br> " + fileName + "<br><br>" + err.responseText);
-			if (fdelegate) fdelegate(""); 
-		}
-	});	
-}
-
-
-
-/**
  * Create last path from a list
  * @param list
  * @returns {Array}
@@ -519,25 +509,29 @@ function sortLastPath(list) {
 	return tlast;
 }
 
-//======================================== END Utils.js =====================================
+/** Show log/error */
+function showlog(err) {
+	var sErr = (""+err);
+	if (sErr) {
+		if (typeof err === 'object') {
+			sErr = err.responseText;
+			if (!sErr) sErr = err.data.responseText;
+			if (sErr) {
+				var i = sErr.indexOf("<body");
+				if (i>0) {
+					j = sErr.indexOf("/body>");
+					sErr = sErr.substring(i+6, j-1);
+				} 
+			}
+			else {
+				sErr = JSON.stringify(err, null, 4);
+			}
+		}
+		console.log("ERROR: \n" + sErr.replace(/<\//g, "\n</") );
+	}
+	return sErr;
+}
 
-//==========================================================================
-//Handle popover NOT WORKING
-//(function($) { 
-//	$('[data-toggle="popover"]').popover(); 
-//});
-//Handle show/hide events 
-//(function($) {
-//	$.each(['show', 'hide'], function(i, val) { 
-//		var _org = $.fn[val]; 
-//		$.fn[val] = function() {  
-//			var obj = _org.apply(this, arguments);
-//			try {
-//				this.trigger(val); 
-//			}
-//			catch (err) {}
-//			return obj; //Must has return, because othe element use this
-//		};  
-//	});
-//})(jQuery); 
-//==========================================================================
+
+/////======================================== END Utils.js =====================================////////
+

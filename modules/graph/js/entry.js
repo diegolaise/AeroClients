@@ -125,8 +125,9 @@ function Entry(jData) {
 		return this.metadata("Type");
 	} 
 	this.metadata = function(key) {
-		if (this._metadata && (key in this._metadata))
+		if (this._metadata && (key in this._metadata)) {
 			return this._metadata[key];
+		}
 		return "";
 	}
  
