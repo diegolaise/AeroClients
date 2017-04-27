@@ -47,7 +47,7 @@ angular.module('Graph')
 	/**
 	 * Get entry informations
 	 */
-	service.getEntry= function(filepath, lnkname, successHandler, errorHandler) { 
+	service.getEntry = function(filepath, lnkname, successHandler, errorHandler) { 
 		console.log("Call service.getEntry: " + filepath);
 		var myhttp = $resource(SERVER_URL + "/getEntry/:path/:lnkdir");		
 		var tPath = filepath.split(","); 
@@ -83,7 +83,7 @@ angular.module('Graph')
 	 */
 	service.removeExportedFile = function(filePath, fdelegate)  {
 		var myhttp = $resource(SERVER_URL + "/removeFiles/:path");	
-		myhttp.get( {path : filePath.split(",")}, function(success) {
+		myhttp.get( {path:filePath.split(",")}, function(success) {
 				if (fdelegate) {
 					fdelegate(success);
 				}  

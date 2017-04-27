@@ -25,6 +25,11 @@ angular.module('aero-app', ['Authentication', 'ngRoute',  'ngCookies', 'Tree', '
             templateUrl: 'modules/authentication/views/login.html',
             hideMenus: true
         })
+        .when('/logout/:login/:project', {
+            controller : 'LoginController',
+            templateUrl: 'modules/authentication/views/login.html',
+            hideMenus: true
+        })
 	    .when('/graph/:activePath?', {
 	    	controller : 'GraphController',
 	    	templateUrl: 'modules/graph/views/graph.html'

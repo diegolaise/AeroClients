@@ -147,8 +147,9 @@
 }
 
 .ic-disabled {  
-  	color  : #999;  
-  	opacity: 0.3;   
+/*   	color  : #999;  
+  	opacity: 0.3;  */  
+  	display:none;
 }
 
 .ic-enabled { 
@@ -163,6 +164,8 @@
 	-webkit-animation-direction: alternate;  
 /*  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0); */
 }
+
+#canceldata {display:none;}
 
 @media(min-width:768px) {
     #wrapper {

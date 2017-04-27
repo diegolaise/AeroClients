@@ -798,17 +798,19 @@ $(document).delegate('.check', 'click', function(e) {
 //});
  
 //=============================================================
-//HANDLE SELECT CHANGE  
+//HANDLE ACTIVE DATA SELECT CHANGE  
 //=============================================================
-
 $(document).delegate('.metadata select', 'change', function(e) { 
 	e.stopPropagation();
+	
+	//Hide popover
+	$("#actdata").popover("hide");
 
 	var value = $(':selected', $(this)).text(); 
 	var metaName = $(this).attr("title"); 
 
 	//Selected medatata
-	var metaLbl =  $(this).attr("id");
+	var metaLbl = $(this).attr("id");
 
 	//Select by Index
 	var idx = parseInt( $("option:selected", $(this) ).attr("title") );
@@ -822,28 +824,33 @@ $(document).delegate('.metadata select', 'change', function(e) {
 	});
 
 	//Select good version
-	var version = "";
+	var version = value;
 	if (metaName != "Version") {
 		//Select the good version
 		$("#a_Version option:eq("+idx+")").prop('selected', true);
 		version = $("#a_Version :selected").text();
 	}
-	else {
-		version = value;
-	}
 
-	var isActive = (value.indexOf("*")>0);
+	var isActive = (value.indexOf("*")>=0);
 	if (isActive) { 
 		$("#actdata").removeClass("ic-enabled");
 		$("#actdata").addClass("ic-disabled");	
-		//_SVG.color("transparent");
 		_SVG.disable(false);
+		
+		$("#actdata").hide();
+		$("#canceldata").hide();
 	} 
 	else {
 		$("#actdata").removeClass("ic-disabled");
 		$("#actdata").addClass("ic-enabled");
-		//_SVG.color("#ddd");
+
 		_SVG.disable(true);
+		
+		//Show actdata
+		$("#actdata").show();
+		//Show cancel
+		$("#canceldata").show();
+		$("#actdata").popover("show");
 	}
 });
 
@@ -871,6 +878,44 @@ $(document).delegate('.toActiveData', 'click', function(e) {
 				}
 			} 
 	}); 
+});
+
+//---------------------------------------
+//		Toggle ACTIVE DATA titre
+//---------------------------------------
+$(document).delegate('.titre a', 'click', function(e) { 
+	e.stopPropagation();
+	e.preventDefault();
+
+	var checkElement = $(this).next();
+
+	var cls = "." + $(this).attr("title");
+
+	if ( ! checkElement.is('ul')) {
+		checkElement = $(this).parent().nextAll(cls);
+	}
+
+	if ( !(checkElement.is(':visible'))) {
+
+		//-- Open current
+		checkElement.slideDown('normal');
+
+		$('i.fa-angle-up', $(this)).addClass('fa-angle-down');
+		$('i.fa-angle-up', $(this)).removeClass('fa-angle-up');
+
+		//Handle
+		handleHideUncheckMenu();
+	}
+	else if ( !_SLIDE) {
+		//Close this
+		checkElement.slideUp('normal'); 
+
+		$('i.fa-angle-down', $(this)).addClass('fa-angle-up');
+		$('i.fa-angle-down', $(this)).removeClass('fa-angle-down');
+	}
+
+	updateScroll();
+	return false;
 });
 
 //===================ACTIVE-DATA/PARENTS TOGGLE=================
@@ -919,7 +964,6 @@ $(document).delegate('.menu a', 'click', function(e) {
 	}
 	updateScroll();
 });
-
 
 //=============================================================
 function Event_CheckCircleTitleClick(){} //-RADIO TITLE VERSION/EXTENSION
@@ -1064,6 +1108,22 @@ $(document).delegate('.filter span.fa-circle-o, .filter span.fa-check-circle-o',
 	//--------------
 	wait(true); //END WAIT
 });
+
+//============================================================== 
+function Event_ToggleTopSideBar() {} 
+//============================================================== 
+//- Top navbar
+$(document).delegate('#menu-toggle', 'click', function(e) {  
+	e.preventDefault();
+	$("#wrapper").toggleClass("toggled");
+});
+
+//- Left Sidebar
+$(document).delegate("#menu-toggle-2", 'click', function(e) {  
+	e.preventDefault();
+	$("#wrapper").toggleClass("toggled-2");
+	$("#brand").toggleClass("toggled");
+}); 
 
 //============================================================== 
 function Event_filename() {} 
@@ -1244,11 +1304,10 @@ function runScreenFull() {
 } 
 
 //============================================================== 
-function READY() {} //- READY
+function READY() { 
 //============================================================== 
-$(document).ready(function() {
-	
-	//$("#main").zoomTarget();
+	console.log("Call Ready ...");
+
 	//--- Allow fullcreeen
 	runScreenFull(true); 
 
@@ -1256,95 +1315,23 @@ $(document).ready(function() {
 	$('.menu ul').hide();
 	$('.menu ul.current').show();
 
-	//- Top navbar
-	$("#menu-toggle").click(function(e) {
-		e.preventDefault();
-		$("#wrapper").toggleClass("toggled");
-	});
-
-	//- Left Sidebar
-	$("#menu-toggle-2").click(function(e) {
-		e.preventDefault();
-		$("#wrapper").toggleClass("toggled-2");
-		$("#brand").toggleClass("toggled");
-	}); 
-
 	//- Handle scrolling, graph 
 	// Add scroll to sidebar
 	$('.sidebar-nav').slimScroll({
 		height : '98%'  /*'92%'*/
-			, railOpacity : 0.1
-			, color: '#fff'
-	}
-	);
-
-	//---------------------------------------
-	//		Toggle titre
-	//---------------------------------------
-	$('.titre a').click(function() { 
-
-		var checkElement = $(this).next();
-
-		var cls = "." + $(this).attr("title");
-
-		if ( ! checkElement.is('ul')) {
-			checkElement = $(this).parent().nextAll(cls);
-		}
-
-		if ( !(checkElement.is(':visible'))) {
-
-			//-- Open current
-			checkElement.slideDown('normal');
-
-			$('i.fa-angle-up', $(this)).addClass('fa-angle-down');
-			$('i.fa-angle-up', $(this)).removeClass('fa-angle-up');
-
-			//Handle
-			handleHideUncheckMenu();
-		}
-		else if ( !_SLIDE) {
-			//Close this
-			checkElement.slideUp('normal'); 
-
-			$('i.fa-angle-down', $(this)).addClass('fa-angle-up');
-			$('i.fa-angle-down', $(this)).removeClass('fa-angle-down');
-		}
-
-		updateScroll();
-		return false;
+			   , railOpacity : 0.1
+			   , color: '#fff'
 	});
 
 	//----------------------------
 	// Window RESIZE
 	//----------------------------  
-	/** Update sidebar scrolling */
-//	var screenCssPixelRatio = (window.outerWidth - 8) / window.innerWidth;
-//	console.log("Zoom: " + screenCssPixelRatio);
-
 	$(window).resize(function() {
-//		var zoomNew = (window.outerWidth - 8) / window.innerWidth;
-//		//document.documentElement.clientWidth / window.innerWidth;
-//		if (screenCssPixelRatio != zoomNew) {
-//		// zoom has changed
-//		// adjust your fixed element
-//		screenCssPixelRatio = zoomNew; 
-//		//aft-zoom: 1.0018744142455482 level: 2 (150%)
-//		//aft-zoom: 1.00390625 level: 1 (125%)
-//		//aft-zoom: 1.005 level: 0
-//		//aft-zoom: 1.0065635255508673 level: -1 (75%) 
-//		console.log("aft-zoom: " + screenCssPixelRatio + " level: " + zoomLevel);
-//		}
-
 		updateScroll(".sidebar-nav");
 	});
 
-	//-----------------------
+}//end ready
 
-//	var scale = 'scale(1.0)';
-//	document.body.style.zoom = 1.0; 
-//	document.body.style.webkitTransform =  scale;    // Chrome, Opera, Safari
-//	document.body.style.msTransform =   scale;       // IE 9
-//	document.body.style.transform = scale;     // General 
-});
+//$(document).ready(function() { READY(); });
 /***============================== END ================================**/
 

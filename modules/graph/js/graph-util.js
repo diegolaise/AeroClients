@@ -20,8 +20,11 @@ var _TABKEY = { "Tool"		: "From tool"
 /**------------------------------------------------------------------
  * 			GRAPH/DRAW GLOBAL VARS 
  *------------------------------------------------------------------*/
-var p = $("body").css("padding-top");
-var _BODY_PADDING = parseInt(p.replace("px", "")); //Body padding top
+var pbody = $("body").css("padding-top");
+var _BODY_PADDING = parseInt(pbody.replace("px", "")); //Body padding top
+
+/** The graph lines */
+var _SVG = null;
 
 var _MIN_TOP 	= _BODY_PADDING + 120; 
 var _MIN_LEFT 	=  220; //Width of menu (min begin of entry)
@@ -510,7 +513,7 @@ function sortLastPath(list) {
 }
 
 /** Show log/error */
-function showlog(err) {
+function showlog(err, title, delegateFunction) {
 	var sErr = (""+err);
 	if (sErr) {
 		if (typeof err === 'object') {
@@ -529,7 +532,54 @@ function showlog(err) {
 		}
 		console.log("ERROR: \n" + sErr.replace(/<\//g, "\n</") );
 	}
-	return sErr;
+	
+	if (delegateFunction) {
+		bootbox.alert(title + "<br>" + stxt, {
+			  "label"    : "OK"
+			, "class"    : "danger"
+			, "callback" : delegateFunction
+		});	
+	}
+	else {
+		return sErr;
+	}
+}
+
+/** Short path */
+function getShortPath(path) {
+	
+	var wdt = $(window).width() - 675;
+	var lg = 7 * path.length;
+	
+	if (lg<=wdt) {
+		return path;
+	}
+	
+	var spath = path;
+	var vers = "";
+	var i = path.indexOf("/?"); 
+	if (i>0) {
+		vers = path.substring(i);
+		spath = path.substring(0, i); 
+	}
+
+	var tab = spath.split("/"); 
+	var n = tab.length - 1;
+
+	if (i>0)
+		vers = "/" + tab[n] + vers;
+	else
+		vers += "/" + tab[n];
+
+	spath = "/" + tab[1] + "/" + tab[2] + "/ ... ";
+	for (var i=(n-3); i<n; i++){
+		var p = tab[i];
+		if (p.length>10) p = p.substring(0,11) + " ... ";
+		spath += "/" + p;
+	}
+	spath += vers;
+	
+	return spath;	
 }
 
 

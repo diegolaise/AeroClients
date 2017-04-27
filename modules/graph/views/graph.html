@@ -39,7 +39,7 @@
 
   			<ul class="nav navbar-nav hidden-sm hidden-xs">
 				<li><a>
-				<span id="request-fullscreen" class="glyphicon glyphicon-fullscreen"  title="Fullscreen ON/OFF"></span> 
+				<span id="request-fullscreen" class="glyphicon glyphicon-fullscreen" title="Fullscreen ON/OFF"></span> 
 				</a></li> 
 			</ul>
 
@@ -54,7 +54,7 @@
 
   			<ul id="userinfo" class="nav navbar-nav navbar-right hidden-md hidden-sm hidden-xs">				
 				<li style="margin-left:10px;cursor:default;">
-					<a title="Logout ..." ng-href="#/login">
+					<a title="Logout ..." ng-href="#/logout/{{_login}}/graph">
 						<i class="glyphicon glyphicon-user"></i>
 						<span class="ltab">{{_login}}</span>
 				    </a>
@@ -83,16 +83,18 @@
 		</div>
 		
         <div id="sidebar-wrapper">
-        
             <ul class="sidebar-nav nav-pills nav-stacked">
 
+ 				<!--========================== ACTIVE DATA ===============================-->
 				 <li class="titre activeData" ng-class="{hidden : isMultipleData()}">
                     <a href="" title="actdata">
                     	<span class="titre">ACTIVE DATA</span> 
                     	<span class="rtab" style="margin-left:5%;"><i class="fa fa-angle-down"></i></span>
-                    	<span id="actdata" ng-click="activeDataChange()" title="Load selected active data" 
-                    		  class="glyphicon glyphicon-open ic-disabled pull-right">
-                        </span>
+                    	<span id="actdata" ng-click="activeDataChange()" 
+                    		  data-toggle="popover" data-placement="right" data-html="true"
+	    	                  data-container="body" data-content="Click to load selection OR Cancel"
+                              class="glyphicon glyphicon-open ic-disabled pull-right"></span>
+                        <span id="canceldata" class="pull-right" ng-click="restoreActiveSel($event)"><i class="fa fa-refresh"></i></span>
                     </a>
                     <ul class="nav-pills nav-stacked current">
 		                <li ng-repeat="(metaLbl, tOpts) in _hActiveData">
@@ -246,8 +248,10 @@
         
     </div><!--end -wrapper--> 
 
-	<!-- GRAPH VIEW -->
-	<script type="text/javascript">var _SVG = $('#main').connect();</script>
-	<script src="/modules/graph/js/g-events.js"></script>
+	<!-- GRAPH JS -->
+<!-- 	<script src="/modules/graph/js/graph-events.js">  -->
+    <script>
+    	$(document).ready(function() { READY(); });
+	</script> 
 	
 </div>

@@ -272,7 +272,7 @@ function getEntryData(path, isChildren, callbackFunct) {
 		}
 		return;
 	}
-	console.log("Call $graphScope.expandEntry: " + path)
+	//console.log("Call $graphScope.expandEntry: " + path)
 	$graphScope.expandEntry(path, (isChildren ? "children" : "parent"), function (obj, err) { 
 		if (err) { 
 			var errorMessage = JSON.stringify(err.responseText);

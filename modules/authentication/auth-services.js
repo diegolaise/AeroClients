@@ -21,18 +21,6 @@ angular.module('Authentication')
             	var error  = {message : err, success : false};
             	callback(error);
     		});
-
-            /* Use this for real authentication
-             ----------------------------------------------*/
-//            $http.get(resourcePath + '/:'+username+ '/:' + epassword, {userid: username, password: epassword})
-//            .success(function (response) {
-//            	response.success = true;
-//            	callback(response);
-//            })
-//            .error(function (err) {
-//            	callback({message : err, success : false});
-//            });
-
         };
  
         service.SetCredentials = function (username, password) {
@@ -41,8 +29,8 @@ angular.module('Authentication')
  
             $rootScope.globals = {
                 currentUser: {
-                    username: username,
-                    authdata: authdata
+                    username: username
+                    , authdata: authdata
                     , sessionId : sesId
                 }
             };
