@@ -63,6 +63,7 @@ angular.module('Graph')
 
 		try {
 			
+			//- Init lines SVG
 			if (_SVG) {
 				_SVG.reset();
 			}
@@ -103,7 +104,7 @@ angular.module('Graph')
 		//Load many active data
 		var tabDatas = $scope._activePath.split(","); 
 		if (tabDatas.length>1) { 
-			loadDatas(tabDatas, bOnlyUpdate, endCallFunction); 
+			loadManyDatas(tabDatas, bOnlyUpdate, endCallFunction); 
 			return;
 		}; 
 
@@ -188,7 +189,7 @@ angular.module('Graph')
 	}
 
 	/** Load many active datas */
-	var loadDatas = function(tabDatas, bOnlyUpdate, endCallFunction) { 
+	var loadManyDatas = function(tabDatas, bOnlyUpdate, endCallFunction) { 
 
 		//Path to handle
 		var showPath = (tabDatas.length==1 ? $scope._activePath : ""); 
@@ -198,7 +199,15 @@ angular.module('Graph')
 		var drawData = function() {
 			//End get data info
 			var endLoading = function(jdata) {
-				if (jdata) {
+				if (jdata.constructor === Array) {
+					if (tDataRes.length===0) {
+						tDataRes = jdata;
+					}
+					else {
+						tDataRes.concat(jdata);
+					}
+				}
+				else {
 					tDataRes.push(jdata);
 				}
 

@@ -87,13 +87,13 @@
 
  				<!--========================== ACTIVE DATA ===============================-->
 				 <li class="titre activeData" ng-class="{hidden : isMultipleData()}">
-                    <a href="" title="actdata">
+                    <a href="" for="actdata"
+                    		  data-toggle="popover" data-placement="right" data-html="false" 
+	    	                  data-container="body" data-content="Click to Apply selection OR Revert">
                     	<span class="titre">ACTIVE DATA</span> 
                     	<span class="rtab" style="margin-left:5%;"><i class="fa fa-angle-down"></i></span>
-                    	<span id="actdata" ng-click="activeDataChange()" 
-                    		  data-toggle="popover" data-placement="right" data-html="true"
-	    	                  data-container="body" data-content="Click to load selection OR Cancel"
-                              class="glyphicon glyphicon-open ic-disabled pull-right"></span>
+                    	
+                    	<span id="actdata" class="glyphicon glyphicon-open ic-disabled pull-right" ng-click="activeDataChange()" ></span>
                         <span id="canceldata" class="pull-right" ng-click="restoreActiveSel($event)"><i class="fa fa-refresh"></i></span>
                     </a>
                     <ul class="nav-pills nav-stacked current">
@@ -113,7 +113,7 @@
 				
                 <!--========================== FILTER ===============================-->
 				<li class="titre">
-				    <a href="" title="filter"><span class="titre">FILTER</span>
+				    <a href="" for="filter"><span class="titre">FILTER</span>
                     	<span class="rtab" style="margin-left:26%;"><i class="fa fa-angle-down"></i></span>
                     </a>
 				</li>
@@ -122,9 +122,10 @@
                     <a href="">
                         <span class="fa-stack"><i class="fa fa-code-fork fa-stack-1x"></i></span>
                         <span>Version</span><span class="fa fa-caret-up" style="margin-left:13%;"></span>
-                     	<span class="fa-stack pull-right" ng-class="{hidden : isEmpty(_hVersion)}">
-                    		<i id="all_version"class="fa fa-circle-o fa-stack-1x"></i>
-                    	</span>
+                       	<span class="fa-stack pull-right" ng-class="{hidden : isEmpty(_hVersion)}">
+                    		<i id="all_version" class="fa fa-circle-o fa-stack-1x"></i>
+                    	</span> 
+                    	<!-- <span id="all_version" ng-class="{hidden : isEmpty(_hVersion)}" class="fa fa-circle-o pull-right"></span> -->
                     </a>
                     <ul id="version" class="nav-pills nav-stacked submenu">
                     	<li><a href="" title="Only last version">
@@ -137,7 +138,7 @@
 							<a href="" title="{{pwdt}}">
 							     <span class="badger">{{nb}}</span>
 							     <span class="">{{pwdt}}</span>
-								 <i class="fa fa-square-o pull-right"></i>
+								 <span class="fa fa-square-o pull-right"></span>
 							</a>
 						</li>
 					</ul>
@@ -150,6 +151,7 @@
                     	<span class="fa-stack pull-right" ng-class="{hidden : isEmpty(_hExtension)}">
                     		<i id="all_extension" class="fa fa-check-circle-o fa-stack-1x"></i>
                     	</span>
+                       <!--  <span id="all_extension" ng-class="{hidden : isEmpty(_hExtension)}" class="fa fa-check-circle-o pull-right"></i> -->
                     </a>
                     <ul  id="extension" class="nav-pills nav-stacked submenu">
 						<li ng-repeat="(pwdt, nb) in _hExtension">
@@ -164,7 +166,7 @@
                   
 				<!-- ========================================================== -->
 				<li class="titre">
-				    <a href=""  title="edit">
+				    <a href="" for="edit">
 				        <span class="titre">EDIT</span>
                     	<span class="rtab" style="margin-left:32%;"><i class="fa fa-angle-down"></i></span>
                     </a>
@@ -215,7 +217,10 @@
 				</li>
 				
                <li class="titre">
-                   <a href="" id="exportedFiles" title="links">
+                   <a href="" id="exportedFiles" for="links"
+                   		data-toggle="popover" data-placement="right" data-title="" 
+	    	            data-container="body" data-content="Click to export selected">
+	    	            
                     	<span class="titre">EXPORT</span> 
                     	<span class="rtab" style="margin-left:22%;"><i class="fa fa-angle-down"></i></span>
                     	<span id="doExporting" onclick="exportFiles()" title="Do Exporting"
@@ -224,14 +229,10 @@
                     
                   <ul class="links submenu">
 					<li ng-repeat="(fname, path) in _exported">
-						<a href="" title="{{path}}" style="white-space: nowrap;">
- 					 		<span class="fa-stack" title="Download this file">
- 					 			<i class="fa fa-download fa-stack-1x" ng-click="getExported($event,path)"></i>
- 					 		</span>
+						<a href="" title="{{path}}">
+ 					 		<span class="fa fa-download" ng-click="getExported($event,path)" title="Download this file"></span>
 					 		<span class="exportText" ng-click="openExported($event,path)">{{fname}}</span>
-					 		<span class="fa-stack pull-right" title="Click to delete file">
-					 			<i class="fa fa-trash-o fa-stack-1x" ng-click="delExported($event,path)"></i>
-					 		</span>
+					 		<span class="fa fa-trash-o pull-right" ng-click="delExported($event,path)" title="Click to delete file"></span>
 						</a> 
 					</li>
 					<li><a style="color:transparent;cursor:none;">-</a></li>

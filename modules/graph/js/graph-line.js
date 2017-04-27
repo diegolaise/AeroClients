@@ -32,7 +32,11 @@ function initGraph(activeDataPath, tDatas, bOnlyUpdate, callback) {
 	
 	var oActiveData = null;
 	if (tDatas) {
-		$.each(tDatas, function(idx, jdata) {
+		$.each(tDatas, function(idx) {
+			var jdata = tDatas[idx];
+			if (jdata.constructor === Array) {
+				jdata = jdata[0];
+			}
 			var path  = jdata["path"];
 	
 			var oEntry = getEntry(path);

@@ -306,12 +306,14 @@ function handleHideUncheckMenu() {
 	var bExported = false;
 	$("#hideUncheck").hide(); 
 
+	var b = false;
 	var numUncheckedParent = $(".ancestr").find('input:checkbox:not(:checked)').length;
 	if (numUncheckedParent > 0) { 
 		//Toggle Off parent Check all 
 		$("#chckancestr").addClass(_UnCHECK);
 		$("#chckancestr").removeClass(_CHECK); 
 		$("#chckancestr").parent().prev().text("Check Parents");
+		b = true;
 	}
 
 	var numUncheckedChild  = $(".child").find('input:checkbox:not(:checked)').length;
@@ -320,6 +322,7 @@ function handleHideUncheckMenu() {
 		$("#chckchild").addClass(_UnCHECK);
 		$("#chckchild").removeClass(_CHECK); 
 		$("#chckchild").parent().prev().text("Check Children");
+		b = true;
 	} 
 
 	if (!_IS_HIDDEN_PARENT) {
@@ -343,13 +346,16 @@ function handleHideUncheckMenu() {
 		$("#hideUncheck").show();
 	} 
 
+	var $pop = $("#exportedFiles");
 	if (bExported) {
 		$("#doExporting").removeClass("ic-disabled");
 		$("#doExporting").addClass("ic-enabled");
+		if (b) $pop.popover("show");
 	}
 	else {
 		$("#doExporting").removeClass("ic-enabled");
 		$("#doExporting").addClass("ic-disabled");
+		if (b) $pop.popover("hide");
 	}
 }
 
@@ -359,7 +365,7 @@ function handleHideUncheckMenu() {
  */
 function toggleCheckboxes(id) { 
 	var bToOn = toggleOnOff( $(id) );
-
+	
 	if (bToOn) {
 		$("input.check").css("display", "block");
 
@@ -375,7 +381,7 @@ function toggleCheckboxes(id) {
 		$('.sidebar-nav').slimScroll({ scrollTo: bttm+'px' });
 
 		//Handle
-		handleHideUncheckMenu();
+		handleHideUncheckMenu();		
 	}
 	else {
 		//var bVisible = $("#doExporting").hasClass("ic-enabled"); //$("#doExporting").is(":visible");
@@ -803,9 +809,6 @@ $(document).delegate('.check', 'click', function(e) {
 $(document).delegate('.metadata select', 'change', function(e) { 
 	e.stopPropagation();
 	
-	//Hide popover
-	$("#actdata").popover("hide");
-
 	var value = $(':selected', $(this)).text(); 
 	var metaName = $(this).attr("title"); 
 
@@ -831,8 +834,12 @@ $(document).delegate('.metadata select', 'change', function(e) {
 		version = $("#a_Version :selected").text();
 	}
 
+	var $pop = $(".titre.activeData a");
 	var isActive = (value.indexOf("*")>=0);
 	if (isActive) { 
+		//Hide popover
+		$pop.popover("hide");
+		
 		$("#actdata").removeClass("ic-enabled");
 		$("#actdata").addClass("ic-disabled");	
 		_SVG.disable(false);
@@ -850,7 +857,10 @@ $(document).delegate('.metadata select', 'change', function(e) {
 		$("#actdata").show();
 		//Show cancel
 		$("#canceldata").show();
-		$("#actdata").popover("show");
+		
+		//Show popover
+		$pop.popover("show");
+		$(".popover").addClass("ic-pop");
 	}
 });
 
@@ -878,44 +888,6 @@ $(document).delegate('.toActiveData', 'click', function(e) {
 				}
 			} 
 	}); 
-});
-
-//---------------------------------------
-//		Toggle ACTIVE DATA titre
-//---------------------------------------
-$(document).delegate('.titre a', 'click', function(e) { 
-	e.stopPropagation();
-	e.preventDefault();
-
-	var checkElement = $(this).next();
-
-	var cls = "." + $(this).attr("title");
-
-	if ( ! checkElement.is('ul')) {
-		checkElement = $(this).parent().nextAll(cls);
-	}
-
-	if ( !(checkElement.is(':visible'))) {
-
-		//-- Open current
-		checkElement.slideDown('normal');
-
-		$('i.fa-angle-up', $(this)).addClass('fa-angle-down');
-		$('i.fa-angle-up', $(this)).removeClass('fa-angle-up');
-
-		//Handle
-		handleHideUncheckMenu();
-	}
-	else if ( !_SLIDE) {
-		//Close this
-		checkElement.slideUp('normal'); 
-
-		$('i.fa-angle-down', $(this)).addClass('fa-angle-up');
-		$('i.fa-angle-down', $(this)).removeClass('fa-angle-down');
-	}
-
-	updateScroll();
-	return false;
 });
 
 //===================ACTIVE-DATA/PARENTS TOGGLE=================
@@ -1129,8 +1101,9 @@ $(document).delegate("#menu-toggle-2", 'click', function(e) {
 function Event_filename() {} 
 //============================================================== 
 $(document).delegate('.filename', 'click', function(e) {
-	var href = $graphScope._ALUrl + "/content/files" + $(this).attr("title");
-	window.open(href, "_blank", "width=900, height=700, scrollbars=yes");
+	//TODO open Aerodata file
+//	var href = $graphScope._ALUrl + "/content/files" + $(this).attr("title");
+//	window.open(href, "_blank", "width=900, height=700, scrollbars=yes");
 });
 
 var _BSHOWED = false;
@@ -1328,6 +1301,43 @@ function READY() {
 	//----------------------------  
 	$(window).resize(function() {
 		updateScroll(".sidebar-nav");
+	});
+	
+	//---------------------------------------
+	//		Toggle titre
+	//---------------------------------------
+	$('.titre a').click(function() { 
+		
+		var checkElement = $(this).next();
+		
+		if ( ! checkElement.is('ul')) {
+			var cls = $(this).attr("for");
+			if (cls) {
+				checkElement = $(this).parent().nextAll(("." + cls));
+			}
+		}
+
+		if ( !(checkElement.is(':visible'))) {
+  
+			//-- Open current
+			checkElement.slideDown('normal');
+
+			$('i.fa-angle-up', $(this)).addClass('fa-angle-down');
+			$('i.fa-angle-up', $(this)).removeClass('fa-angle-up');
+			
+			//Handle
+			handleHideUncheckMenu();
+		}
+		else if ( !_SLIDE) {
+			//Close this
+			checkElement.slideUp('normal'); 
+			
+			$('i.fa-angle-down', $(this)).addClass('fa-angle-up');
+			$('i.fa-angle-down', $(this)).removeClass('fa-angle-down');
+		}
+
+		updateScroll();
+		return false;
 	});
 
 }//end ready

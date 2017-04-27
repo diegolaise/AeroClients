@@ -39,6 +39,11 @@
 
 .navbar-nav .fa-stack, .fa-border{ color : #000; }
 
+.ibox-c .panel-heading {
+	padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-radius: 1px;
+}
 
 /*===================== CSS Document ====================================*/ 
 * {
