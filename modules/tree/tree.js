@@ -9,7 +9,8 @@
 var _D_NODES = {};
 var _IN_CALL = {};
 
-var getTreeNodes = function (foldePath, folderOnly, callback) {
+var getTreeNodes = function(foldePath, folderOnly, callback) {
+	
 	if (_D_NODES[foldePath]) {
 		if (callback) { 
 			callback( _D_NODES[foldePath] ); 
@@ -62,15 +63,17 @@ var getTreeNodes = function (foldePath, folderOnly, callback) {
 				callback(jtab); 
 			}
 			
-			if (foldePath in _IN_CALL)
+			if (foldePath in _IN_CALL) {
 				delete _IN_CALL[foldePath];
+			}
 			
 			//Anticiper le niveau suivant -> gain de temps
 			if (folderOnly) 
 			{
 				var tabs = jtab;
-				if (jtab.length==1)
+				if (jtab.length==1) {
 					tabs = jtab[0].nodes;
+				}
 					
 				$.each(tabs, function(i, node) {
 					if (node.tags == "0") { 
@@ -82,13 +85,15 @@ var getTreeNodes = function (foldePath, folderOnly, callback) {
 		},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {  
 			console.log("ERROR: failed to load paths for: " + errorThrown);
-			if (callback) callback();
+			if (callback) {
+				callback();
+			}
 		}
 	});	
-}
+}//END getTreeNode
 
-$(document).delegate('#filepath', 'click', function (e) {
-
+function showTree(bFolderOnly, endTreeFct) {
+	
 	$("#main").css({opacity: "0"});
  
 	//Tree root
@@ -98,7 +103,9 @@ $(document).delegate('#filepath', 'click', function (e) {
 	// SHOW TREE
 	//-------------------------------------- 
 	getTreeNodes(rootFolder, true, function(defaultData) { 
-		    if (!defaultData) return;
+		    if (!defaultData) {
+		    	return;
+		    }
 		
 			//============= TREE FRM ==============
 			var treeFrm = '<form class="form-horizontal"> ' +
@@ -134,14 +141,18 @@ $(document).delegate('#filepath', 'click', function (e) {
 				, className: "widget-tree"
 					, closeButton : true
 					, buttons: {
-						cancel: { label: "Cancel", className: "btn-default"
-							, callback: function () {   
-								$("#main").css({opacity: "1"});
-							}
+						cancel: { label: "Cancel"
+								, className: "btn-default" 
+							    , callback: function () {   
+							    	$("#main").css({opacity: "1"});
+							    	if (endTreeFct) {
+							    		endTreeFct(null);
+							    	}
+							    }
 						},
 						success: {
-							label: "OK",
-							className: "btn-primary btn-large",
+							label		: "OK",
+							className	: "btn-primary btn-large", 
 							callback: function () {
 								$("#main").css({opacity: "1"});
 	
@@ -150,7 +161,11 @@ $(document).delegate('#filepath', 'click', function (e) {
 									selectedPath = selectedPath.replace(/#/, "");
 									
 									//Load a new Active data
-									_oAppScope.changeActiveData(selectedPath, true); 
+									//_oAppScope.changeActiveData(selectedPath, true); 
+									if (endTreeFct) {
+										endTreeFct(selectedPath, true);
+									}
+									
 									$("#actdata").removeClass("ic-enabled");
 									$("#actdata").addClass("ic-disabled");
 								} 
@@ -182,10 +197,8 @@ $(document).delegate('#filepath', 'click', function (e) {
 					ignoreCase: $("#chk-ignore-case").is(":checked"),
 					exactMatch: $("#chk-exact-match").is(":checked"),
 					revealResults: true 
-				};
-				//var results = 
-					$searchableTree.treeview("search", [pattern, options]); 
-				//$("#btn-search").hide();
+				};				
+				$searchableTree.treeview("search", [pattern, options]); 
 			}
   
 			//$("#btn-search").on("click", treeSearch);
@@ -216,4 +229,4 @@ $(document).delegate('#filepath', 'click', function (e) {
 
 	}); //-- END showTreeFrm function 
  
-});
+};

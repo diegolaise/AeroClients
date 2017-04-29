@@ -1,10 +1,10 @@
 
 //========================= ICONS CONSTANTS =========================
-var _T_CHECK 	= "fa-check-circle-o";
-var _T_UnCHECK  = "fa-circle-o";
+var _Circle_Check 	= "fa-check-circle-o";
+var _Circle_UnCheck = "fa-circle-o";
 
-var _CHECK   	= "fa-check-square-o";
-var _UnCHECK 	= "fa-square-o";
+var _Square_Check   = "fa-check-square-o";
+var _Square_UnCHECK = "fa-square-o";
 
 //============================================================== 
 function FUNCTIONS(){}
@@ -23,7 +23,7 @@ function getUnfilteredList(type, bIsChild) {
 		id += type; 
 
 	//Find all checked squares
-	$(id).find("."+_UnCHECK).each(function() {
+	$(id).find("."+_Square_UnCHECK).each(function() {
 		tfilter.push( $(this).prev().text().trim() );
 	});
 
@@ -153,10 +153,10 @@ function toggleOff($this) {
  * @returns
  */
 function toggleSquareCheck($this, tLabel) {
-	var bToChecked = $this.hasClass(_UnCHECK);
+	var bToChecked = $this.hasClass(_Square_UnCHECK);
 
-	$this.addClass((bToChecked ? _CHECK : _UnCHECK));
-	$this.removeClass((bToChecked ? _UnCHECK : _CHECK));
+	$this.addClass((bToChecked ? _Square_Check : _Square_UnCHECK));
+	$this.removeClass((bToChecked ? _Square_UnCHECK : _Square_Check));
 
 	if (tLabel && tLabel.length>1) {
 		var slbl = (bToChecked ? tLabel[0] : tLabel[1]); 
@@ -189,10 +189,10 @@ function updateScroll(id) {
  */
 function checkAll(id, bIsChild) { 
 
-	var bToChecked = $(id).hasClass(_UnCHECK);
+	var bToChecked = $(id).hasClass(_Square_UnCHECK);
 
-	$(id).addClass((bToChecked ? _CHECK : _UnCHECK));
-	$(id).removeClass((bToChecked ? _UnCHECK : _CHECK));
+	$(id).addClass((bToChecked ? _Square_Check : _Square_UnCHECK));
+	$(id).removeClass((bToChecked ? _Square_UnCHECK : _Square_Check));
 
 	var borl = (bToChecked ? 'red 2px solid' : 'none');
 	$(id).closest("li").css("border-left", borl);
@@ -310,8 +310,8 @@ function handleHideUncheckMenu() {
 	var numUncheckedParent = $(".ancestr").find('input:checkbox:not(:checked)').length;
 	if (numUncheckedParent > 0) { 
 		//Toggle Off parent Check all 
-		$("#chckancestr").addClass(_UnCHECK);
-		$("#chckancestr").removeClass(_CHECK); 
+		$("#chckancestr").addClass(_Square_UnCHECK);
+		$("#chckancestr").removeClass(_Square_Check); 
 		$("#chckancestr").parent().prev().text("Check Parents");
 		b = true;
 	}
@@ -319,8 +319,8 @@ function handleHideUncheckMenu() {
 	var numUncheckedChild  = $(".child").find('input:checkbox:not(:checked)').length;
 	if (numUncheckedChild > 0 ) {
 		//Toggle Off child Check all
-		$("#chckchild").addClass(_UnCHECK);
-		$("#chckchild").removeClass(_CHECK); 
+		$("#chckchild").addClass(_Square_UnCHECK);
+		$("#chckchild").removeClass(_Square_Check); 
 		$("#chckchild").parent().prev().text("Check Children");
 		b = true;
 	} 
@@ -581,7 +581,7 @@ function filterEntries(label, bIsChild) {
 	var isLastVersionChecked = $("#"+prefix+"version .last").hasClass("fa-check-circle-o");
 
 	//If all version checked && all extension checked => check all
-	var allChecked = $("#all_"+prefix+"version").hasClass(_T_CHECK);
+	var allChecked = $("#all_"+prefix+"version").hasClass(_Circle_Check);
 	// If not last version checked
 	if ( !isLastVersionChecked) {  
 		$(cls + ".entry").show();   //.child.entry
@@ -596,7 +596,7 @@ function filterEntries(label, bIsChild) {
 	//Hide extension Uncheck squares 	
 	$("#"+prefix+"extension").find("li .fa").each(function() {
 		var ext = $(this).prev().text().trim(); 
-		if ( $(this).hasClass(_UnCHECK) ) 
+		if ( $(this).hasClass(_Square_UnCHECK) ) 
 			$(cls+"."+ext).hide(); 
 	});
 
@@ -604,7 +604,7 @@ function filterEntries(label, bIsChild) {
 	if ( !isLastVersionChecked && !allChecked) { 
 		$("#"+prefix+"version").find("li .fa").each(function() {
 			var ver = $(this).prev().text().trim(); 
-			if ( $(this).hasClass(_UnCHECK) ) 
+			if ( $(this).hasClass(_Square_UnCHECK) ) 
 				$(cls+"."+ver).hide(); 
 		});
 	}
@@ -779,31 +779,6 @@ $(document).delegate('.check', 'click', function(e) {
 });
 
 //=============================================================
-// TRASH EXPORTED FILE
-//=============================================================
-//function Event_ExportTrashed(){}
-//$(document).delegate('.fa.fa-trash-o', 'click', function(e) { 
-//	e.preventDefault(); e.stopPropagation();
-//	var $this = $(this);
-//
-//	var href = $(this).attr("title");
-//
-//	var filename = href.substring(href.lastIndexOf("/") + 1);
-//	filename = filename.substring(0, filename.indexOf(".json"));
-//
-//	bootbox.confirm({ size:"medium"
-//		, title: "Remove file '<b>" + filename + "</b>' from the server"
-//		, message: "Are you sure ?"
-//			, callback: function(bOk) {
-//				if (bOk) {
-//					$this.closest("li").remove();
-//					RemoveExportedFile(href); 
-//				}
-//			} 
-//	});
-//});
- 
-//=============================================================
 //HANDLE ACTIVE DATA SELECT CHANGE  
 //=============================================================
 $(document).delegate('.metadata select', 'change', function(e) { 
@@ -938,38 +913,38 @@ $(document).delegate('.menu a', 'click', function(e) {
 });
 
 //=============================================================
-function Event_CheckCircleTitleClick(){} //-RADIO TITLE VERSION/EXTENSION
+function Event_CheckCircleTitleClick(){} //- RADIO TITLE VERSION/EXTENSION
 //=============================================================
 $(document).delegate('.menu a i.fa-stack-1x', 'click', function(e) {   
 	e.preventDefault(); e.stopPropagation(); 
 
 	//If already checked => do nothing
 	//Disable UNCHEK ALL (n'a aucun sens)
-	if ( $(this).hasClass(_T_CHECK) ||
-			(! $(this).hasClass(_T_CHECK)
-					&& ! $(this).hasClass(_T_UnCHECK) )
+	if ( $(this).hasClass(_Circle_Check) ||
+			(! $(this).hasClass(_Circle_Check)
+					&& ! $(this).hasClass(_Circle_UnCheck) )
 	) return;
 
 	//- WAIT
 	wait();
 
-	$(this).removeClass(_T_UnCHECK);
-	$(this).addClass(_T_CHECK); //CHECK TITLE RADIO
+	$(this).removeClass(_Circle_UnCheck);
+	$(this).addClass(_Circle_Check); //CHECK TITLE RADIO
 
 	//Get parent jdom
 	var $parent = $(this).closest("li");
 	var $ul = $parent.children("ul");
 
 	//- UNCHECK "Last" radio button
-	$ul.find("."+_T_CHECK).each(function() {
-		$(this).removeClass(_T_CHECK);
-		$(this).addClass(_T_UnCHECK); //UNCHECK LAST RADIO
+	$ul.find("."+_Circle_Check).each(function() {
+		$(this).removeClass(_Circle_Check);
+		$(this).addClass(_Circle_UnCheck); //UNCHECK LAST RADIO
 	});
 
 	//- CHECK all squares children
-	$ul.find("."+_UnCHECK).each(function() {
-		$(this).removeClass(_UnCHECK);
-		$(this).addClass(_CHECK); //CHECK SUB SQUAREs
+	$ul.find("."+_Square_UnCHECK).each(function() {
+		$(this).removeClass(_Square_UnCHECK);
+		$(this).addClass(_Square_Check); //CHECK SUB SQUAREs
 	});
 
 	//----- FILTER entries
@@ -1001,20 +976,20 @@ $(document).delegate('.menu .fa-check-square-o, .menu .fa-square-o', 'click', fu
 	var $limenu = $ul.parent();
 
 	//Find checked children
-	var unCheckNum   = $ul.find("."+_UnCHECK).length; 
+	var unCheckNum   = $ul.find("."+_Square_UnCHECK).length; 
 	var bAllChecked= (unCheckNum == 0); 
 
 	//Check/Uncheck Radio Title (parent)
-	$('i.fa.fa-stack-1x', $limenu).removeClass( (bAllChecked ? _T_UnCHECK : _T_CHECK) );
-	$('i.fa.fa-stack-1x', $limenu).addClass( (bAllChecked ? _T_CHECK : _T_UnCHECK));
+	$('i.fa.fa-stack-1x', $limenu).removeClass( (bAllChecked ? _Circle_UnCheck : _Circle_Check) );
+	$('i.fa.fa-stack-1x', $limenu).addClass( (bAllChecked ? _Circle_Check : _Circle_UnCheck));
 
 	//Uncheck LAST radio title, if only 1 checked
 	if (bToChecked) {
-		var checkNum   = $ul.find("."+_CHECK).length; 
+		var checkNum   = $ul.find("."+_Square_Check).length; 
 		if (checkNum>0) {
 			var $lastRadio  = $('span.last', $ul);
-			$lastRadio.removeClass(_T_CHECK);
-			$lastRadio.addClass(_T_UnCHECK);
+			$lastRadio.removeClass(_Circle_Check);
+			$lastRadio.addClass(_Circle_UnCheck);
 		}
 	}
 
@@ -1034,14 +1009,15 @@ $(document).delegate('.menu .fa-check-square-o, .menu .fa-square-o', 'click', fu
 //============================================================== 
 function Event_CheckLast() {} //- CHECK LAST
 //============================================================== 
-$(document).delegate('.filter span.fa-circle-o, .filter span.fa-check-circle-o', 'click', function(e) {
+$(document).delegate('.last', 'click', function(e) {
+	
 	e.preventDefault(); e.stopPropagation();
 
 	//If already checked => do nothing
-	if ( $(this).hasClass(_T_CHECK) ) return;
+	if ( $(this).hasClass(_Circle_Check) ) return;
 
-	$(this).removeClass(_T_UnCHECK);
-	$(this).addClass(_T_CHECK); //CHECK LAST RADIO
+	$(this).removeClass(_Circle_UnCheck);
+	$(this).addClass(_Circle_Check); //CHECK LAST RADIO
 
 	//---------------
 	wait(); //WAIT
@@ -1049,19 +1025,16 @@ $(document).delegate('.filter span.fa-circle-o, .filter span.fa-check-circle-o',
 
 	//Uncheck ALL squares
 	var $ul = $(this).closest("ul");
-	$ul.find("."+_CHECK).each(function() {
-		$(this).removeClass(_CHECK);
-		$(this).addClass(_UnCHECK);
+	$ul.find("."+_Square_Check).each(function() {
+		$(this).removeClass(_Square_Check);
+		$(this).addClass(_Square_UnCHECK);
 	});
 
 	//Uncheck Title radio
-	$('i.fa-check-circle-o', $ul.prev()).addClass(_T_UnCHECK);
-	$('i.fa-check-circle-o', $ul.prev()).removeClass(_T_CHECK);
+	$('i.fa-check-circle-o', $ul.prev()).addClass(_Circle_UnCheck);
+	$('i.fa-check-circle-o', $ul.prev()).removeClass(_Circle_Check);
 
 	var cls = "";
-//	var $limenu = $ul.parent();
-//	var bIsChild = $limenu.hasClass("menu-c");
-//	cls = (bIsChild ? ".child" : ".ancestr");
 
 	//- BEFORE Filter
 	beforeFilter(cls);
@@ -1098,12 +1071,20 @@ $(document).delegate("#menu-toggle-2", 'click', function(e) {
 }); 
 
 //============================================================== 
-function Event_filename() {} 
+function Event_filename() {} //OPEN Aero datas
 //============================================================== 
 $(document).delegate('.filename', 'click', function(e) {
-	//TODO open Aerodata file
-//	var href = $graphScope._ALUrl + "/content/files" + $(this).attr("title");
-//	window.open(href, "_blank", "width=900, height=700, scrollbars=yes");
+	var href = $(this).attr("title");
+	var entry = getEntry(href);
+	if (entry) {
+		//var fpath = entry.get('filepath');
+		//window.open(fpath, "_blank", "width=900, height=700, scrollbars=yes");
+		
+		var mime = entry.get("mimeType");
+		var fpath = entry.get("filepath");
+		$graphScope.loadFile(fpath, mime);
+	}
+
 });
 
 var _BSHOWED = false;

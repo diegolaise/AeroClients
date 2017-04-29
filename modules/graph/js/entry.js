@@ -4,16 +4,16 @@
  * 
  *==================================================================*/
 var METADATA = [ "Version"	
-			, "From tool"
-			, "From process"
-			, "Description"
-			, "Type"
-			, "Data Origin"
-			, "Status"
-			, "Study Type"
-			, "Aircraft"
-			, "Program"
-			, "Creation version"
+				, "From tool"
+				, "From process"
+				, "Description"
+				, "Type"
+				, "Data Origin"
+				, "Status"
+				, "Study Type"
+				, "Aircraft"
+				, "Program"
+				//, "Creation version"
 			]; 
 
 function Entry(jData) { 
@@ -147,10 +147,8 @@ function Entry(jData) {
 			else if (o.hasOwnProperty(key)){
 				val = o[key];
 			}
-			if (key !== "version") {
-				str += sep + "<label style='width:70px;'>"+key+"</label>:&emsp;"+val+"";
-				sep = "<br>";
-			}
+			str += sep + "<label style='width:70px;'>"+key+"</label>:&emsp;"+val+"";
+			sep = "<br>";
 		});
 		
 		//Show all versions
@@ -455,6 +453,8 @@ function Entry(jData) {
 		
 		//Format style
 		if (style) { style = 'style="'+style+'"'; }
+		
+		//var href = "http://localhost:81"+this.get("filepath");
 
 		//Create div :  data-trigger="hover" //focus for click => not working
 	    return '<div id="'+this._id+'" for="'+this._path+'" class="'+this._class+'" '+style+'>' 
@@ -468,6 +468,7 @@ function Entry(jData) {
 	     	   
 	    	    // Filename
 	    	    + ' <span class="filename" title="'+this._path+'">'+ this._label + ' </span>'
+	    	    //+ ' <a class="filename" title="'+this._path+'" href="'+ href +'">'+ this._label + ' </span>'
 	    	    + ( isActive && !bHasContainer ? "" :
 	    	       ' <span class="fa fa-external-link toActiveData" title="Set this to actif"></span>'
 	    	     )

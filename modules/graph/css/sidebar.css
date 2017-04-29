@@ -420,7 +420,12 @@ a span {
     margin-right:10px !important;
 }
 
+.filter span.pull-right, .edit span.pull-right  {
+	margin-top:4px;
+	margin-right:10px !important;
+}
 
 /*-----------------------------------*/
 
+ul.submenu li { display: inline; }
 

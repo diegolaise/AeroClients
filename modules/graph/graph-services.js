@@ -22,7 +22,9 @@ angular.module('Graph')
 			
 		}, function(err) {
 			console.log("getDataInfo failed !" + err.responseText);
-			if (errorHandler) errorHandler(err);
+			if (errorHandler) {
+				errorHandler(err);
+			}
 		});
 
 	};

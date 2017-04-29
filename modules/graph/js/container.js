@@ -177,7 +177,7 @@ function Container(id, label, type) {
              if ($.inArray(el, tUniqueNames) === -1) tUniqueNames.push(el);
          });
          return tUniqueNames;
-         return tab;
+         //return tab;
 	};
 	
 	/** All parents of all entries */

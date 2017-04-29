@@ -46,7 +46,7 @@
 			<ul id="filepath" class="nav navbar-nav navbar-center hidden-xs">
                 <li style="max-width:408px;">
 					<a title="{{_activePath}}"> 
-					   <span class="fa fa-file-o" title="Click to select another file" style="cursor:pointer"></span>
+					   <span class="fa fa-file-o" title="Click to select another file" style="cursor:pointer" ng-click="showTree()"></span>
 					   <span class="ltab">{{shortPath()}}</span>
 					</a>
 				</li> 
@@ -153,7 +153,7 @@
                     	</span>
                        <!--  <span id="all_extension" ng-class="{hidden : isEmpty(_hExtension)}" class="fa fa-check-circle-o pull-right"></i> -->
                     </a>
-                    <ul  id="extension" class="nav-pills nav-stacked submenu">
+                    <ul id="extension" class="nav-pills nav-stacked submenu">
 						<li ng-repeat="(pwdt, nb) in _hExtension">
 							<a href="" title="{{pwdt}}">
 							     <span class="badger">{{nb}}</span>
@@ -176,9 +176,10 @@
 				    <a href="javascript:collapse('#collapseAll')" title="Collapse all parents">
 				    	<span class="fa-stack"><i class="fa fa-navicon fa-stack-1x"></i></span>
 				    	<span class="">Collapse all</span>
-				    	<span class="fa-stack pull-right switch">
+<!-- 				    	<span class="fa-stack pull-right switch">
 				    		<i id="collapseAll" class="fa fa-toggle-off fa-stack-1x"></i>
-				    	</span>
+				    	</span> -->
+				    	<span id="collapseAll" class="fa fa-toggle-off pull-right"></span>
 				    </a> 
 				</li>
 				
@@ -186,13 +187,14 @@
 				    <a href="javascript:toggleCheckboxes('#showCheck');" title="Show check-boxes allowing to choose">
 				    	<span class="fa-stack"><i class="fa fa-edit fa-stack-1x"></i></span>
 				    	<span class="">Toggle Check</span>
-				    	<span class="fa-stack pull-right switch">
+				    	<!-- <span class="fa-stack pull-right switch">
 				    		<i id="showCheck" class="fa fa-toggle-off fa-stack-1x"></i>
-				    	</span>
+				    	 </span> -->
+				    	<span id="showCheck" class="fa fa-toggle-off pull-right"></span>
 				    </a> 
 				</li>
 
- 				<li class="exportItem menu-p edit" title="PARENT CHECK"  id="ancestrCheckAll"> 
+ 				<li class="exportItem menu-p edit" title="PARENT CHECK" id="ancestrCheckAll"> 
 				    <a href="javascript:checkAll('#chckancestr', false);" title="Check and select all children">
 				    	<span class="fa fa-check"></span>
 				    	<span class="lemsp">Check Parents</span>
@@ -228,12 +230,13 @@
                    </a>
                     
                   <ul class="links submenu">
-					<li ng-repeat="(fname, path) in _exported">
-						<a href="" title="{{path}}">
- 					 		<span class="fa fa-download" ng-click="getExported($event,path)" title="Download this file"></span>
-					 		<span class="exportText" ng-click="openExported($event,path)">{{fname}}</span>
-					 		<span class="fa fa-trash-o pull-right" ng-click="delExported($event,path)" title="Click to delete file"></span>
-						</a> 
+					<li ng-repeat="(fname, path) in _exported">						
+						<span class="fa fa-trash-o pull-right" ng-click="deleteFile(path)" title="Delete"></span>
+<!--   					<a href="{{path}}" target="_blank" title="{{path}}" download>
+ 					 		<span class="fa fa-download" title="Download">&nbsp;{{fname}}</span>	
+						</a> -->
+						<a href="{{path}}" title="Download" class="pull-right" download><span class="fa fa-download"></span></a>
+						<a href="{{path}}" class="exportText" target="_blank">{{fname}}</a>			 
 					</li>
 					<li><a style="color:transparent;cursor:none;">-</a></li>
 				  </ul>

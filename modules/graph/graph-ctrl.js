@@ -12,8 +12,10 @@
  * 
  * ====================================================================*/
 angular.module('Graph')
-.controller('GraphController', ['$scope', '$location', '$http', '$routeParams', '$rootScope', '$cookieStore', 'GraphService',
-	function ($scope, $location, $http, $routeParams, $rootScope, $cookieStore, GraphService) {
+.controller('GraphController', ['$scope', '$location', '$http', '$routeParams', '$rootScope', '$cookieStore'
+	, 'GraphService', 'TreeService',
+	function ($scope, $location, $http, $routeParams, $rootScope, $cookieStore
+			, GraphService, TreeService) {
 
 	$scope._revision 	= _REVISION;
 	$scope._brandIcon   = "/assets/images/brand-icon.gif";
@@ -56,7 +58,7 @@ angular.module('Graph')
 		spin();
 
 		$scope._login 	    = $rootScope.globals.currentUser.username; 
-		$scope._activePath  = $routeParams.activePath || $rootScope.globals.currentUser.active_path;
+		$scope._activePath  = $rootScope.globals.currentUser.active_path || $routeParams.activePath;
 
 		//Initialize xhr log string  
 		$scope._exportDir += $scope._login + "/"; 
@@ -79,7 +81,7 @@ angular.module('Graph')
 			//---------------------------------
 			// Load active data
 			//---------------------------------
-			loadActiveData(false, hideSpin);
+			loadActiveData(hideSpin);
 		}
 		catch (err) {
 			showLog(err, "Graph initilaize error", hideSpin);
@@ -87,14 +89,18 @@ angular.module('Graph')
 	};
 
 	/** Load active data */
-	var loadActiveData = function(bOnlyUpdate, endCallFunction) {
+	var loadActiveData = function(endCallFunction) {
 		
 		if ( ! $scope._activePath ) {
-			//TODO : propose to select a file
+
 			//Show tree view here 
 			if (endCallFunction) {
 				endCallFunction(false);
 			}
+			
+			//Propose to select a file in a tree
+			$scope.showTree();
+			
 			return;
 		}
 		
@@ -104,7 +110,7 @@ angular.module('Graph')
 		//Load many active data
 		var tabDatas = $scope._activePath.split(","); 
 		if (tabDatas.length>1) { 
-			loadManyDatas(tabDatas, bOnlyUpdate, endCallFunction); 
+			loadManyDatas(tabDatas, endCallFunction); 
 			return;
 		}; 
 
@@ -118,10 +124,9 @@ angular.module('Graph')
 			console.log("loadActiveData end ...");
 			
 			//Initialize sidebar
-			if (jdata && Object.keys(jdata).length>0) {
-				
+			if (jdata && Object.keys(jdata).length>0) {				
 				//Init graph and active data object
-				initGraph($scope._activePath, jdata, bOnlyUpdate, function(entry) {
+				initGraph($scope._activePath, jdata, function(entry) {
 					
 					$scope._oDataActive = entry;
 					initActiveDataSelection();
@@ -189,7 +194,7 @@ angular.module('Graph')
 	}
 
 	/** Load many active datas */
-	var loadManyDatas = function(tabDatas, bOnlyUpdate, endCallFunction) { 
+	var loadManyDatas = function(tabDatas, endCallFunction) { 
 
 		//Path to handle
 		var showPath = (tabDatas.length==1 ? $scope._activePath : ""); 
@@ -200,11 +205,8 @@ angular.module('Graph')
 			//End get data info
 			var endLoading = function(jdata) {
 				if (jdata.constructor === Array) {
-					if (tDataRes.length===0) {
-						tDataRes = jdata;
-					}
-					else {
-						tDataRes.concat(jdata);
+					for (var i=0; i<jdata.length; i++){
+						tDataRes.push(jdata[i]);
 					}
 				}
 				else {
@@ -216,9 +218,8 @@ angular.module('Graph')
 				}
 				else {
 					//Init Graph
-					initGraph(showPath, tDataRes, bOnlyUpdate, function(entry) {	
+					initGraph(showPath, tDataRes, function(entry) {	
 						$scope._oDataActive = entry;
-
 					});
 					
 					//Can put here because hisdespin
@@ -235,6 +236,7 @@ angular.module('Graph')
 			});
 			
 		}
+		//Call draw
 		drawData();
 	}
 	
@@ -248,7 +250,7 @@ angular.module('Graph')
 	}
 
 	/** Change the active data */
-	$scope.changeActiveData = function(path, bOnlyUpdate) {
+	$scope.changeActiveData = function(path) {
 		spin();
 
 		//Change the active path
@@ -259,7 +261,7 @@ angular.module('Graph')
 		$scope._hExtension = {}; 
 		$scope._oDataActive = null;
 
-		loadActiveData(bOnlyUpdate, function(bOk) {
+		loadActiveData(function(bOk) {
 			if (bOk) {
 				$scope.store();//not working, because no cache
 			}
@@ -272,6 +274,11 @@ angular.module('Graph')
 			slide(false);
 		});
 	};
+	
+	/** Show tree */
+	$scope.showTree = function() {
+		TreeService.showTree(false, $scope.changeActiveData);
+	}
 
 	/**---------------------------------
 	 * Get list of exported files 
@@ -318,7 +325,7 @@ angular.module('Graph')
 
 		//Cut
 		if (skey.length > 16) {
-			skey = skey.substring(0, 8) + " ... " + skey.substring(skey.length - 9);
+			skey = skey.substring(0, 10) + " ... " + skey.substring(skey.length - 12);
 		}	
 		$scope._exported[skey] = $scope._exportDir + fname;		
 	}
@@ -524,37 +531,10 @@ angular.module('Graph')
 		var value = '* ' + $scope._oDataActive._version;
 		$(id).val(value).trigger('change');
 	}
-	
-	/** Open/load the exported file */
-	$scope.openExported = function(e, href) {
-		e.preventDefault(); 
-		e.stopPropagation();
-		//---
-		// This is Used instead of href, 
-		// because : allow to stop propagation when click on delete icon
-		//---
-		window.open(href);
-	};
-	
-	$scope.getExported = function(e, href) {
-		var filename = href.substring(href.lastIndexOf("/") + 1);
 
-		GraphService.download(href, function(data) {
-			var url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], {type:'application/json'}));
-			var a = document.createElement('a');
-			a.href = url;
-			a.download = filename;
-			a.target = '_blank';
-			a.click();
-		});
-	}
-	
 	/** Remove exported file */
-	$scope.delExported  = function(e, href) { 
-		e.preventDefault(); 
-		e.stopPropagation(); 
-		
-		var filename = href.substring(href.lastIndexOf("/") + 1);
+	$scope.deleteFile  = function(path) { 
+		var filename = path.substring(path.lastIndexOf("/") + 1);
 		filename = filename.substring(0, filename.indexOf(".json"));
 
 		bootbox.confirm({ size:"medium"
@@ -562,7 +542,7 @@ angular.module('Graph')
 			, message   : "Remove following file from the server : <br/><b>" + filename + "</b>"
 			, callback: function(bOk) {
 					if (bOk) { 
-						GraphService.removeExportedFile(href, function(success) {
+						GraphService.removeExportedFile(path, function(success) {
 							if (success) {
 								e.currentTarget.closest("li").remove();
 							}
@@ -611,5 +591,3 @@ angular.module('Graph')
 	}
 
 }]); //--============================= END graph controller --=============================//
-
-

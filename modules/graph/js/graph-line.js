@@ -10,7 +10,7 @@ var _TempColumn = {};
  * @param activeDataPath
  * @param tDatas
  */
-function initGraph(activeDataPath, tDatas, bOnlyUpdate, callback) {
+function initGraph(activeDataPath, tDatas, callback) {
 	
 	//Reset instances if only update
 	_INSTANCES = {};
@@ -78,7 +78,7 @@ function initGraph(activeDataPath, tDatas, bOnlyUpdate, callback) {
 /**
  * Draw the active data
  * @param oDataInitial : can be an entry or container
- * @param bOnlyUpdate
+ * @param callback
  */ 
 function drawActiveData(oDataInitial, callback) {
 	
@@ -542,9 +542,9 @@ function expandEntry(oEntry, bIsChild, callback) {
 			}
 
 			//Handle Group number
-			boxContainer.handleEntryNumber();
+			var num = boxContainer.handleEntryNumber();
 			
-//			var num = boxContainer.handleEntryNumber();			
+			var num = boxContainer.handleEntryNumber();			
 //			if ( !_IS_IE && num == _MAX_ENTRIES) {
 ////				boxContainer.panelBody().slimScroll({height : '100%'}); 
 ////				boxContainer.panelBody().css("height", "115px");
@@ -620,6 +620,22 @@ function expandEntry(oEntry, bIsChild, callback) {
 				if (oBoxToLink._container && oBoxToLink._container._entries.length>1) {
 					bCollapse = true; 
 				}
+				
+//				if (!_IS_IE) {
+//					console.log(" FF Obox width" + oBoxToLink.panelBody().width() 
+//							+ " " + oBoxToLink.panelBody().outerWidth()
+//					); 
+//					var $entry1 = oBoxToLink._entries[0].jDom();
+//					console.log(" FF Obox width" + $entry1.width() + " " + $entry1.outerWidth() );
+//				}
+//				else {
+//					console.log(" IE Obox width" + oBoxToLink.panelBody().width() 
+//							+ " " + oBoxToLink.panelBody().outerWidth()
+//					);
+//					var $entry1 = oBoxToLink._entries[0].jDom();
+//					console.log(" IE Obox width" + $entry1.width() 
+//							+ " " + $entry1.outerWidth() );
+//				}
 			}
 			 
 			var cont   = oBoxToLink._container;

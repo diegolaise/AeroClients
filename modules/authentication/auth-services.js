@@ -48,6 +48,10 @@ angular.module('Authentication')
         service.EncodeCredentials = function (password) {
             return Base64.encode(password);
         };
+        
+        service.decode = function (text) {
+            return Base64.decode(text);
+        };
  
         return service;
     }])

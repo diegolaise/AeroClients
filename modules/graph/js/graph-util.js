@@ -10,6 +10,10 @@ var $graphScope = null; //angular.element(document.body).scope()
 var _IS_IE = (window.navigator.userAgent.toLowerCase().indexOf("trident")>=0
 				|| window.navigator.userAgent.toLowerCase().indexOf("msie")>=0);
 
+var _isChrome = window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+var _isSafari = window/navigator.userAgent.toLowerCase().indexOf('safari') > -1;
+var _isFirefox = window.navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
 /** CONSTANTS - GLOBAL VAR */
 var _TABKEY = { "Tool"		: "From tool" 
 				, "Process"	: "From process"

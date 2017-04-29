@@ -28,12 +28,15 @@ angular.module('Authentication')
 					//Save authentication
 					AuthenticationService.SetCredentials($scope.username, $scope.password);
 					
-					//var spath = encodeURIComponent('/Projects/A330_WV052/2-WORKSPACE/2-FORWARD_LOWER_SHELL/FRAMES_38-39.2/1-ExtractionResults/FR39_LHS_L1_U__90XXFR002001.cas?ver=3');
-					var spath = encodeURIComponent('/Projects/A330_WV052/1-LOADS/INPUT/STATIC/COMBINED/load_combined_1.dat?ver=4'
-													// '/Projects/A330_WV052/1-LOADS/RESULTS/STATIC/COMBINED/load_combined_1.neut?ver='
-	                    							// '/Projects/A330_WV052/0-MODEL/modele_v2005_MOD_1.neut?ver=1'
-												  );
+					var url = AuthenticationService.decode("");
+					console.log("URL: " + url);
 					
+//					var p = encodeURIComponent('/Projects/A330_WV052/2-WORKSPACE/2-FORWARD_LOWER_SHELL/FRAMES_38-39.2/1-ExtractionResults/FR39_LHS_L1_U__90XXFR002001.cas?ver=3';
+//					var p = '/Projects/A330_WV052/1-LOADS/INPUT/STATIC/COMBINED/load_combined_1.dat?ver=4';
+//					var p = '/Projects/A330_WV052/1-LOADS/RESULTS/STATIC/COMBINED/load_combined_1.neut?ver=';
+//					var p = '/Projects/A330_WV052/0-MODEL/modele_v2005_MOD_1.neut?ver=1';
+					var p = '/Projects/A330_WV052/2-WORKSPACE/2-FORWARD_LOWER_SHELL/FRAMES_38-39.2/0-AnalysisPoints/FR39_LHS.dpsn3?ver=4';
+					var spath = encodeURIComponent(p);
 					
 					//Redirect to selected project
 					$location.path('/' + $scope._project + '/' + spath);;
