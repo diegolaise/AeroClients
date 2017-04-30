@@ -4,7 +4,7 @@
 	<h6>Choose an application and Login in</h6> 
 </div>
 
-<div class="middle-box text-center">
+<div class="middle-box text-center" ng-init="initLogin()">
  	<i ng-if="dataLoading" class="fa fa-4x fa-spinner fa-spin"></i>
  	
 	<form name="form" ng-submit="login()" role="form" id="myform">

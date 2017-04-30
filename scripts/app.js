@@ -34,6 +34,10 @@ angular.module('aero-app', ['Authentication', 'ngRoute',  'ngCookies', 'Tree', '
 	    	controller : 'GraphController',
 	    	templateUrl: 'modules/graph/views/graph.html'
 	    })
+	    .when('/Exported/:login/:path', {
+	    	controller : 'LoginController',
+	    	templateUrl: 'modules/authentication/views/blank.html'
+	    })
         .otherwise({ redirectTo: '/login' });
 	} //end function
 ])

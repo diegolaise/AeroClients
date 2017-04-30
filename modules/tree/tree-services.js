@@ -5,8 +5,7 @@ angular.module('Tree')
 
 	var service = {};
 	
-	var _D_NODES = {};
-	var _IN_CALL = {};
+	var _allNodes = {}; 
 	
 	var _http = $resource(SERVER_URL + "/getTreeDatas/:path/:folder/:level");
 
@@ -15,57 +14,27 @@ angular.module('Tree')
 	 */
 	service.getTreeNodes = function(foldePath, folderOnly, callback, errorHandler) {
 		
-		if (_D_NODES[foldePath]) {
-			if (callback) { 
-				callback( _D_NODES[foldePath] ); 
-				
-				var tabs = _D_NODES[foldePath];
-				if (tabs.length==1)
-					tabs = tabs[0].nodes;
-					
-				$.each(tabs, function(i, node) {
-					if (node.tags == "0") { 
-						console.log(" -> Sub Call: " + node.href);
-						getTreeNodes(node.href, false); 
-					} 
-				});
-			}
-			return _D_NODES[foldePath];
+		if (_allNodes[foldePath]) {
+			callback( _allNodes[foldePath] );
 		}
-		
-		if (foldePath in _IN_CALL) {
-			_IN_CALL[foldePath] = callback;
-			return;
-		}
-		
-		_IN_CALL[foldePath] = callback; 
-		
-		var startTime = (new Date()).getTime();		 
-		_http.get({path: foldePath, folder:folderOnly, level:1}, function(jtab) {  
-				console.log("- " + foldePath + " : " + (((new Date()).getTime() - startTime)/1000) );
-				
-				//console.log(" -> End: " + foldePath);
-				_D_NODES[foldePath] = jtab;
-				
-				if (!callback) {
-					callback = _IN_CALL[foldePath];
-				}
+		else {
+			//var startTime = (new Date()).getTime();	
+			
+			_http.get({path: foldePath, folder:folderOnly, level:1}, function(res) {  
+					//console.log("- " + foldePath + " : " + (((new Date()).getTime() - startTime)/1000) );
 
-				if (foldePath in _IN_CALL) {
-					delete _IN_CALL[foldePath];
+					console.log("getTreeNodes success! " + foldePath);
+					_allNodes[foldePath] = res.data;
+					callback(res.data); 
+					
+				}, function (err) {  
+					console.log("getTreeNodes failed: " + foldePath + " "+ err);
+					if (errorHandler) {
+						errorHandler(err);
+					}
 				}
-				
-				if (callback) {
-					callback(jtab); 
-				}
-			},
-			function (err) {  
-				console.log("ERROR: failed to load paths for: " + err);
-				if (errorHandler) {
-					errorHandler(err);
-				}
-			}
-		);	
+			);
+		}
 	};//END getTreeNode
 
 	/**
@@ -113,7 +82,7 @@ angular.module('Tree')
 				'</form> ';
 				//=================================================================
 		
-				bootbox.dialog({ title: "Select file"
+				bootbox.dialog({ title: "Select a file"
 					, message: treeFrm
 					, className: "widget-tree"
 						, closeButton : true
@@ -125,6 +94,7 @@ angular.module('Tree')
 								    	if (endTreeFct) {
 								    		endTreeFct(null);
 								    	}
+								    	return;
 								    }
 							},
 							success: {
@@ -204,7 +174,8 @@ angular.module('Tree')
 				$(".widget-tree .modal-header").css("background", "#fff");
 				$(".widget-tree .modal-body").css("background", "#ddd");
 				
-				var hgt =  $("body").outerHeight() - 160;
+				//Widget hight
+				var hgt =  $("body").outerHeight() - 120; //160;
 				$(".widget-tree .modal-body").css("height", hgt);  
 				$(".widget-tree #treeview-searchable").css("height", hgt - 120); 
 

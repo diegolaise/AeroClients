@@ -99,54 +99,54 @@ angular.module('Graph')
 			}
 			
 			//Propose to select a file in a tree
-			$scope.showTree();
-			
-			return;
+			$scope.showTree(endCallFunction);
 		}
+		else {
 		
-		// Store active data
-		$scope.store();
-
-		//Load many active data
-		var tabDatas = $scope._activePath.split(","); 
-		if (tabDatas.length>1) { 
-			loadManyDatas(tabDatas, endCallFunction); 
-			return;
-		}; 
-
-		//Clear metadatas
-		$scope._hActiveData = {};
-		
-		//Read data info
-		GraphService.getDataInfo($scope._activePath, 1,  function(jdata) { 	
+			// Store active data
+			$scope.store();
+	
+			//Load many active data
+			var tabDatas = $scope._activePath.split(","); 
+			if (tabDatas.length>1) { 
+				loadManyDatas(tabDatas, endCallFunction); 
+				return;
+			}; 
+	
+			//Clear metadatas
+			$scope._hActiveData = {};
 			
-			//console.log("Datas found: " +  JSON.stringify(jdata, null, 4) + " " + Object.keys(jdata));
-			console.log("loadActiveData end ...");
-			
-			//Initialize sidebar
-			if (jdata && Object.keys(jdata).length>0) {				
-				//Init graph and active data object
-				initGraph($scope._activePath, jdata, function(entry) {
-					
-					$scope._oDataActive = entry;
-					initActiveDataSelection();
-					
-				}); //end initGraph 
-			}//if has data
-			
-			//Call back
-			if (endCallFunction) {
-				endCallFunction(true);
+			//Read data info
+			GraphService.getDataInfo($scope._activePath, 1,  function(jdata) { 	
+				
+				//console.log("Datas found: " +  JSON.stringify(jdata, null, 4) + " " + Object.keys(jdata));
+				console.log("loadActiveData end ...");
+				
+				//Initialize sidebar
+				if (jdata && Object.keys(jdata).length>0) {				
+					//Init graph and active data object
+					initGraph($scope._activePath, jdata, function(entry) {
+						
+						$scope._oDataActive = entry;
+						initActiveDataSelection();
+						
+					}); //end initGraph 
+				}//if has data
+				
+				//Call back
+				if (endCallFunction) {
+					endCallFunction(true);
+				}
 			}
-		}
-		, function(err, status, headers, config) {
-			bootbox.alert("Read active data Error <br>" + showlog(err));
-			//Call back
-			if (endCallFunction) {
-				endCallFunction(false);
-			}
-		});
-		
+			, function(err, status, headers, config) {
+				bootbox.alert("Read active data Error <br>" + showlog(err));
+				//Call back
+				if (endCallFunction) {
+					endCallFunction(false);
+				}
+			});
+			
+		} 
 	};
 	
 	/** Init ACTIVE DATA selection */
@@ -277,7 +277,14 @@ angular.module('Graph')
 	
 	/** Show tree */
 	$scope.showTree = function() {
-		TreeService.showTree(false, $scope.changeActiveData);
+		TreeService.showTree(false, function(path) {
+			if (path) {
+				$scope.changeActiveData(path);
+			}
+//			else{
+//				alert("Pas de path");
+//			}
+		});
 	}
 
 	/**---------------------------------
@@ -333,6 +340,27 @@ angular.module('Graph')
 	/** Check if has exported */
 	$scope.hasExported = function() {
 		return (Object.keys($scope._exported).length>0);
+	}
+	
+	$scope.openExported = function(href, e) {
+		var filename = href.substring(href.lastIndexOf("/") + 1);
+		//var href = "/"+$scope._exportDir+ filename;
+		
+		var a = $(e.currentTarget).parent();
+
+		GraphService.downloadfile(href, function(data) {
+			var url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], {type:'application/json'}));
+			//var url = URL.createObjectURL(new Blob([data], {type:'application/json'}));
+//			var a = document.createElement('a');
+//			a.href = url;
+//			a.download = filename;
+//			a.target = '_blank';
+//			a.click();
+			$(a).attr('href', url);
+			$(a).attr('download', filename);
+			$(a).attr('target', '_blank');
+			$(a).trigger('click');
+		});
 	}
 	
 	/**
@@ -406,6 +434,7 @@ angular.module('Graph')
 	};
 
 	$scope.isMultipleData = function() {
+		if (!$scope._activePath) return false;
 		return ($scope._activePath.split(",").length > 1);
 	}
 
@@ -487,7 +516,7 @@ angular.module('Graph')
 
 	/** Get short path */
 	$scope.shortPath = function() { 
-
+		if (!$scope._activePath) return "";
 		if ($scope._activePath.indexOf(",")>0) {
 			if ($scope._oDataActive) {
 				return $scope._oDataActive._label;

@@ -230,13 +230,15 @@
                    </a>
                     
                   <ul class="links submenu">
-					<li ng-repeat="(fname, path) in _exported">						
-						<span class="fa fa-trash-o pull-right" ng-click="deleteFile(path)" title="Delete"></span>
-<!--   					<a href="{{path}}" target="_blank" title="{{path}}" download>
- 					 		<span class="fa fa-download" title="Download">&nbsp;{{fname}}</span>	
+					<li ng-repeat="(fname, path) in _exported">	 
+ 				    	
+<!-- 						<span class="fa fa-trash-o pull-right" ng-click="deleteFile(path)" title="Delete"></span>
+   						<a href="" target="_blank"  download>
+ 					 		<span class="fa fa-download" title="Download" ng-click="openExported(path, $event)">&nbsp;{{fname}}</span>	
 						</a> -->
-						<a href="{{path}}" title="Download" class="pull-right" download><span class="fa fa-download"></span></a>
-						<a href="{{path}}" class="exportText" target="_blank">{{fname}}</a>			 
+						
+ 					<a href="{{path}}" title="Download" class="pull-right" download><span class="fa fa-download"></span></a>
+						<a href="{{path}}" class="exportText" target="_blank">{{fname}}</a>	 
 					</li>
 					<li><a style="color:transparent;cursor:none;">-</a></li>
 				  </ul>

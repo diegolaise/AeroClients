@@ -83,20 +83,30 @@ angular.module('Graph')
 	 * @param filePath
 	 * @param fdelegate
 	 */
-	service.removeExportedFile = function(filePath, fdelegate)  {
+	service.removeExportedFile = function(filePath, fdelegate, errorHandler)  {
 		var myhttp = $resource(SERVER_URL + "/removeFiles/:path");	
 		myhttp.get( {path:filePath.split(",")}, function(success) {
-				if (fdelegate) {
-					fdelegate(success);
-				}  
-			} 
-		);	
+				 errorHandler(success);			 
+		}, function(err) { 
+			if (errorHandler) {
+				errorHandler(err);
+			}
+		});	
 	}
 
-	service.download = function(path, callback) {  
-		$http.get(path).success(function(data, status, headers, config) {
+	service.downloadfile = function(path, callback, errorHandler) {  
+//		$http.get(path).success(function(data, status, headers, config) {
+//			callback(data); 
+//		}); 
+		var myhttp = $resource(SERVER_URL + "/getFile/:path");
+		myhttp.get( {path: path}, function(data) {
 			callback(data); 
-		}); 
+		}
+		, function(err) { 
+			if (errorHandler) {
+				errorHandler(err);
+			}
+		});
 	}
 
 	return service;

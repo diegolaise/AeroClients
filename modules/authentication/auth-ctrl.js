@@ -1,20 +1,40 @@
 'use strict';
 
 angular.module('Authentication')
-.controller('LoginController', ['$scope', '$rootScope', '$location', '$routeParams', 'AuthenticationService', //'beforeUnload',
-	function ($scope, $rootScope, $location, $routeParams, AuthenticationService//, beforeUnload
-			) {
+.controller('LoginController', ['$scope', '$rootScope', '$location', '$routeParams', '$cookieStore', '$window', 'AuthenticationService', 
+	function ($scope, $rootScope, $location, $routeParams, $cookieStore, $window, AuthenticationService) {
 	
 		//Set default to graph
 		$scope._project = $routeParams.project || "graph";
 		$scope.dataLoading = false;
 		$scope.username = $routeParams.login || "";
 		$scope.error = "";
+		 
+		$scope.initLogin = function() {
+			console.log("Reset login ...");
+			// Reset login status
+			AuthenticationService.ClearCredentials();
+		}
 		
-		// Reset login status
-		AuthenticationService.ClearCredentials();
-	
+		$scope.downloadfile = function() {
+			$rootScope.globals = $cookieStore.get('globals') || {};	
+			
+			if ( $rootScope.globals.currentUser 
+					&& $rootScope.globals.currentUser.username === $scope.username) {
+				var spath = $routeParams.path;
+				//$location.path('/' + spath);
+				$window.open( '/Exported/' + $scope.username + "/" + spath, '_blank');
+			}
+			else {
+				console.log("forbidden");
+			}
+			$window.history.back();
+		}
+		
 		$scope.login = function () {
+			// Reset login status
+			AuthenticationService.ClearCredentials();
+			
 			$scope.dataLoading = true;
 			wait();
 				
@@ -36,10 +56,12 @@ angular.module('Authentication')
 //					var p = '/Projects/A330_WV052/1-LOADS/RESULTS/STATIC/COMBINED/load_combined_1.neut?ver=';
 //					var p = '/Projects/A330_WV052/0-MODEL/modele_v2005_MOD_1.neut?ver=1';
 					var p = '/Projects/A330_WV052/2-WORKSPACE/2-FORWARD_LOWER_SHELL/FRAMES_38-39.2/0-AnalysisPoints/FR39_LHS.dpsn3?ver=4';
-					var spath = encodeURIComponent(p);
+					
+					var spath = encodeURIComponent(p);				
+					spath = '';
 					
 					//Redirect to selected project
-					$location.path('/' + $scope._project + '/' + spath);;
+					$location.path('/' + $scope._project + '/' + spath);
 				} 
 				else {
 					if (!response.message) 
